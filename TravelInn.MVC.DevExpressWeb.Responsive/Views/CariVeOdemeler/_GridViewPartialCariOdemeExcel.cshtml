@@ -1,0 +1,115 @@
+@using DevExpress.Export
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewCariOdemeExcel";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "CariVeOdemeler",
+            Action = "GridViewPartialCariOdemeExcel"
+        };
+
+        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+        settings.ClientSideEvents.BeginCallback = "function(s,e){grid_BeginCallback(s,e)}";
+
+        settings.ClientVisible = false;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = false;
+        settings.SettingsPager.PageSize = Int32.MaxValue;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        // GENISLIK ICIN ******************************************************
+        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        // ****************************************************** GENISLIK ICIN
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = ExportType.WYSIWYG;
+        settings.Toolbars.Add(t =>
+        {
+            t.EnableAdaptivity = true;
+            t.Items.Add(GridViewToolbarCommand.ExportToXls);
+            t.Items.Add(GridViewToolbarCommand.ExportToXlsx);
+        });
+
+        settings.Columns.Add(col => { col.FieldName = "Id"; col.Caption = "";col.Width = Unit.Pixel(50);});
+        settings.Columns.Add(col => { col.FieldName = "Firma"; col.Caption = "Firma"; col.Width = Unit.Pixel(150); });
+        settings.Columns.Add(col => { col.FieldName = "CTarih";
+            col.Caption = "Tarih"; col.Width = Unit.Pixel(80); col.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+        });
+        settings.Columns.Add(col => { col.FieldName = "SatisSorumlusu";
+                                        col.Caption = " "; col.Width = Unit.Pixel(50);
+        });
+        settings.Columns.Add(col => { col.FieldName = "CAciklama";
+            col.Caption = "Aciklama"; col.Width = Unit.Pixel(250);
+        });
+        settings.Columns.Add(col => { col.FieldName = "CTL"; col.PropertiesEdit.DisplayFormatString = "N";
+            col.Caption = "TL"; col.Width = Unit.Pixel(86);
+        });
+        settings.Columns.Add(col => { col.FieldName = "CEuro"; col.PropertiesEdit.DisplayFormatString = "N";
+            col.Caption = "Euro"; col.Width = Unit.Pixel(86);
+        });
+        settings.Columns.Add(col => { col.FieldName = "CDollar"; col.PropertiesEdit.DisplayFormatString = "N";
+            col.Caption = "Dollar"; col.Width = Unit.Pixel(86);
+        });
+        settings.Columns.Add(col => { col.FieldName = "CMusteri_AdiSoyadi";
+            col.Caption = "Musteri"; col.MinWidth = 100;
+        });
+        settings.Columns.Add(col => { col.FieldName = "CTur_Adi";
+            col.Caption = "Tur"; col.MinWidth = 100;
+        });
+        settings.Columns.Add(col => { col.FieldName = "COtel_Adi";
+            col.Caption = "Otel"; col.MinWidth = 100;
+        });
+        settings.Columns.Add(col => { col.FieldName = "OTarih";
+            col.Caption = "Tarih"; col.Width = Unit.Pixel(80); col.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+        });
+        settings.Columns.Add(col => { col.FieldName = "OAciklama";
+            col.Caption = "Aciklama"; col.Width = Unit.Pixel(250);
+        });
+        settings.Columns.Add(col => { col.FieldName = "OTL"; col.PropertiesEdit.DisplayFormatString = "N";
+            col.Caption = "TL"; col.Width = Unit.Pixel(86);
+        });
+        settings.Columns.Add(col => { col.FieldName = "OEuro"; col.PropertiesEdit.DisplayFormatString = "N";
+            col.Caption = "Euro"; col.Width = Unit.Pixel(86);
+        });
+        settings.Columns.Add(col => { col.FieldName = "ODollar"; col.PropertiesEdit.DisplayFormatString = "N";
+            col.Caption = "Dollar"; col.Width = Unit.Pixel(86);
+        });
+        settings.Columns.Add(col => { col.FieldName = "Banka_Adi";
+            col.Caption = "Banka"; col.MinWidth = 100;
+        });
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "CDollar").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "CEuro").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "CTL").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ODollar").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "OEuro").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "OTL").DisplayFormat = "{0:N}";
+
+        settings.Settings.ShowFooter = true;
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

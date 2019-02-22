@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style type="text/css">
+    .marginTop5px {
+        margin-top: 5px;
+    }
+</style>
+
+@Html.DevExpress().Splitter(settings =>
+{
+    settings.Name = "SplitterFirmalar";
+    settings.Width = System.Web.UI.WebControls.Unit.Pixel(667);
+    settings.AllowResize = true;
+
+    settings.Panes.Add(contentPane =>
+    {
+
+        contentPane.Panes.Add(firmaPane =>
+        {
+            firmaPane.Size = System.Web.UI.WebControls.Unit.Pixel(667);
+            firmaPane.AutoHeight = true;
+            firmaPane.SetContent(() =>
+            {
+                ViewContext.Writer.Write(@Html.Action("GridViewFirmalarPartial", "Firmalar"));
+
+                Html.DevExpress().Button(s =>
+                {
+                    s.Name = "AddFirma";
+                    s.Text = "+";
+                    s.ControlStyle.CssClass = "rndBtn marginTop5px";
+                    s.Width = 25;
+                    s.ClientSideEvents.Click = "function(s, e){GridViewFirmalar.AddNewRow()}";
+                }).Render();
+
+            });
+        });
+
+        contentPane.Panes.Add(firmaTemsilcisiPane =>
+        {
+            firmaTemsilcisiPane.Size = System.Web.UI.WebControls.Unit.Pixel(667);
+            firmaTemsilcisiPane.AutoHeight = true;
+            firmaTemsilcisiPane.SetContent(() =>
+            {
+                ViewContext.Writer.Write("<h2 id='firmaTitle' style='color: #757575;'></h2>");
+
+                ViewContext.Writer.Write(@Html.Action("GridViewFirmaTemsilcileriPartial", "FirmaTemsilcileri"));
+
+                Html.DevExpress().Button(s =>
+                {
+                    s.Name = "AddFirmaTemsilcisi";
+                    s.Text = "+";
+                    s.ControlStyle.CssClass = "rndBtn marginTop5px";
+                    s.Width = 25;
+                    s.ClientSideEvents.Click = "function(s, e){GridViewFirmaTemsilcileri.AddNewRow()}";
+                }).Render();
+
+            });
+        });
+
+    });
+
+}).GetHtml()
+
+<script type="text/javascript">
+    $(function () {
+
+        var frmId = 0;
+
+        onGrdFirmalar_RowClick = function (s, e)
+        {
+
+            frmId = GridViewFirmalar.GetRowKey(e.visibleIndex);
+
+            GridViewFirmalar.GetRowValues(
+                e.visibleIndex,
+                'Ismi',
+                function (value)
+                {
+                    document.getElementById('firmaTitle').innerHTML = value
+                })
+
+            GridViewFirmaTemsilcileri.PerformCallback();
+
+        }
+
+        onGrdFirmaTemsilcileri_BeginCallback = function (s, e)
+        {
+            e.customArgs["FirmaId"] = frmId;
+        }
+
+    })
+</script>

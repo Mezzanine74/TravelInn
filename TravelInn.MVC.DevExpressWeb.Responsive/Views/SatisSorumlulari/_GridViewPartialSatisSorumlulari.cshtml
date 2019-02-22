@@ -1,0 +1,94 @@
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewSatisSorumlulari";
+        settings.CallbackRouteValues = new { Controller = "SatisSorumlulari", Action = "GridViewPartialSatisSorumlulari" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "SatisSorumlulari", Action = "GridViewPartialSatisSorumlulariAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "SatisSorumlulari", Action = "GridViewPartialSatisSorumlulariUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "SatisSorumlulari", Action = "GridViewPartialSatisSorumlulariDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+
+        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e){ onRowDblClick(s,e) }";
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.Caption = " ";
+        settings.CommandColumn.Width = 74;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = Int32.MaxValue;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+// GENISLIK ICIN ******************************************************
+settings.Width = System.Web.UI.WebControls.Unit.Pixel(800);
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+// ****************************************************** GENISLIK ICIN
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add(col =>
+        {
+            col.Width = Unit.Pixel(200);
+
+            col.FieldName = "Ismi";
+            col.SetEditItemTemplateContent(dEdit =>
+            {
+                Html.DevExpress().TextBox(lnkSettings =>
+                {
+                    lnkSettings.Name = col.FieldName;
+                    lnkSettings.Width = Unit.Percentage(100);
+                    lnkSettings.Text = Convert.ToString(DataBinder.Eval(dEdit.DataItem, col.FieldName));
+                }).Render();
+            });
+
+            col.SetDataItemTemplateContent(dItem =>
+            {
+                Html.DevExpress().Button(lnkSettings =>
+                {
+                    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "Ismi"));
+                    var cariAdedi = Convert.ToInt16(DataBinder.Eval(dItem.DataItem, "CariAdedi"));
+                    var cariGoster = cariAdedi > 0 
+                        ? " <span class='cariDetay'>(" + cariAdedi.ToString() + " adet cari)</span>" 
+                        : " <i class='cariYok'>(cari yok)</i>";
+                    var clickEvent = cariAdedi > 0 ? "function(m){ ButtonCariDetayClick('" + description + "'); }" : "function(){alert('kayitli bir cari yok')}";
+
+                    lnkSettings.Name = "btn" + dItem.VisibleIndex;
+                    lnkSettings.EncodeHtml = false;
+                    lnkSettings.Styles.Style.CssClass = cariAdedi > 0 ? String.Empty : "noCursor";
+                    lnkSettings.Text =description.ToString() + cariGoster;
+                    lnkSettings.RenderMode = ButtonRenderMode.Link;
+                    lnkSettings.ClientSideEvents.Click = clickEvent;
+                }).Render();
+            });
+
+        });
+        settings.Columns.Add(col => { col.FieldName = "Telefon"; });
+        settings.Columns.Add(col => { col.FieldName = "Email"; });
+        settings.Columns.Add(col => { col.FieldName = "Adres"; col.CellStyle.Wrap = DefaultBoolean.True; });
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

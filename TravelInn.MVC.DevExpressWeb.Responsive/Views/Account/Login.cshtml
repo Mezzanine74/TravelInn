@@ -1,0 +1,96 @@
+@{ Layout = "~/Views/Shared/_lightLayout.cshtml"; }
+@using TravelInn.MVC.DevExpressWeb.Responsive.Models
+@model TravelInn.MVC.DevExpressWeb.Responsive.Models.LoginModel
+
+
+<style type="text/css">
+    body{
+        background-color: lightgray;
+    }
+
+    #wrapper {
+        text-align: center;
+        padding-top: 10%;
+
+    }
+
+    #yourdiv {
+        background-color: white;
+        display: inline-block;
+        margin: auto;
+    }
+
+</style>
+
+<div id="wrapper">
+    <div id="yourdiv">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.DevExpress().FormLayout(settings =>
+        {
+            settings.Name = "FormLogin";
+            settings.ColCount = 1;
+
+            settings.Items.AddGroupItem(setting =>
+            {
+                setting.GroupBoxDecoration = GroupBoxDecoration.Box;
+                setting.Caption = "Kullanici Girisi";
+                setting.ColSpan = 1;
+                setting.ColCount = 1;
+
+                setting.Items.Add(item =>
+                {
+                    item.Caption = "Kullanici Adi";
+                    item.SetNestedContent(() =>
+                    {
+                        @Html.DevExpress().TextBoxFor(m => m.UserName, tb =>
+                        {
+                            //tb.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+                            tb.ShowModelErrors = true;
+                            tb.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.Text;
+                            tb.Properties.ValidationSettings.ErrorTextPosition = ErrorTextPosition.Bottom;
+                            tb.Properties.ClientSideEvents.Init = "function(s, e){ s.Focus(); }";
+                        }).GetHtml();
+                    });
+                });
+
+                setting.Items.Add(item =>
+                {
+                    item.Caption = "Sifre";
+                    item.SetNestedContent(() =>
+                    {
+                        @Html.DevExpress().TextBoxFor(m => m.Password, tb =>
+                        {
+                            tb.Properties.Password = true;
+                            tb.ShowModelErrors = true;
+                            tb.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.Text;
+                            tb.Properties.ValidationSettings.ErrorTextPosition = ErrorTextPosition.Bottom;
+                        }).GetHtml();
+                    });
+                });
+
+                setting.Items.Add(item =>
+                {
+                    item.Caption = " ";
+                    item.SetNestedContent(() =>
+                    {
+                        @Html.DevExpress().Button(b =>
+                        {
+                            b.Width = Unit.Percentage(100);
+                            b.Name = "Button";
+                            b.Text = "Giris";
+                            b.UseSubmitBehavior = true;
+                        }).GetHtml();
+                    });
+                });
+            });
+        }).GetHtml()
+        }
+
+    </div>
+</div>

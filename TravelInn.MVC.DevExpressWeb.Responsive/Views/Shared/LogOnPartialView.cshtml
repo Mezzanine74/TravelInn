@@ -1,0 +1,10 @@
+@if(!Request.IsAuthenticated) {
+    @*@Html.ActionLink("Register", "Register", "Account")*@
+    @*@: |*@ 
+    @Html.ActionLink("Giris", "Login", "Account")
+}
+else { @Html.ActionLink(User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Yonet" })
+
+    @: |
+    @Html.ActionLink("Cikis", "LogOff", "Account")
+}

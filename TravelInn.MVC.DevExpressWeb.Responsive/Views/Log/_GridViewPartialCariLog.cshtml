@@ -1,0 +1,70 @@
+@functions{
+    protected void ExpandAll(MVCxGridView gridView)
+    {
+        gridView.ExpandAll();
+    }
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewCariLog";
+        settings.CallbackRouteValues = new { Controller = "Log", Action = "GridViewPartialCariLog" };
+
+        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+        settings.CommandColumn.Visible = false;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = false;
+        settings.SettingsPager.PageSize = Int32.MaxValue;
+
+// GENISLIK ICIN ******************************************************
+settings.Width = System.Web.UI.WebControls.Unit.Pixel(1400);
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+// ****************************************************** GENISLIK ICIN
+
+settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.SettingsBehavior.AllowFixedGroups = true;
+
+        settings.Columns.Add(col => { col.FieldName = "Action"; col.Width = 80; col.GroupIndex = 0; });
+        settings.Columns.Add(col => { col.FieldName = "FirmaIsmi"; col.Width = 150; });
+        settings.Columns.Add(col => { col.FieldName = "Tarih"; col.Width = 75; col.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy"; });
+        settings.Columns.Add(col => { col.FieldName = "Aciklama"; col.Width = 150; col.CellStyle.Wrap = DefaultBoolean.True; });
+        settings.Columns.Add(col => { col.FieldName = "TL"; col.Width = 80; col.PropertiesEdit.DisplayFormatString = "N"; });
+        settings.Columns.Add(col => { col.FieldName = "Dollar"; col.Width = 80; col.PropertiesEdit.DisplayFormatString = "N"; });
+        settings.Columns.Add(col => { col.FieldName = "Euro"; col.Width = 80; col.PropertiesEdit.DisplayFormatString = "N"; });
+        settings.Columns.Add(col => { col.FieldName = "VoucherNo"; col.Width = 80; });
+        settings.Columns.Add(col => { col.FieldName = "Pax"; col.Width = 80; });
+        settings.Columns.Add(col => { col.FieldName = "MusteriAdi"; col.Width = 100; });
+        settings.Columns.Add(col => { col.FieldName = "TurAdi"; col.Width = 100; });
+        settings.Columns.Add(col => { col.FieldName = "OtelAdi"; col.Width = 100; });
+        settings.Columns.Add(col => { col.FieldName = "Who"; col.Width = 100; });
+        settings.Columns.Add(col => { col.FieldName = "When"; col.Width = 100; });
+
+        settings.PreRender = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            ExpandAll(gridView);
+        };
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            ExpandAll(gridView);
+        };
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

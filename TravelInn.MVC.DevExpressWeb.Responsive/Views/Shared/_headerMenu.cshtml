@@ -1,0 +1,414 @@
+﻿@using TravelInn.Data.ViewModelRepository
+@using System.Drawing
+
+<div class="headerMenu">
+
+    @{
+        var isMobile = Request.Browser.IsMobileDevice;
+
+        if (isMobile)
+        {
+            Html.DevExpress().Menu(settings =>
+            {
+                settings.Name = "HeaderMenu";
+                settings.ItemAutoWidth = false;
+                settings.ControlStyle.CssClass = "headerMenu";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+                settings.Items.Add(item =>
+                {
+                    item.SetTemplateContent(c =>
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            ViewContext.Writer.Write("<div style='overflow: hidden;'>");
+
+                            ViewContext.Writer.Write("<div style='float: left;' >");
+                            Html.RenderAction("ComboBoxFirmaPartial", "Firmalar");
+                            ViewContext.Writer.Write("</div>");
+
+                            ViewContext.Writer.Write("<div style='float: left;' >");
+                            Html.RenderAction("ComboBoxVNPartial", "CariVeOdemeler");
+                            ViewContext.Writer.Write("</div>");
+
+                            ViewContext.Writer.Write("<div style='float: left;' >");
+                            Html.RenderAction("ComboBoxMusterilerPartial", "CariVeOdemeler");
+                            ViewContext.Writer.Write("</div>");
+
+                            ViewContext.Writer.Write("</div>");
+                        }
+                    });
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.SetTemplateContent(c =>
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            ViewContext.Writer.Write("<div style='overflow: hidden;'>");
+
+                            ViewContext.Writer.Write("<div style='float: left;' >");
+                            Html.RenderAction("ComboBoxOtellerPartial", "CariVeOdemeler");
+                            ViewContext.Writer.Write("</div>");
+
+                            ViewContext.Writer.Write("<div style='float: left;' >");
+                            Html.RenderAction("ComboBoxTurlarPartial", "CariVeOdemeler");
+                            ViewContext.Writer.Write("</div>");
+
+                            ViewContext.Writer.Write("<div style='float: left;' >");
+                            Html.RenderAction("ComboBoxSorumlularPartial", "CariVeOdemeler");
+                            ViewContext.Writer.Write("</div>");
+
+                            ViewContext.Writer.Write("</div>");
+                        }
+                    });
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.Text = "Cari ve Odemeler";
+                    item.NavigateUrl = "/CariVeOdemeler";
+                    if (ViewBag.ControllerToMenu == "CariVeOdemeler")
+                    {
+                        item.Selected = true;
+                    }
+                });
+
+                settings.Items.Add(item =>
+                {
+
+                    var a = new CariViewModelRepository();
+                    if (a.YaklasanTur().Yaklasiyor)
+                    {
+                        item.Text = a.YaklasanTur().Bilgileri;
+                        item.ItemStyle.BackColor = Color.Red;
+                        item.ItemStyle.ForeColor = Color.White;
+                        item.ItemStyle.Font.Bold = true;
+                        item.ItemStyle.BorderColor = Color.Black;
+                        item.ItemStyle.BorderStyle = BorderStyle.Solid;
+                        item.ItemStyle.BorderWidth = Unit.Pixel(1);
+                    }
+                    else
+                    {
+                        item.Text = "Yaklasan Turlar";
+                    }
+
+                    item.NavigateUrl = "/CariVeOdemeler/YaklasanTurlar";
+                    if (ViewBag.ControllerToMenu == "YaklasanTurlar")
+                    {
+                        item.Selected = true;
+                    }
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.Text = "Digerleri...";
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Bakiye";
+                        itemSub.NavigateUrl = "/Bakiye";
+                        if (ViewBag.ControllerToMenu == "Bakiye")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Firmalar";
+                        itemSub.NavigateUrl = "/Firmalar";
+                        if (ViewBag.ControllerToMenu == "Firmalar")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Gunluk Aktivite";
+                        itemSub.NavigateUrl = "/Log";
+                        if (ViewBag.ControllerToMenu == "GunlukAktiviteler")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Musteriler";
+                        itemSub.NavigateUrl = "/Musteriler";
+                        if (ViewBag.ControllerToMenu == "Musteriler")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Oteller";
+                        itemSub.NavigateUrl = "/Oteller";
+                        if (ViewBag.ControllerToMenu == "Oteller")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Turlar";
+                        itemSub.NavigateUrl = "/Turlar";
+                        if (ViewBag.ControllerToMenu == "Turlar")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Bankalar";
+                        itemSub.NavigateUrl = "/Bankalar";
+                        if (ViewBag.ControllerToMenu == "Bankalar")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Uyruklar";
+                        itemSub.NavigateUrl = "/Uyruklar";
+                        if (ViewBag.ControllerToMenu == "Uyruklar")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Satis Sorumlulari";
+                        itemSub.NavigateUrl = "/SatisSorumlulari";
+                        if (ViewBag.ControllerToMenu == "SatisSorumlulari")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                });
+
+            }).GetHtml();
+        }
+        else
+        {
+            Html.DevExpress().Menu(settings =>
+            {
+                settings.Name = "HeaderMenu";
+                settings.ItemAutoWidth = false;
+                settings.ControlStyle.CssClass = "headerMenu";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+
+                settings.Items.Add(item =>
+                {
+                    item.Text = "Cari ve Odemeler";
+                    item.NavigateUrl = "/CariVeOdemeler";
+                    if (ViewBag.ControllerToMenu == "CariVeOdemeler")
+                    {
+                        item.Selected = true;
+                    }
+                });
+
+                settings.Items.Add(item =>
+                {
+
+                    var a = new CariViewModelRepository();
+                    if (a.YaklasanTur().Yaklasiyor)
+                    {
+                        item.Text = a.YaklasanTur().Bilgileri;
+                        item.ItemStyle.BackColor = Color.Red;
+                        item.ItemStyle.ForeColor = Color.White;
+                        item.ItemStyle.Font.Bold = true;
+                        item.ItemStyle.BorderColor = Color.Black;
+                        item.ItemStyle.BorderStyle = BorderStyle.Solid;
+                        item.ItemStyle.BorderWidth = Unit.Pixel(1);
+                    }
+                    else
+                    {
+                        item.Text = "Yaklasan Turlar";
+                    }
+
+                    item.NavigateUrl = "/CariVeOdemeler/YaklasanTurlar";
+                    if (ViewBag.ControllerToMenu == "YaklasanTurlar")
+                    {
+                        item.Selected = true;
+                    }
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.Text = "Bakiye";
+                    item.NavigateUrl = "/Bakiye";
+                    if (ViewBag.ControllerToMenu == "Bakiye")
+                    {
+                        item.Selected = true;
+                    }
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.SetTemplateContent(c =>
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            Html.RenderAction("ComboBoxFirmaPartial", "Firmalar");
+                        }
+                    });
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.Text = "Firmalar";
+                    item.NavigateUrl = "/Firmalar";
+                    if (ViewBag.ControllerToMenu == "Firmalar")
+                    {
+                        item.Selected = true;
+                    }
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.Text = "Gunluk Aktivite";
+                    item.NavigateUrl = "/Log";
+                    if (ViewBag.ControllerToMenu == "GunlukAktiviteler")
+                    {
+                        item.Selected = true;
+                    }
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.Text = "Digerleri...";
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Musteriler";
+                        itemSub.NavigateUrl = "/Musteriler";
+                        if (ViewBag.ControllerToMenu == "Musteriler")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Oteller";
+                        itemSub.NavigateUrl = "/Oteller";
+                        if (ViewBag.ControllerToMenu == "Oteller")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Turlar";
+                        itemSub.NavigateUrl = "/Turlar";
+                        if (ViewBag.ControllerToMenu == "Turlar")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Bankalar";
+                        itemSub.NavigateUrl = "/Bankalar";
+                        if (ViewBag.ControllerToMenu == "Bankalar")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Uyruklar";
+                        itemSub.NavigateUrl = "/Uyruklar";
+                        if (ViewBag.ControllerToMenu == "Uyruklar")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                    item.Items.Add(itemSub =>
+                    {
+                        itemSub.Text = "Satis Sorumlulari";
+                        itemSub.NavigateUrl = "/SatisSorumlulari";
+                        if (ViewBag.ControllerToMenu == "SatisSorumlulari")
+                        {
+                            itemSub.Selected = true;
+                        }
+                    });
+
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.SetTemplateContent(c =>
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            Html.RenderAction("ComboBoxVNPartial", "CariVeOdemeler");
+                        }
+                    });
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.SetTemplateContent(c =>
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            Html.RenderAction("ComboBoxMusterilerPartial", "CariVeOdemeler");
+                        }
+                    });
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.SetTemplateContent(c =>
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            Html.RenderAction("ComboBoxOtellerPartial", "CariVeOdemeler");
+                        }
+                    });
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.SetTemplateContent(c =>
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            Html.RenderAction("ComboBoxTurlarPartial", "CariVeOdemeler");
+                        }
+                    });
+                });
+
+                settings.Items.Add(item =>
+                {
+                    item.SetTemplateContent(c =>
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            Html.RenderAction("ComboBoxSorumlularPartial", "CariVeOdemeler");
+                        }
+                    });
+                });
+
+            }).GetHtml();
+        }
+    }
+
+</div>

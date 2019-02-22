@@ -1,0 +1,239 @@
+@using System.Drawing
+@using DevExpress.Export
+
+@{
+
+    bool filtrele = ViewBag.Filtrele;
+    var isMobile = Request.Browser.IsMobileDevice;
+    var colWidth = isMobile ? Unit.Pixel(60) : Unit.Pixel(86);
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewBakiye";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "CariVeOdemeler",
+            Action = "GridViewPartialBakiye"
+        };
+
+        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+
+        settings.KeyFieldName = "FirmaId";
+
+        if (isMobile)
+        {
+            settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        }
+
+        settings.SettingsPager.Visible = false;
+        settings.SettingsPager.PageSize = Int32.MaxValue;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+// GENISLIK ICIN ******************************************************
+if (!filtrele)
+        {
+            settings.Width = isMobile ? Unit.Pixel(667) : System.Web.UI.WebControls.Unit.Percentage(50);
+
+        }
+        else
+        {
+            settings.Width = System.Web.UI.WebControls.Unit.Pixel(280);
+        }
+
+
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+// ****************************************************** GENISLIK ICIN
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
+
+        settings.Styles.Header.Font.Size = isMobile ? FontUnit.Small : FontUnit.Medium;
+        settings.Styles.Header.Font.Bold = true;
+
+        if (!filtrele)
+        {
+            settings.Columns.Add(col => { col.FieldName = "Firma"; col.Caption = "Firma"; col.Width = isMobile ? Unit.Pixel(120) : Unit.Pixel(150); });
+
+            settings.Columns.AddBand(orderBand =>
+            {
+                orderBand.Caption = "Cari";
+
+                orderBand.Columns.Add(col =>
+                {
+                    col.FieldName = "Cari_TL";
+                    col.PropertiesEdit.DisplayFormatString = "N";
+                    col.Caption = "TL";
+                    col.Width = colWidth;
+
+                });
+                orderBand.Columns.Add(col =>
+                {
+                    col.FieldName = "Cari_Euro";
+                    col.PropertiesEdit.DisplayFormatString = "N";
+                    col.Width = colWidth;
+
+                    col.SetHeaderCaptionTemplateContent(colHeader =>
+                    {
+                        Html.DevExpress().Image(
+                            image =>
+                            {
+                                image.Name = "CariImageEuro";
+                                image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessEuroSvg16x16;
+                            }).GetHtml();
+                    });
+                });
+                orderBand.Columns.Add(col =>
+                {
+                    col.FieldName = "Cari_Dollar";
+                    col.PropertiesEdit.DisplayFormatString = "N";
+                    col.Width = colWidth;
+                    col.SetHeaderCaptionTemplateContent(colHeader =>
+                    {
+                        Html.DevExpress().Image(
+                            image =>
+                            {
+                                image.Name = "CariImageDollar";
+                                image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessDollarSvg16x16;
+                            }).GetHtml();
+                    });
+                });
+            });
+
+            settings.Columns.AddBand(orderBand =>
+            {
+                orderBand.Caption = "Odeme";
+                orderBand.Columns.Add(col =>
+                {
+                    col.FieldName = "Odeme_TL";
+                    col.PropertiesEdit.DisplayFormatString = "N";
+                    col.Caption = "TL";
+                    col.Width = colWidth;
+                });
+                orderBand.Columns.Add(col =>
+                {
+                    col.FieldName = "Odeme_Euro";
+                    col.PropertiesEdit.DisplayFormatString = "N";
+                    col.Width = colWidth;
+                    col.SetHeaderCaptionTemplateContent(colHeader =>
+                    {
+                        Html.DevExpress().Image(
+                            image =>
+                            {
+                                image.Name = "OdemeImageEuro";
+                                image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessEuroSvg16x16;
+                            }).GetHtml();
+                    });
+                });
+                orderBand.Columns.Add(col =>
+                {
+                    col.FieldName = "Odeme_Dollar";
+                    col.PropertiesEdit.DisplayFormatString = "N";
+                    col.Width = colWidth;
+                    col.SetHeaderCaptionTemplateContent(colHeader =>
+                    {
+                        Html.DevExpress().Image(
+                            image =>
+                            {
+                                image.Name = "OdemeImageDollar";
+                                image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessDollarSvg16x16;
+                            }).GetHtml();
+                    });
+                });
+            });
+
+        }
+
+        settings.Columns.AddBand(orderBand =>
+        {
+            orderBand.Caption = "Bakiye";
+            orderBand.Columns.Add(col =>
+            {
+                col.FieldName = "Bakiye_TL";
+                col.PropertiesEdit.DisplayFormatString = "N";
+                col.Caption = "TL";
+                col.Width = colWidth;
+
+                if (filtrele)
+                {
+                    col.Settings.AllowSort = DefaultBoolean.False;
+                }
+            });
+            orderBand.Columns.Add(col =>
+            {
+                col.FieldName = "Bakiye_Euro";
+                col.PropertiesEdit.DisplayFormatString = "N";
+                col.Width = colWidth;
+                col.SetHeaderCaptionTemplateContent(colHeader =>
+                {
+                    Html.DevExpress().Image(
+                        image =>
+                        {
+                            image.Name = "BakiyeImageEuro";
+                            image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessEuroSvg16x16;
+                        }).GetHtml();
+                });
+
+                if (filtrele)
+                {
+                    col.Settings.AllowSort = DefaultBoolean.False;
+                }
+            });
+            orderBand.Columns.Add(col =>
+            {
+                col.FieldName = "Bakiye_Dollar";
+                col.PropertiesEdit.DisplayFormatString = "N";
+                col.Width = colWidth;
+                col.SetHeaderCaptionTemplateContent(colHeader =>
+                {
+                    Html.DevExpress().Image(
+                        image =>
+                        {
+                            image.Name = "BakiyeImageDollar";
+                            image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessDollarSvg16x16;
+                        }).GetHtml();
+                });
+
+                if (filtrele)
+                {
+                    col.Settings.AllowSort = DefaultBoolean.False;
+                }
+            });
+        });
+
+        settings.Styles.Footer.BackColor = Color.WhiteSmoke;
+        settings.Styles.Footer.Font.Bold = true;
+        settings.Styles.Footer.Font.Size = isMobile ? FontUnit.Empty : FontUnit.Medium;
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Cari_Dollar").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Cari_Euro").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Cari_TL").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Odeme_Dollar").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Odeme_Euro").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Odeme_TL").DisplayFormat = "{0:N}";
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Bakiye_Dollar").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Bakiye_Euro").DisplayFormat = "{0:N}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Bakiye_TL").DisplayFormat = "{0:N}";
+
+        settings.Settings.ShowFooter = true;
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

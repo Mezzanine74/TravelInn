@@ -1,0 +1,77 @@
+@using System.Drawing
+@using TravelInn.Data.ViewModelRepository
+@using TravelInn.MVC.DevExpressWeb.Responsive.Controllers
+@model TravelInn.MVC.DevExpressWeb.Responsive.Controllers.HeaderViewRenderMode?
+
+@if (Model == HeaderViewRenderMode.Title)
+{
+    <div class="templateTitle">
+        @*@Html.ActionLink("TravelInn Data", "Index", "Home")*@
+        <a href='@Url.Action("Index", "Home")'>
+            <img src='@Url.Content("~/Content/Images/TravelInn.Logo.37px.png")' />
+        </a>
+    </div>
+}
+else
+{
+    if (Request.Browser.IsMobileDevice)
+    {
+
+        @Html.Partial("_headerMenu")
+
+        if (Model == HeaderViewRenderMode.Full)
+        {
+
+            @Html.Partial("_headerTop")
+
+        }
+    }
+    else
+    {
+        if (Model == HeaderViewRenderMode.Full)
+        {
+
+            @Html.Partial("_headerTop")
+
+        }
+
+        @Html.Partial("_headerMenu")
+
+    }
+
+}
+
+<script type="text/javascript">
+    'use strict';
+
+    var comboFirmaSearchSelectFromUrl = function(s, e) {
+        s.SetValue(@Request.Params["frmId"]);
+        s.GetInputElement().placeholder = 'Firma Ara';
+    }
+
+    var comboVNSearchSelectFromUrl = function(s, e) {
+        @*s.SetValue(@Request.Params["frmId"]);*@
+        s.GetInputElement().placeholder = 'Voucher No Ara';
+    }
+
+    var comboMusterilerSearchSelectFromUrl = function(s, e) {
+        @*s.SetValue(@Request.Params["frmId"]);*@
+        s.GetInputElement().placeholder = 'Musteri Ara';
+    }
+
+    var comboOtellerSearchSelectFromUrl = function(s, e) {
+        @*s.SetValue(@Request.Params["frmId"]);*@
+        s.GetInputElement().placeholder = 'Otel Ara';
+    }
+
+    var comboTurlarSearchSelectFromUrl = function(s, e) {
+        @*s.SetValue(@Request.Params["frmId"]);*@
+        s.GetInputElement().placeholder = 'Tur Ara';
+    }
+
+    var comboSorumlularSearchSelectFromUrl = function(s, e) {
+        @*s.SetValue(@Request.Params["frmId"]);*@
+        s.GetInputElement().placeholder = 'Sorumlu Ara';
+    }
+
+</script>

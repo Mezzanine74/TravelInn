@@ -1,0 +1,1538 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TravelInnModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Banka">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Banka_Adi" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Cari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Tarih" Type="smalldatetime" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="FirmaId" Type="int" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+          <Property Name="VoucherNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pax" Type="nvarchar" MaxLength="50" />
+          <Property Name="MusteriId" Type="int" />
+          <Property Name="TurId" Type="int" />
+          <Property Name="OtelId" Type="int" />
+          <Property Name="SatisSorumlusu_Id" Type="int" />
+          <Property Name="Confirmed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CariConfirmations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CariId" Type="int" Nullable="false" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="255" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="CariLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tarih" Type="smalldatetime" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="FirmaIsmi" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="VoucherNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pax" Type="nvarchar" MaxLength="50" />
+          <Property Name="MusteriAdi" Type="nvarchar" MaxLength="256" />
+          <Property Name="TurAdi" Type="nvarchar" MaxLength="256" />
+          <Property Name="OtelAdi" Type="nvarchar" MaxLength="256" />
+          <Property Name="Who" Type="nvarchar" MaxLength="256" />
+          <Property Name="When" Type="datetime2" Precision="7" />
+          <Property Name="Action" Type="nvarchar" MaxLength="50" />
+          <Property Name="SatisSorumlusu" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Firma">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Ismi" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Adresi" Type="nvarchar" MaxLength="500" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="FirmaTemsilcisi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="AdiSoyadi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirmaId" Type="int" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LogString" Type="nvarchar" MaxLength="2000" />
+          <Property Name="TimeStamp" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Musteri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Musteri_AdiSoyadi" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+          <Property Name="Uyruk_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Odeme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Tarih" Type="smalldatetime" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="FirmaId" Type="int" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+          <Property Name="Banka_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="OdemeLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tarih" Type="smalldatetime" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="FirmaIsmi" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="Who" Type="nvarchar" MaxLength="256" />
+          <Property Name="When" Type="datetime2" Precision="7" />
+          <Property Name="Action" Type="nvarchar" MaxLength="50" />
+          <Property Name="Banka" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Otel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Otel_Adi" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="SatisSorumlusu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Ismi" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Tur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Tur_Adi" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Uyruk">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+          <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+          <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+          <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_CariOdemeExcel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_CariOdemeExcel">
+          <Key>
+            <PropertyRef Name="Id" />
+            
+            
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FirmaId" Type="int" Nullable="false" />
+          <Property Name="Firma" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CTarih" Type="smalldatetime" />
+          <Property Name="CAciklama" Type="nvarchar" MaxLength="250" />
+          <Property Name="CTL" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="CEuro" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="CDollar" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="CMusteri_AdiSoyadi" Type="nvarchar" MaxLength="256" />
+          <Property Name="CTur_Adi" Type="nvarchar" MaxLength="256" />
+          <Property Name="COtel_Adi" Type="nvarchar" MaxLength="256" />
+          <Property Name="SatisSorumlusu" Type="nvarchar" MaxLength="256" />
+          <Property Name="OTarih" Type="smalldatetime" />
+          <Property Name="OAciklama" Type="nvarchar" MaxLength="250" />
+          <Property Name="OTL" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="OEuro" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="ODollar" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Banka_Adi" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_CariSearch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_CariSearch">
+          <Key>
+            <PropertyRef Name="Id" />
+            
+            
+            
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FirmaId" Type="int" Nullable="false" />
+          <Property Name="Firma" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Tarih" Type="smalldatetime" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Sorumlu" Type="nvarchar" MaxLength="256" />
+          <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Vno" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Musteri" Type="nvarchar" MaxLength="256" />
+          <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" />
+          <Property Name="Tur" Type="nvarchar" MaxLength="256" />
+          <Property Name="Otel" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_FirmaBakiye' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_FirmaBakiye">
+          <Key>
+            <PropertyRef Name="FirmaId" />
+            
+            
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="FirmaId" Type="int" Nullable="false" />
+          <Property Name="Firma" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Cari_TL" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Cari_Euro" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Cari_Dollar" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Odeme_TL" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Odeme_Euro" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Odeme_Dollar" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Bakiye_TL" Type="numeric" Precision="38" Scale="2" />
+          <Property Name="Bakiye_Euro" Type="numeric" Precision="38" Scale="2" />
+          <Property Name="Bakiye_Dollar" Type="numeric" Precision="38" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_UyrukCariAdedi' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_UyrukCariAdedi">
+          <Key>
+            <PropertyRef Name="Id" />
+            
+            
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="CariAdedi" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_YaklasanKayitlar">
+          <Key>
+            <PropertyRef Name="Id" />
+            
+            
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Tarih" Type="smalldatetime" />
+          <Property Name="FirmaIsmi" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Sorumlu" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="VN" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Musteri" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Tur" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Otel" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cari_Musteri">
+          <End Role="Musteri" Type="Self.Musteri" Multiplicity="0..1" />
+          <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteri">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="MusteriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cari_Otel">
+          <End Role="Otel" Type="Self.Otel" Multiplicity="0..1" />
+          <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Otel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="OtelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cari_SatisSorumlusu">
+          <End Role="SatisSorumlusu" Type="Self.SatisSorumlusu" Multiplicity="0..1" />
+          <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SatisSorumlusu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="SatisSorumlusu_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cari_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1" />
+          <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="TurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CariConfirmations_Cari">
+          <End Role="Cari" Type="Self.Cari" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CariConfirmations" Type="Self.CariConfirmations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cari">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CariConfirmations">
+              <PropertyRef Name="CariId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirmaTemsilcisi_Firma">
+          <End Role="Firma" Type="Self.Firma" Multiplicity="1" />
+          <End Role="FirmaTemsilcisi" Type="Self.FirmaTemsilcisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FirmaTemsilcisi">
+              <PropertyRef Name="FirmaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Musteri_Uyruk">
+          <End Role="Uyruk" Type="Self.Uyruk" Multiplicity="0..1" />
+          <End Role="Musteri" Type="Self.Musteri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uyruk">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Musteri">
+              <PropertyRef Name="Uyruk_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Odeme_Banka">
+          <End Role="Banka" Type="Self.Banka" Multiplicity="0..1" />
+          <End Role="Odeme" Type="Self.Odeme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banka">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Odeme">
+              <PropertyRef Name="Banka_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Odenecek_Firma">
+          <End Role="Firma" Type="Self.Firma" Multiplicity="1" />
+          <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="FirmaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Odenen_Firma">
+          <End Role="Firma" Type="Self.Firma" Multiplicity="1" />
+          <End Role="Odeme" Type="Self.Odeme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Odeme">
+              <PropertyRef Name="FirmaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TravelInnModelStoreContainer">
+          <EntitySet Name="Banka" EntityType="Self.Banka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cari" EntityType="Self.Cari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CariConfirmations" EntityType="Self.CariConfirmations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CariLog" EntityType="Self.CariLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Firma" EntityType="Self.Firma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FirmaTemsilcisi" EntityType="Self.FirmaTemsilcisi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Musteri" EntityType="Self.Musteri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Odeme" EntityType="Self.Odeme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OdemeLog" EntityType="Self.OdemeLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Otel" EntityType="Self.Otel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SatisSorumlusu" EntityType="Self.SatisSorumlusu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tur" EntityType="Self.Tur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uyruk" EntityType="Self.Uyruk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_CariOdemeExcel" EntityType="Self.View_CariOdemeExcel" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_CariOdemeExcel].[Id] AS [Id], 
+    [View_CariOdemeExcel].[FirmaId] AS [FirmaId], 
+    [View_CariOdemeExcel].[Firma] AS [Firma], 
+    [View_CariOdemeExcel].[CTarih] AS [CTarih], 
+    [View_CariOdemeExcel].[CAciklama] AS [CAciklama], 
+    [View_CariOdemeExcel].[CTL] AS [CTL], 
+    [View_CariOdemeExcel].[CEuro] AS [CEuro], 
+    [View_CariOdemeExcel].[CDollar] AS [CDollar], 
+    [View_CariOdemeExcel].[CMusteri_AdiSoyadi] AS [CMusteri_AdiSoyadi], 
+    [View_CariOdemeExcel].[CTur_Adi] AS [CTur_Adi], 
+    [View_CariOdemeExcel].[COtel_Adi] AS [COtel_Adi], 
+    [View_CariOdemeExcel].[SatisSorumlusu] AS [SatisSorumlusu], 
+    [View_CariOdemeExcel].[OTarih] AS [OTarih], 
+    [View_CariOdemeExcel].[OAciklama] AS [OAciklama], 
+    [View_CariOdemeExcel].[OTL] AS [OTL], 
+    [View_CariOdemeExcel].[OEuro] AS [OEuro], 
+    [View_CariOdemeExcel].[ODollar] AS [ODollar], 
+    [View_CariOdemeExcel].[Banka_Adi] AS [Banka_Adi]
+    FROM [dbo].[View_CariOdemeExcel] AS [View_CariOdemeExcel]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_CariSearch" EntityType="Self.View_CariSearch" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_CariSearch].[Id] AS [Id], 
+    [View_CariSearch].[FirmaId] AS [FirmaId], 
+    [View_CariSearch].[Firma] AS [Firma], 
+    [View_CariSearch].[Tarih] AS [Tarih], 
+    [View_CariSearch].[Aciklama] AS [Aciklama], 
+    [View_CariSearch].[Sorumlu] AS [Sorumlu], 
+    [View_CariSearch].[Dollar] AS [Dollar], 
+    [View_CariSearch].[Euro] AS [Euro], 
+    [View_CariSearch].[TL] AS [TL], 
+    [View_CariSearch].[Vno] AS [Vno], 
+    [View_CariSearch].[Pax] AS [Pax], 
+    [View_CariSearch].[Musteri] AS [Musteri], 
+    [View_CariSearch].[Uyrugu] AS [Uyrugu], 
+    [View_CariSearch].[Tur] AS [Tur], 
+    [View_CariSearch].[Otel] AS [Otel]
+    FROM [dbo].[View_CariSearch] AS [View_CariSearch]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_FirmaBakiye" EntityType="Self.View_FirmaBakiye" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_FirmaBakiye].[FirmaId] AS [FirmaId], 
+    [View_FirmaBakiye].[Firma] AS [Firma], 
+    [View_FirmaBakiye].[Cari_TL] AS [Cari_TL], 
+    [View_FirmaBakiye].[Cari_Euro] AS [Cari_Euro], 
+    [View_FirmaBakiye].[Cari_Dollar] AS [Cari_Dollar], 
+    [View_FirmaBakiye].[Odeme_TL] AS [Odeme_TL], 
+    [View_FirmaBakiye].[Odeme_Euro] AS [Odeme_Euro], 
+    [View_FirmaBakiye].[Odeme_Dollar] AS [Odeme_Dollar], 
+    [View_FirmaBakiye].[Bakiye_TL] AS [Bakiye_TL], 
+    [View_FirmaBakiye].[Bakiye_Euro] AS [Bakiye_Euro], 
+    [View_FirmaBakiye].[Bakiye_Dollar] AS [Bakiye_Dollar]
+    FROM [dbo].[View_FirmaBakiye] AS [View_FirmaBakiye]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_UyrukCariAdedi" EntityType="Self.View_UyrukCariAdedi" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_UyrukCariAdedi].[Id] AS [Id], 
+    [View_UyrukCariAdedi].[Uyrugu] AS [Uyrugu], 
+    [View_UyrukCariAdedi].[Uniqueidentifier] AS [Uniqueidentifier], 
+    [View_UyrukCariAdedi].[CariAdedi] AS [CariAdedi]
+    FROM [dbo].[View_UyrukCariAdedi] AS [View_UyrukCariAdedi]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_YaklasanKayitlar" EntityType="Self.View_YaklasanKayitlar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_YaklasanKayitlar].[Id] AS [Id], 
+    [View_YaklasanKayitlar].[Tarih] AS [Tarih], 
+    [View_YaklasanKayitlar].[FirmaIsmi] AS [FirmaIsmi], 
+    [View_YaklasanKayitlar].[Aciklama] AS [Aciklama], 
+    [View_YaklasanKayitlar].[Sorumlu] AS [Sorumlu], 
+    [View_YaklasanKayitlar].[TL] AS [TL], 
+    [View_YaklasanKayitlar].[Euro] AS [Euro], 
+    [View_YaklasanKayitlar].[Dollar] AS [Dollar], 
+    [View_YaklasanKayitlar].[VN] AS [VN], 
+    [View_YaklasanKayitlar].[Pax] AS [Pax], 
+    [View_YaklasanKayitlar].[Musteri] AS [Musteri], 
+    [View_YaklasanKayitlar].[Uyrugu] AS [Uyrugu], 
+    [View_YaklasanKayitlar].[Tur] AS [Tur], 
+    [View_YaklasanKayitlar].[Otel] AS [Otel]
+    FROM [dbo].[View_YaklasanKayitlar] AS [View_YaklasanKayitlar]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Cari_Musteri" Association="Self.FK_Cari_Musteri">
+            <End Role="Musteri" EntitySet="Musteri" />
+            <End Role="Cari" EntitySet="Cari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cari_Otel" Association="Self.FK_Cari_Otel">
+            <End Role="Otel" EntitySet="Otel" />
+            <End Role="Cari" EntitySet="Cari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cari_SatisSorumlusu" Association="Self.FK_Cari_SatisSorumlusu">
+            <End Role="SatisSorumlusu" EntitySet="SatisSorumlusu" />
+            <End Role="Cari" EntitySet="Cari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cari_Tur" Association="Self.FK_Cari_Tur">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="Cari" EntitySet="Cari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CariConfirmations_Cari" Association="Self.FK_CariConfirmations_Cari">
+            <End Role="Cari" EntitySet="Cari" />
+            <End Role="CariConfirmations" EntitySet="CariConfirmations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirmaTemsilcisi_Firma" Association="Self.FK_FirmaTemsilcisi_Firma">
+            <End Role="Firma" EntitySet="Firma" />
+            <End Role="FirmaTemsilcisi" EntitySet="FirmaTemsilcisi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Musteri_Uyruk" Association="Self.FK_Musteri_Uyruk">
+            <End Role="Uyruk" EntitySet="Uyruk" />
+            <End Role="Musteri" EntitySet="Musteri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Odeme_Banka" Association="Self.FK_Odeme_Banka">
+            <End Role="Banka" EntitySet="Banka" />
+            <End Role="Odeme" EntitySet="Odeme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Odenecek_Firma" Association="Self.FK_Odenecek_Firma">
+            <End Role="Firma" EntitySet="Firma" />
+            <End Role="Cari" EntitySet="Cari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Odenen_Firma" Association="Self.FK_Odenen_Firma">
+            <End Role="Firma" EntitySet="Firma" />
+            <End Role="Odeme" EntitySet="Odeme" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TravelInnModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TravelInnEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Firmas" EntityType="TravelInnModel.Firma" />
+          <EntitySet Name="FirmaTemsilcisis" EntityType="TravelInnModel.FirmaTemsilcisi" />
+          <EntitySet Name="Logs" EntityType="TravelInnModel.Log" />
+          <EntitySet Name="Odemes" EntityType="TravelInnModel.Odeme" />
+          <EntitySet Name="OdemeLogs" EntityType="TravelInnModel.OdemeLog" />
+          <EntitySet Name="Uyruks" EntityType="TravelInnModel.Uyruk" />
+          <AssociationSet Name="FK_FirmaTemsilcisi_Firma" Association="TravelInnModel.FK_FirmaTemsilcisi_Firma">
+            <End Role="Firma" EntitySet="Firmas" />
+            <End Role="FirmaTemsilcisi" EntitySet="FirmaTemsilcisis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Odenen_Firma" Association="TravelInnModel.FK_Odenen_Firma">
+            <End Role="Firma" EntitySet="Firmas" />
+            <End Role="Odeme" EntitySet="Odemes" />
+          </AssociationSet>
+          <EntitySet Name="CariLogs" EntityType="TravelInnModel.CariLog" />
+          <EntitySet Name="View_CariOdemeExcel" EntityType="TravelInnModel.View_CariOdemeExcel" />
+          <EntitySet Name="View_FirmaBakiye" EntityType="TravelInnModel.View_FirmaBakiye" />
+          <EntitySet Name="Bankas" EntityType="TravelInnModel.Banka" />
+          <EntitySet Name="Musteris" EntityType="TravelInnModel.Musteri" />
+          <EntitySet Name="Otels" EntityType="TravelInnModel.Otel" />
+          <EntitySet Name="SatisSorumlusus" EntityType="TravelInnModel.SatisSorumlusu" />
+          <EntitySet Name="Turs" EntityType="TravelInnModel.Tur" />
+          <AssociationSet Name="FK_Odeme_Banka" Association="TravelInnModel.FK_Odeme_Banka">
+            <End Role="Banka" EntitySet="Bankas" />
+            <End Role="Odeme" EntitySet="Odemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Musteri_Uyruk" Association="TravelInnModel.FK_Musteri_Uyruk">
+            <End Role="Uyruk" EntitySet="Uyruks" />
+            <End Role="Musteri" EntitySet="Musteris" />
+          </AssociationSet>
+          <EntitySet Name="View_YaklasanKayitlar" EntityType="TravelInnModel.View_YaklasanKayitlar" />
+          <EntitySet Name="View_UyrukCariAdedi" EntityType="TravelInnModel.View_UyrukCariAdedi" />
+          <EntitySet Name="View_CariSearch" EntityType="TravelInnModel.View_CariSearch" />
+          <EntitySet Name="Caris" EntityType="TravelInnModel.Cari" />
+          <AssociationSet Name="FK_Cari_Musteri" Association="TravelInnModel.FK_Cari_Musteri">
+            <End Role="Musteri" EntitySet="Musteris" />
+            <End Role="Cari" EntitySet="Caris" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cari_Otel" Association="TravelInnModel.FK_Cari_Otel">
+            <End Role="Otel" EntitySet="Otels" />
+            <End Role="Cari" EntitySet="Caris" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cari_SatisSorumlusu" Association="TravelInnModel.FK_Cari_SatisSorumlusu">
+            <End Role="SatisSorumlusu" EntitySet="SatisSorumlusus" />
+            <End Role="Cari" EntitySet="Caris" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cari_Tur" Association="TravelInnModel.FK_Cari_Tur">
+            <End Role="Tur" EntitySet="Turs" />
+            <End Role="Cari" EntitySet="Caris" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Odenecek_Firma" Association="TravelInnModel.FK_Odenecek_Firma">
+            <End Role="Firma" EntitySet="Firmas" />
+            <End Role="Cari" EntitySet="Caris" />
+          </AssociationSet>
+          <EntitySet Name="CariConfirmations" EntityType="TravelInnModel.CariConfirmation" />
+          <AssociationSet Name="FK_CariConfirmations_Cari" Association="TravelInnModel.FK_CariConfirmations_Cari">
+            <End Role="Cari" EntitySet="Caris" />
+            <End Role="CariConfirmation" EntitySet="CariConfirmations" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Firma">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Ismi" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Adresi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="FirmaTemsilcisis" Relationship="TravelInnModel.FK_FirmaTemsilcisi_Firma" FromRole="Firma" ToRole="FirmaTemsilcisi" />
+          <NavigationProperty Name="Odemes" Relationship="TravelInnModel.FK_Odenen_Firma" FromRole="Firma" ToRole="Odeme" />
+          <NavigationProperty Name="Caris" Relationship="TravelInnModel.FK_Odenecek_Firma" FromRole="Firma" ToRole="Cari" />
+        </EntityType>
+        <EntityType Name="FirmaTemsilcisi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="AdiSoyadi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirmaId" Type="Int32" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Firma" Relationship="TravelInnModel.FK_FirmaTemsilcisi_Firma" FromRole="FirmaTemsilcisi" ToRole="Firma" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LogString" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="TimeStamp" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="Odeme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FirmaId" Type="Int32" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <Property Name="Banka_Id" Type="Int32" />
+          <NavigationProperty Name="Firma" Relationship="TravelInnModel.FK_Odenen_Firma" FromRole="Odeme" ToRole="Firma" />
+          <NavigationProperty Name="Banka" Relationship="TravelInnModel.FK_Odeme_Banka" FromRole="Odeme" ToRole="Banka" />
+        </EntityType>
+        <EntityType Name="OdemeLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FirmaIsmi" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Who" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="When" Type="DateTime" Precision="7" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Banka" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Uyruk">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Uyrugu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Musteris" Relationship="TravelInnModel.FK_Musteri_Uyruk" FromRole="Uyruk" ToRole="Musteri" />
+        </EntityType>
+        <Association Name="FK_FirmaTemsilcisi_Firma">
+          <End Type="TravelInnModel.Firma" Role="Firma" Multiplicity="1" />
+          <End Type="TravelInnModel.FirmaTemsilcisi" Role="FirmaTemsilcisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FirmaTemsilcisi">
+              <PropertyRef Name="FirmaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Odenen_Firma">
+          <End Type="TravelInnModel.Firma" Role="Firma" Multiplicity="1" />
+          <End Type="TravelInnModel.Odeme" Role="Odeme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Odeme">
+              <PropertyRef Name="FirmaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CariLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FirmaIsmi" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MusteriAdi" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TurAdi" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OtelAdi" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Who" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="When" Type="DateTime" Precision="7" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SatisSorumlusu" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_CariOdemeExcel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FirmaId" Type="Int32" Nullable="false" />
+          <Property Name="Firma" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CTarih" Type="DateTime" Precision="0" />
+          <Property Name="CAciklama" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CTL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CEuro" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CDollar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CMusteri_AdiSoyadi" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CTur_Adi" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="COtel_Adi" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SatisSorumlusu" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OTarih" Type="DateTime" Precision="0" />
+          <Property Name="OAciklama" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="OTL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OEuro" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ODollar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Banka_Adi" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_FirmaBakiye">
+          <Key>
+            <PropertyRef Name="FirmaId" />
+          </Key>
+          <Property Name="FirmaId" Type="Int32" Nullable="false" />
+          <Property Name="Firma" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Cari_TL" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Cari_Euro" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Cari_Dollar" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Odeme_TL" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Odeme_Euro" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Odeme_Dollar" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Bakiye_TL" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="Bakiye_Euro" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="Bakiye_Dollar" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="Banka">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Banka_Adi" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Odemes" Relationship="TravelInnModel.FK_Odeme_Banka" FromRole="Banka" ToRole="Odeme" />
+        </EntityType>
+        <EntityType Name="Musteri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Musteri_AdiSoyadi" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <Property Name="Uyruk_Id" Type="Int32" />
+          <NavigationProperty Name="Uyruk" Relationship="TravelInnModel.FK_Musteri_Uyruk" FromRole="Musteri" ToRole="Uyruk" />
+          <NavigationProperty Name="Caris" Relationship="TravelInnModel.FK_Cari_Musteri" FromRole="Musteri" ToRole="Cari" />
+        </EntityType>
+        <EntityType Name="Otel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Otel_Adi" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Caris" Relationship="TravelInnModel.FK_Cari_Otel" FromRole="Otel" ToRole="Cari" />
+        </EntityType>
+        <EntityType Name="SatisSorumlusu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Ismi" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Caris" Relationship="TravelInnModel.FK_Cari_SatisSorumlusu" FromRole="SatisSorumlusu" ToRole="Cari" />
+        </EntityType>
+        <EntityType Name="Tur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Tur_Adi" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Caris" Relationship="TravelInnModel.FK_Cari_Tur" FromRole="Tur" ToRole="Cari" />
+        </EntityType>
+        <Association Name="FK_Odeme_Banka">
+          <End Type="TravelInnModel.Banka" Role="Banka" Multiplicity="0..1" />
+          <End Type="TravelInnModel.Odeme" Role="Odeme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banka">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Odeme">
+              <PropertyRef Name="Banka_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Musteri_Uyruk">
+          <End Type="TravelInnModel.Uyruk" Role="Uyruk" Multiplicity="0..1" />
+          <End Type="TravelInnModel.Musteri" Role="Musteri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uyruk">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Musteri">
+              <PropertyRef Name="Uyruk_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="View_YaklasanKayitlar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <Property Name="FirmaIsmi" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Sorumlu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="VN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Musteri" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Uyrugu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Tur" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Otel" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_UyrukCariAdedi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Uyrugu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CariAdedi" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View_CariSearch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FirmaId" Type="Int32" Nullable="false" />
+          <Property Name="Firma" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Sorumlu" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Vno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Musteri" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Uyrugu" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Tur" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Otel" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Cari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FirmaId" Type="Int32" Nullable="false" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MusteriId" Type="Int32" />
+          <Property Name="TurId" Type="Int32" />
+          <Property Name="OtelId" Type="Int32" />
+          <Property Name="SatisSorumlusu_Id" Type="Int32" />
+          <Property Name="Confirmed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Musteri" Relationship="TravelInnModel.FK_Cari_Musteri" FromRole="Cari" ToRole="Musteri" />
+          <NavigationProperty Name="Otel" Relationship="TravelInnModel.FK_Cari_Otel" FromRole="Cari" ToRole="Otel" />
+          <NavigationProperty Name="SatisSorumlusu" Relationship="TravelInnModel.FK_Cari_SatisSorumlusu" FromRole="Cari" ToRole="SatisSorumlusu" />
+          <NavigationProperty Name="Tur" Relationship="TravelInnModel.FK_Cari_Tur" FromRole="Cari" ToRole="Tur" />
+          <NavigationProperty Name="Firma" Relationship="TravelInnModel.FK_Odenecek_Firma" FromRole="Cari" ToRole="Firma" />
+          <NavigationProperty Name="CariConfirmations" Relationship="TravelInnModel.FK_CariConfirmations_Cari" FromRole="Cari" ToRole="CariConfirmation" />
+        </EntityType>
+        <Association Name="FK_Cari_Musteri">
+          <End Type="TravelInnModel.Musteri" Role="Musteri" Multiplicity="0..1" />
+          <End Type="TravelInnModel.Cari" Role="Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteri">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="MusteriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cari_Otel">
+          <End Type="TravelInnModel.Otel" Role="Otel" Multiplicity="0..1" />
+          <End Type="TravelInnModel.Cari" Role="Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Otel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="OtelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cari_SatisSorumlusu">
+          <End Type="TravelInnModel.SatisSorumlusu" Role="SatisSorumlusu" Multiplicity="0..1" />
+          <End Type="TravelInnModel.Cari" Role="Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SatisSorumlusu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="SatisSorumlusu_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cari_Tur">
+          <End Type="TravelInnModel.Tur" Role="Tur" Multiplicity="0..1" />
+          <End Type="TravelInnModel.Cari" Role="Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="TurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Odenecek_Firma">
+          <End Type="TravelInnModel.Firma" Role="Firma" Multiplicity="1" />
+          <End Type="TravelInnModel.Cari" Role="Cari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cari">
+              <PropertyRef Name="FirmaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CariConfirmation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CariId" Type="Int32" Nullable="false" />
+          <Property Name="FilePath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Uniqueidentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhenDeleted" Type="DateTime" Precision="7" />
+          <Property Name="WhoInserted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoUpdated" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhoDeleted" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="WhenInserted" Type="DateTime" Precision="7" />
+          <Property Name="WhenUpdated" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Cari" Relationship="TravelInnModel.FK_CariConfirmations_Cari" FromRole="CariConfirmation" ToRole="Cari" />
+        </EntityType>
+        <Association Name="FK_CariConfirmations_Cari">
+          <End Type="TravelInnModel.Cari" Role="Cari" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TravelInnModel.CariConfirmation" Role="CariConfirmation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cari">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CariConfirmation">
+              <PropertyRef Name="CariId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TravelInnModelStoreContainer" CdmEntityContainer="TravelInnEntities">
+          <EntitySetMapping Name="Firmas">
+            <EntityTypeMapping TypeName="TravelInnModel.Firma">
+              <MappingFragment StoreEntitySet="Firma">
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="Adresi" ColumnName="Adresi" />
+                <ScalarProperty Name="Ismi" ColumnName="Ismi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FirmaTemsilcisis">
+            <EntityTypeMapping TypeName="TravelInnModel.FirmaTemsilcisi">
+              <MappingFragment StoreEntitySet="FirmaTemsilcisi">
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="AdiSoyadi" ColumnName="AdiSoyadi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="TravelInnModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="LogString" ColumnName="LogString" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Odemes">
+            <EntityTypeMapping TypeName="TravelInnModel.Odeme">
+              <MappingFragment StoreEntitySet="Odeme">
+                <ScalarProperty Name="Banka_Id" ColumnName="Banka_Id" />
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+                <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+                <ScalarProperty Name="Euro" ColumnName="Euro" />
+                <ScalarProperty Name="TL" ColumnName="TL" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OdemeLogs">
+            <EntityTypeMapping TypeName="TravelInnModel.OdemeLog">
+              <MappingFragment StoreEntitySet="OdemeLog">
+                <ScalarProperty Name="Banka" ColumnName="Banka" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="When" ColumnName="When" />
+                <ScalarProperty Name="Who" ColumnName="Who" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
+                <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+                <ScalarProperty Name="Euro" ColumnName="Euro" />
+                <ScalarProperty Name="TL" ColumnName="TL" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uyruks">
+            <EntityTypeMapping TypeName="TravelInnModel.Uyruk">
+              <MappingFragment StoreEntitySet="Uyruk">
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CariLogs">
+            <EntityTypeMapping TypeName="TravelInnModel.CariLog">
+              <MappingFragment StoreEntitySet="CariLog">
+                <ScalarProperty Name="SatisSorumlusu" ColumnName="SatisSorumlusu" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="When" ColumnName="When" />
+                <ScalarProperty Name="Who" ColumnName="Who" />
+                <ScalarProperty Name="OtelAdi" ColumnName="OtelAdi" />
+                <ScalarProperty Name="TurAdi" ColumnName="TurAdi" />
+                <ScalarProperty Name="MusteriAdi" ColumnName="MusteriAdi" />
+                <ScalarProperty Name="Pax" ColumnName="Pax" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
+                <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+                <ScalarProperty Name="Euro" ColumnName="Euro" />
+                <ScalarProperty Name="TL" ColumnName="TL" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_CariOdemeExcel">
+            <EntityTypeMapping TypeName="TravelInnModel.View_CariOdemeExcel">
+              <MappingFragment StoreEntitySet="View_CariOdemeExcel">
+                <ScalarProperty Name="Banka_Adi" ColumnName="Banka_Adi" />
+                <ScalarProperty Name="ODollar" ColumnName="ODollar" />
+                <ScalarProperty Name="OEuro" ColumnName="OEuro" />
+                <ScalarProperty Name="OTL" ColumnName="OTL" />
+                <ScalarProperty Name="OAciklama" ColumnName="OAciklama" />
+                <ScalarProperty Name="OTarih" ColumnName="OTarih" />
+                <ScalarProperty Name="SatisSorumlusu" ColumnName="SatisSorumlusu" />
+                <ScalarProperty Name="COtel_Adi" ColumnName="COtel_Adi" />
+                <ScalarProperty Name="CTur_Adi" ColumnName="CTur_Adi" />
+                <ScalarProperty Name="CMusteri_AdiSoyadi" ColumnName="CMusteri_AdiSoyadi" />
+                <ScalarProperty Name="CDollar" ColumnName="CDollar" />
+                <ScalarProperty Name="CEuro" ColumnName="CEuro" />
+                <ScalarProperty Name="CTL" ColumnName="CTL" />
+                <ScalarProperty Name="CAciklama" ColumnName="CAciklama" />
+                <ScalarProperty Name="CTarih" ColumnName="CTarih" />
+                <ScalarProperty Name="Firma" ColumnName="Firma" />
+                <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_FirmaBakiye">
+            <EntityTypeMapping TypeName="TravelInnModel.View_FirmaBakiye">
+              <MappingFragment StoreEntitySet="View_FirmaBakiye">
+                <ScalarProperty Name="Bakiye_Dollar" ColumnName="Bakiye_Dollar" />
+                <ScalarProperty Name="Bakiye_Euro" ColumnName="Bakiye_Euro" />
+                <ScalarProperty Name="Bakiye_TL" ColumnName="Bakiye_TL" />
+                <ScalarProperty Name="Odeme_Dollar" ColumnName="Odeme_Dollar" />
+                <ScalarProperty Name="Odeme_Euro" ColumnName="Odeme_Euro" />
+                <ScalarProperty Name="Odeme_TL" ColumnName="Odeme_TL" />
+                <ScalarProperty Name="Cari_Dollar" ColumnName="Cari_Dollar" />
+                <ScalarProperty Name="Cari_Euro" ColumnName="Cari_Euro" />
+                <ScalarProperty Name="Cari_TL" ColumnName="Cari_TL" />
+                <ScalarProperty Name="Firma" ColumnName="Firma" />
+                <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bankas">
+            <EntityTypeMapping TypeName="TravelInnModel.Banka">
+              <MappingFragment StoreEntitySet="Banka">
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Banka_Adi" ColumnName="Banka_Adi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musteris">
+            <EntityTypeMapping TypeName="TravelInnModel.Musteri">
+              <MappingFragment StoreEntitySet="Musteri">
+                <ScalarProperty Name="Uyruk_Id" ColumnName="Uyruk_Id" />
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Musteri_AdiSoyadi" ColumnName="Musteri_AdiSoyadi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Otels">
+            <EntityTypeMapping TypeName="TravelInnModel.Otel">
+              <MappingFragment StoreEntitySet="Otel">
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Otel_Adi" ColumnName="Otel_Adi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SatisSorumlusus">
+            <EntityTypeMapping TypeName="TravelInnModel.SatisSorumlusu">
+              <MappingFragment StoreEntitySet="SatisSorumlusu">
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Ismi" ColumnName="Ismi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Turs">
+            <EntityTypeMapping TypeName="TravelInnModel.Tur">
+              <MappingFragment StoreEntitySet="Tur">
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Tur_Adi" ColumnName="Tur_Adi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_YaklasanKayitlar">
+            <EntityTypeMapping TypeName="TravelInnModel.View_YaklasanKayitlar">
+              <MappingFragment StoreEntitySet="View_YaklasanKayitlar">
+                <ScalarProperty Name="Otel" ColumnName="Otel" />
+                <ScalarProperty Name="Tur" ColumnName="Tur" />
+                <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+                <ScalarProperty Name="Musteri" ColumnName="Musteri" />
+                <ScalarProperty Name="Pax" ColumnName="Pax" />
+                <ScalarProperty Name="VN" ColumnName="VN" />
+                <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+                <ScalarProperty Name="Euro" ColumnName="Euro" />
+                <ScalarProperty Name="TL" ColumnName="TL" />
+                <ScalarProperty Name="Sorumlu" ColumnName="Sorumlu" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_UyrukCariAdedi">
+            <EntityTypeMapping TypeName="TravelInnModel.View_UyrukCariAdedi">
+              <MappingFragment StoreEntitySet="View_UyrukCariAdedi">
+                <ScalarProperty Name="CariAdedi" ColumnName="CariAdedi" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_CariSearch">
+            <EntityTypeMapping TypeName="TravelInnModel.View_CariSearch">
+              <MappingFragment StoreEntitySet="View_CariSearch">
+                <ScalarProperty Name="Otel" ColumnName="Otel" />
+                <ScalarProperty Name="Tur" ColumnName="Tur" />
+                <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+                <ScalarProperty Name="Musteri" ColumnName="Musteri" />
+                <ScalarProperty Name="Pax" ColumnName="Pax" />
+                <ScalarProperty Name="Vno" ColumnName="Vno" />
+                <ScalarProperty Name="TL" ColumnName="TL" />
+                <ScalarProperty Name="Euro" ColumnName="Euro" />
+                <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+                <ScalarProperty Name="Sorumlu" ColumnName="Sorumlu" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Firma" ColumnName="Firma" />
+                <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Caris">
+            <EntityTypeMapping TypeName="TravelInnModel.Cari">
+              <MappingFragment StoreEntitySet="Cari">
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+                <ScalarProperty Name="SatisSorumlusu_Id" ColumnName="SatisSorumlusu_Id" />
+                <ScalarProperty Name="OtelId" ColumnName="OtelId" />
+                <ScalarProperty Name="TurId" ColumnName="TurId" />
+                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+                <ScalarProperty Name="Pax" ColumnName="Pax" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+                <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+                <ScalarProperty Name="Euro" ColumnName="Euro" />
+                <ScalarProperty Name="TL" ColumnName="TL" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CariConfirmations">
+            <EntityTypeMapping TypeName="TravelInnModel.CariConfirmation">
+              <MappingFragment StoreEntitySet="CariConfirmations">
+                <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+                <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+                <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+                <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+                <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+                <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+                <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="CariId" ColumnName="CariId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

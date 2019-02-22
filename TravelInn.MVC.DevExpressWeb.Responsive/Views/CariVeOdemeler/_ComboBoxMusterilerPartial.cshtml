@@ -1,0 +1,19 @@
+﻿@Html.DevExpress().ComboBox(settings => {
+    settings.Name = "comboBoxMusterilerSearch";
+    //settings.Width = 180;
+    //settings.SelectedIndex = 0;
+    settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "ComboBoxMusterilerPartial" };
+    settings.Properties.CallbackPageSize = 1000;
+    settings.Properties.TextField = "MusteriAdi";
+    settings.Properties.ValueField = "FirmaId";
+    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+    settings.Properties.DropDownHeight = Unit.Pixel(450);
+
+    settings.Properties.Columns.Add("MusteriAdi", "Musteri Adi", 100);
+    settings.Properties.Columns.Add("FirmaAdi", "Firma Adi", 130);
+    settings.Properties.Columns.Add("Aciklama", "Aciklama", 250);
+
+    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){ if(s.GetValue()){location.href = '/CariVeOdemeler/?frmId=' + s.GetValue()};}";
+    settings.Properties.ClientSideEvents.Init = "function(s,e){ comboMusterilerSearchSelectFromUrl(s,e) }";
+
+}).BindList(Model).GetHtml()

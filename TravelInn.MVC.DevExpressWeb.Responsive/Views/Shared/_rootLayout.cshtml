@@ -1,0 +1,94 @@
+﻿@using System.Drawing
+@using TravelInn.MVC.DevExpressWeb.Responsive.Controllers
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+
+    @Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+    )
+    @Html.DevExpress().GetScripts(
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new Script { ExtensionSuite = ExtensionSuite.GridView }
+    )
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        .dx-hint {
+            background-color: red !important;
+        }
+    </style>
+    
+    @{
+        if (Request.Browser.IsMobileDevice)
+        {
+            <style type="text/css">
+                .expandedPanel .loginControl {
+                    margin-top: 2px;
+                    margin-bottom: 2px;
+                }
+            </style>
+        }
+    }
+
+</head>
+<body>
+    @Html.DevExpress().Panel(settings => {
+        settings.Name = "HeaderPane";
+        settings.FixedPosition = PanelFixedPosition.WindowTop;
+        settings.Collapsible = true;
+        settings.SettingsAdaptivity.CollapseAtWindowInnerWidth = 850;
+        settings.ControlStyle.CssClass = "headerPane";
+        settings.Styles.Panel.CssClass = "panel";
+        settings.Styles.ExpandedPanel.CssClass = "expandedPanel";
+        settings.Styles.ExpandBar.CssClass = "bar";
+        settings.SetContent(() => {
+            Html.RenderPartial("HeaderPartialView", HeaderViewRenderMode.Full);
+        });
+        settings.SetExpandBarTemplateContent((c) => {
+            Html.RenderPartial("HeaderPartialView", HeaderViewRenderMode.Title);
+        });
+    }).GetHtml()
+
+    <script type="text/javascript">
+        function updateHeaderMenuOrientation() {
+            if (!window.HeaderMenu) return;
+            var orientation = HeaderPane.IsExpandable() ? 'Vertical' : 'Horizontal';
+            if (orientation !== HeaderMenu.GetOrientation())
+                HeaderMenu.SetOrientation(orientation);
+        }
+        var collection = ASPxClientControl.GetControlCollection();
+        collection.ControlsInitialized.AddHandler(updateHeaderMenuOrientation);
+        collection.BrowserWindowResized.AddHandler(updateHeaderMenuOrientation);
+
+        var ShowHint = function(s, e) {
+            Hint.Show();
+            console.log('nie gosterilmiyor');
+        }
+
+    </script>
+
+    @Html.DevExpress().Panel(settings => {
+    settings.Name = "MainPane";
+    settings.ControlStyle.CssClass = "mainContentPane";
+    settings.SetContent(RenderBody().ToHtmlString());
+
+}).GetHtml()
+    
+    @RenderSection("script", false )
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+<%@ Application Codebehind="Global.asax.cs" Inherits="TravelInn.MVC.DevExpressWeb.Responsive.MvcApplication" Language="C#" %>

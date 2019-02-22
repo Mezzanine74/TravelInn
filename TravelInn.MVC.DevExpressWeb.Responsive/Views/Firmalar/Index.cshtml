@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "Firmalar";
+}
+
+<style type="text/css">
+    /*BUNLARI SONRA CUSTOM CSS E AL*/
+    .marginTop5px {
+        margin-top: 5px;
+    }
+
+    .dxgvHeader_Metropolis {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<script>
+    var onRowDblClick = function (s, e) {
+        s.GetRowValues(
+            e.visibleIndex,
+            "Uniqueidentifier",
+            function (value) {
+                PopupLog.Show();
+                GridViewLog.PerformCallback({ uniqeIdentifier: value });
+            });
+    }
+
+    var onGrdFirmaEndCallback = function(s, e) {
+        if (s.IsEditing()) {
+            GridViewFirmaTemsilcileri.CancelEdit();
+        };
+    }
+
+    var onGrdFirmaTemsilcileriEndCallback = function (s, e) {
+        if (s.IsEditing()) {
+            GridViewFirmalar.CancelEdit();
+        };
+    }
+
+    // Update with Enter .........................
+
+    var prevOnLoad = window.onload;
+    window.onload = myOnLoad;
+    function myOnLoad() {
+        if (prevOnLoad != null)
+            prevOnLoad();
+        document.onkeydown = myOnKeyDown;
+    }
+    function myOnKeyDown() {
+
+        var grdFirma = GridViewFirmalar;
+        var grdFirmaTemsilcileri = GridViewFirmaTemsilcileri;
+
+        if (event.keyCode == 27)
+        {
+            if (grdFirma.IsEditing()) { grdFirma.CancelEdit(); }
+            if (grdFirmaTemsilcileri.IsEditing()) { grdFirmaTemsilcileri.CancelEdit(); }
+        }
+
+        if (event.keyCode == 13)
+        {
+            if (grdFirma.IsEditing()) { grdFirma.UpdateEdit(); }
+            if (grdFirmaTemsilcileri.IsEditing()) { grdFirmaTemsilcileri.UpdateEdit(); }
+        }
+    }
+    // ......................... Update with Enter
+
+</script>
+
+@Html.DevExpress().Splitter(settings => {
+    settings.Name = "SplitterFirmalar";
+    settings.Width = System.Web.UI.WebControls.Unit.Pixel(1150);
+    settings.AllowResize = true;
+
+    settings.Panes.Add(pane =>
+    {
+        pane.AutoHeight = true;
+        pane.Size = System.Web.UI.WebControls.Unit.Pixel(640);
+        pane.SetContent(() =>
+        {
+            ViewContext.Writer.Write(@Html.Action("GridViewFirmalarPartial"));
+
+            Html.DevExpress().Button(s =>
+            {
+                s.Name = "AddFirma";
+                s.Text = "+";
+                s.ControlStyle.CssClass = "rndBtn marginTop5px";
+                s.Width = 25;
+                s.ClientSideEvents.Click = "function(s, e){GridViewFirmalar.AddNewRow()}";
+            }).Render();
+
+        });
+    });
+
+    settings.Panes.Add(pane =>
+    {
+        pane.AutoHeight = true;
+        pane.Size = System.Web.UI.WebControls.Unit.Pixel(590);
+        pane.SetContent(() =>
+        {
+
+            ViewContext.Writer.Write("<div style='position: fixed;'>");
+            ViewContext.Writer.Write("<h2 id='firmaTitle' style='color: #757575;'></h2>");
+
+            ViewContext.Writer.Write(@Html.Action("GridViewFirmaTemsilcileriPartial", "FirmaTemsilcileri"));
+
+            Html.DevExpress().Button(s =>
+            {
+                s.Name = "AddFirmaTemsilcisi";
+                s.Text = "+";
+                s.ClientVisible = false;
+                s.ControlStyle.CssClass = "rndBtn marginTop5px";
+                s.Width = 25;
+                s.ClientSideEvents.Click = "function(s, e){GridViewFirmaTemsilcileri.AddNewRow()}";
+            }).Render();
+
+            ViewContext.Writer.Write("</div>");
+
+        });
+    });
+
+}).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "PopupLog";
+
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+
+        settings.HeaderText = "Logs";
+        settings.Modal = true;
+
+        settings.SetContent(() =>
+        {
+            Html.RenderAction("GridViewPartialLog","Log");
+        });
+    }).GetHtml()
+
+<script type="text/javascript">
+    $(function () {
+
+        var frmId = 0;
+
+        onGrdFirmalar_RowClick = function (s, e) {
+
+            frmId = GridViewFirmalar.GetRowKey(e.visibleIndex);
+
+            GridViewFirmalar.GetRowValues(
+                e.visibleIndex,
+                'Ismi',
+                function (value) {
+                    document.getElementById('firmaTitle').innerHTML = value
+                })
+
+            GridViewFirmaTemsilcileri.PerformCallback();
+
+        }
+
+        onGrdFirmaTemsilcileriBeginCallback = function (s, e) {
+            e.customArgs["FirmaId"] = frmId;
+
+            if (frmId > 0) {
+                GridViewFirmaTemsilcileri.SetVisible(true);
+                AddFirmaTemsilcisi.SetVisible(true);
+            }
+        }
+
+    })
+</script>

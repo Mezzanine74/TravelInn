@@ -1,0 +1,56 @@
+@using DevExpress.Export
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewLog";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Log",
+            Action = "GridViewPartialLog"
+        };
+
+        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = false;
+        settings.SettingsPager.PageSize = Int32.MaxValue;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        // GENISLIK ICIN ******************************************************
+        settings.Width = System.Web.UI.WebControls.Unit.Pixel(800);
+        //settings.Height = System.Web.UI.WebControls.Unit.Pixel(100);
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 300;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        // ****************************************************** GENISLIK ICIN
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add(col => { col.FieldName = "TimeStamp"; col.Caption = "TimeStamp"; col.Width = System.Web.UI.WebControls.Unit.Pixel(130); });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "LogString";
+            col.Caption = "Log";
+            col.CellStyle.Wrap = DefaultBoolean.True;
+        });
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

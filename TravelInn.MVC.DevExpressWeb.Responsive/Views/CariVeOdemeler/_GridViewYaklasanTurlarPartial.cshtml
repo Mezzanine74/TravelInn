@@ -1,0 +1,77 @@
+@functions{
+    protected void ExpandAll(MVCxGridView gridView)
+    {
+        gridView.ExpandAll();
+    }
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewYaklasanTurlar";
+        settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "GridViewYaklasanTurlarPartial" };
+
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = false;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.SettingsPager.PageSize = Int32.MaxValue;
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Tarih"; col.Width = 75; col.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+            col.GroupIndex = 0;
+        });
+        settings.Columns.Add("FirmaIsmi");
+        settings.Columns.Add("Aciklama");
+        settings.Columns.Add("Sorumlu");
+        settings.Columns.Add("TL");
+        settings.Columns.Add("Euro");
+        settings.Columns.Add("Dollar");
+        settings.Columns.Add("VN");
+        settings.Columns.Add("Pax");
+        settings.Columns.Add("Musteri");
+        settings.Columns.Add("Uyrugu");
+        settings.Columns.Add("Tur");
+        settings.Columns.Add("Otel");
+
+        settings.PreRender = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            ExpandAll(gridView);
+        };
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            ExpandAll(gridView);
+        };
+
+        settings.HtmlRowPrepared = (sender, e) =>
+        {
+            MVCxGridView gridView = sender as MVCxGridView;
+            if (e.RowType == GridViewRowType.Group)
+
+                e.Row.BackColor = System.Drawing.Color.Beige;
+
+            //if (gridView.GetRowLevel(e.VisibleIndex) == 1)
+            //{
+            //    e.Row.BackColor = System.Drawing.Color.Green;
+            //}
+        };
+
+    });
+}
+
+
+@grid.Bind(Model).GetHtml()

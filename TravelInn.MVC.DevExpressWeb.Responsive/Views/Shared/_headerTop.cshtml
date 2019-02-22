@@ -1,0 +1,12 @@
+﻿
+<div class="headerTop">
+    <div class="templateTitle">
+        @*@Html.ActionLink("TravelInn Data", "Index", "Home")*@
+        <a href='@Url.Action("Index", "Home")'>
+            <img src='@Url.Content("~/Content/Images/TravelInn.Logo.60px.png")' />
+        </a>
+    </div>
+    <div class="loginControl">
+        @Html.Partial("LogOnPartialView")
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Bakiyeler";
+    var isMobile = Request.Browser.IsMobileDevice;
+}
+
+<style type="text/css">
+    /*BUNLARI SONRA CUSTOM CSS E AL*/
+    .marginTop5px {
+        margin-top: 5px;
+    }
+
+    .dxgvHeader_Metropolis {
+        background-color: #f0f0f0;
+    }
+</style>
+
+@if (isMobile)
+{
+    <style type="text/css">
+        .dxgvControl_Metropolis {
+            font: 10px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+        }
+    </style>
+}
+
+
+@Html.Action("GridViewPartialBakiye")

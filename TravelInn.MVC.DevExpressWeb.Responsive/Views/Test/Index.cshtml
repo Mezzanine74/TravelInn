@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@section script{
+<script type="text/javascript">
+
+            'use strict';
+
+            var rootFolder = '';
+            var id = 0;
+
+            function OnFileUploaded(s, e) {
+
+                console.log(e);
+                console.log(rootFolder + '/' + e.fileName);
+
+                //$.post('/CariVeOdemeler/ConfirmationUpload', { path: rootFolder + '/' + e.fileName, id: id})
+                //    .done(function( data ) {
+                //        console.log(data);
+                //    })
+                //    .fail(function() {
+                //        console.log('failed');
+                //    })
+                //    .always(function() {
+                //        console.log('finished');
+                //    });
+
+                $.ajax({
+                    //dataType: "html",
+                    type: "POST",
+                    url: "/CariVeOdemeler/ConfirmationUpload",
+                    data: { path: rootFolder + '/' + e.fileName, id: id },
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+
+            }
+
+            function OnItemDeleted(s, e) {
+
+                console.log(e);
+                console.log(rootFolder + '/' + e.name);
+
+                $.post('/CariVeOdemeler/ConfirmationRemove', { path: rootFolder + '/' + e.name, id: id })
+                    .done(function (data) {
+                        console.log(data);
+                    })
+                    .fail(function () {
+                        console.log('failed');
+                    })
+                    .always(function () {
+                        console.log('finished');
+                    });
+
+            }
+
+            function InitiateFileManager(e, f) {
+                id = f;
+                rootFolder = '~/Content/CariConfirmations/' + e;
+                PopupAddFileManager.PerformCallback({ rootFolder: rootFolder });
+            }
+
+</script>    
+}
+
+
+<form>
+    @Html.DevExpress().PopupControl(
+        settings =>
+        {
+            settings.Name = "PopupAddFileManager";
+
+            settings.CallbackRouteValues = new { Controller = "Test", Action = "FileManagerCariConfirmationPartial"};
+            settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+            settings.HeaderText = "FirmaAdi / Musteri / CariAciklama";
+            settings.Modal = true;
+
+            settings.ClientSideEvents.EndCallback = "function (s,e) { s.Show();}";
+
+        }).GetHtml()
+</form>
+
+<table>
+    <tr>
+        <td>
+            Content/CariConfirmations/AliTur
+        </td>
+        <td>
+            <input type="button" value="confirmations" onclick='InitiateFileManager("2", 2);' />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Content/CariConfirmations/AliTur/1
+        </td>
+        <td>
+            <input type="button" value="confirmations" onclick="InitiateFileManager('12', 60);" />
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Ohaa";
+}
+
+<h2>Ohaa</h2>
+
+<form>
+    @Html.DevExpress().PopupControl(
+        settings =>
+        {
+            settings.Name = "PopupAddFileManager";
+
+            settings.CallbackRouteValues = new { Controller = "Test", Action = "FileManagerCariConfirmationPartial"};
+            settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+            settings.HeaderText = "FirmaAdi / Musteri / CariAciklama";
+            settings.Modal = true;
+
+            settings.ClientSideEvents.EndCallback = "function (s,e) { s.Show();}";
+
+        }).GetHtml()
+</form>
+
+<table>
+    <tr>
+        <td>
+            Content/CariConfirmations/AliTur
+        </td>
+        <td>
+            <input type="button" value="confirmations" onclick="alert('asdf')" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Content/CariConfirmations/AliTur/1
+        </td>
+        <td>
+            <input type="button" value="confirmations" onclick='ClickMeAq();' />
+        </td>
+    </tr>
+</table>
+
+<input type="button" value="hay aq" onclick="ClickMeAq()" />
+
+@section script{
+
+    <script type="text/javascript">
+
+        ClickMeAq = function () {
+            alert('aq');
+        }
+
+        var rootFolder = '';
+        var id = 0;
+
+        function OnFileUploaded(s, e) {
+            $.post('/CariVeOdemeler/ConfirmationUpload', { path: rootFolder + '/' + e.fileName, d: 'd'});
+        }
+
+    </script>
+}
+
+

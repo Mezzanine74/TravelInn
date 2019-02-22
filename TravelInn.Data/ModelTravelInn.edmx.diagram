@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="555ff76cdc864a0ba8a54d39baa22475" Name="Diagram1">
+        <EntityTypeShape EntityType="TravelInnModel.Firma" Width="1.5" PointX="0.75" PointY="11.625" />
+        <EntityTypeShape EntityType="TravelInnModel.FirmaTemsilcisi" Width="1.5" PointX="3" PointY="21.875" />
+        <EntityTypeShape EntityType="TravelInnModel.Log" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TravelInnModel.Odeme" Width="1.5" PointX="3" PointY="11.25" />
+        <EntityTypeShape EntityType="TravelInnModel.OdemeLog" Width="1.5" PointX="5.75" PointY="5.75" />
+        <EntityTypeShape EntityType="TravelInnModel.Uyruk" Width="1.5" PointX="1.5" PointY="6.875" />
+        <AssociationConnector Association="TravelInnModel.FK_FirmaTemsilcisi_Firma" />
+        <AssociationConnector Association="TravelInnModel.FK_Odenen_Firma" />
+        <EntityTypeShape EntityType="TravelInnModel.CariLog" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TravelInnModel.View_CariOdemeExcel" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TravelInnModel.View_FirmaBakiye" Width="1.5" PointX="8.375" PointY="5.375" />
+        <EntityTypeShape EntityType="TravelInnModel.Banka" Width="1.5" PointX="8.375" PointY="10" />
+        <EntityTypeShape EntityType="TravelInnModel.Musteri" Width="1.5" PointX="3.75" PointY="16.5" />
+        <EntityTypeShape EntityType="TravelInnModel.Otel" Width="1.5" PointX="3.75" PointY="33.375" />
+        <EntityTypeShape EntityType="TravelInnModel.SatisSorumlusu" Width="1.5" PointX="3.75" PointY="25.75" />
+        <EntityTypeShape EntityType="TravelInnModel.Tur" Width="1.5" PointX="3.75" PointY="29.625" />
+        <AssociationConnector Association="TravelInnModel.FK_Odeme_Banka" />
+        <AssociationConnector Association="TravelInnModel.FK_Musteri_Uyruk" />
+        <EntityTypeShape EntityType="TravelInnModel.View_YaklasanKayitlar" Width="2.25" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TravelInnModel.View_UyrukCariAdedi" Width="1.5" PointX="1" PointY="3" />
+        <EntityTypeShape EntityType="TravelInnModel.View_CariSearch" Width="2.125" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="TravelInnModel.Cari" Width="1.5" PointX="5.75" PointY="9.5" />
+        <AssociationConnector Association="TravelInnModel.FK_Cari_Musteri" />
+        <AssociationConnector Association="TravelInnModel.FK_Cari_Otel" />
+        <AssociationConnector Association="TravelInnModel.FK_Cari_SatisSorumlusu" />
+        <AssociationConnector Association="TravelInnModel.FK_Cari_Tur" />
+        <AssociationConnector Association="TravelInnModel.FK_Odenecek_Firma" />
+        <EntityTypeShape EntityType="TravelInnModel.CariConfirmation" Width="1.5" PointX="8.625" PointY="14" />
+        <AssociationConnector Association="TravelInnModel.FK_CariConfirmations_Cari" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

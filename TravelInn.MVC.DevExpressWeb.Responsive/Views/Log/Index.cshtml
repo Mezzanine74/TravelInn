@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style type="text/css">
+    /*BUNLARI SONRA CUSTOM CSS E AL*/
+    .marginTop5px {
+        margin-top: 5px;
+    }
+
+    .dxgvHeader_Metropolis {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<script type="text/javascript">
+
+    'use strick';
+
+    var onDateChanged = function (s, e) {
+
+        var date = formatDate(s.GetValue());
+
+        console.log(date);
+
+        GridViewCariLog.PerformCallback({ date: date });
+        GridViewOdemeLog.PerformCallback({ date: date });
+    }
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('/');
+    }
+
+</script>
+
+<div style="text-align: center; width: 1400px;">
+    <div style="display: inline-block">
+        @Html.DevExpress().DateEdit(de =>
+        {
+            de.Name = "DateGun";
+            de.Date = new DateTime(TravelInn.Common.LocalTime.GetIstanbul().Year, TravelInn.Common.LocalTime.GetIstanbul().Month, TravelInn.Common.LocalTime.GetIstanbul().Day);
+            de.Width = Unit.Pixel(100);
+            de.Properties.ClientSideEvents.ValueChanged = "function(s,e){ onDateChanged(s,e); }";
+            de.Properties.ClientSideEvents.GotFocus = "function(s, e) { s.ShowDropDown(); }";
+        }).GetHtml()
+    </div>
+
+    <h2>CARI</h2>
+    @Html.Action("GridViewPartialCariLog", new {date = new DateTime(TravelInn.Common.LocalTime.GetIstanbul().Year, TravelInn.Common.LocalTime.GetIstanbul().Month, TravelInn.Common.LocalTime.GetIstanbul().Day) })
+
+    <h2>ODEME</h2>
+    @Html.Action("GridViewPartialOdemeLog", new { date = new DateTime(TravelInn.Common.LocalTime.GetIstanbul().Year, TravelInn.Common.LocalTime.GetIstanbul().Month, TravelInn.Common.LocalTime.GetIstanbul().Day) })
+</div>
+

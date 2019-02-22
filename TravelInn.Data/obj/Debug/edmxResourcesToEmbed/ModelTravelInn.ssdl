@@ -1,0 +1,601 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TravelInnModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Banka">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Banka_Adi" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="Cari">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Tarih" Type="smalldatetime" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="FirmaId" Type="int" Nullable="false" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+    <Property Name="VoucherNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Pax" Type="nvarchar" MaxLength="50" />
+    <Property Name="MusteriId" Type="int" />
+    <Property Name="TurId" Type="int" />
+    <Property Name="OtelId" Type="int" />
+    <Property Name="SatisSorumlusu_Id" Type="int" />
+    <Property Name="Confirmed" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CariConfirmations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="CariId" Type="int" Nullable="false" />
+    <Property Name="FilePath" Type="nvarchar" MaxLength="255" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="CariLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tarih" Type="smalldatetime" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="FirmaIsmi" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="VoucherNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Pax" Type="nvarchar" MaxLength="50" />
+    <Property Name="MusteriAdi" Type="nvarchar" MaxLength="256" />
+    <Property Name="TurAdi" Type="nvarchar" MaxLength="256" />
+    <Property Name="OtelAdi" Type="nvarchar" MaxLength="256" />
+    <Property Name="Who" Type="nvarchar" MaxLength="256" />
+    <Property Name="When" Type="datetime2" Precision="7" />
+    <Property Name="Action" Type="nvarchar" MaxLength="50" />
+    <Property Name="SatisSorumlusu" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="Firma">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Ismi" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Adresi" Type="nvarchar" MaxLength="500" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="FirmaTemsilcisi">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="AdiSoyadi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="FirmaId" Type="int" Nullable="false" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TableName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LogString" Type="nvarchar" MaxLength="2000" />
+    <Property Name="TimeStamp" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="Musteri">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Musteri_AdiSoyadi" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+    <Property Name="Uyruk_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Odeme">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Tarih" Type="smalldatetime" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="FirmaId" Type="int" Nullable="false" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+    <Property Name="Banka_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="OdemeLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tarih" Type="smalldatetime" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="FirmaIsmi" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="Who" Type="nvarchar" MaxLength="256" />
+    <Property Name="When" Type="datetime2" Precision="7" />
+    <Property Name="Action" Type="nvarchar" MaxLength="50" />
+    <Property Name="Banka" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="Otel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Otel_Adi" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="SatisSorumlusu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Ismi" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="Tur">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Tur_Adi" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="Uyruk">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhoInserted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoUpdated" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhoDeleted" Type="nvarchar" MaxLength="256" />
+    <Property Name="WhenInserted" Type="datetime2" Precision="7" />
+    <Property Name="WhenUpdated" Type="datetime2" Precision="7" />
+    <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_CariOdemeExcel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_CariOdemeExcel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="FirmaId" Type="int" Nullable="false" />
+    <Property Name="Firma" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="CTarih" Type="smalldatetime" />
+    <Property Name="CAciklama" Type="nvarchar" MaxLength="250" />
+    <Property Name="CTL" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="CEuro" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="CDollar" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="CMusteri_AdiSoyadi" Type="nvarchar" MaxLength="256" />
+    <Property Name="CTur_Adi" Type="nvarchar" MaxLength="256" />
+    <Property Name="COtel_Adi" Type="nvarchar" MaxLength="256" />
+    <Property Name="SatisSorumlusu" Type="nvarchar" MaxLength="256" />
+    <Property Name="OTarih" Type="smalldatetime" />
+    <Property Name="OAciklama" Type="nvarchar" MaxLength="250" />
+    <Property Name="OTL" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="OEuro" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="ODollar" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Banka_Adi" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_CariSearch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_CariSearch">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="FirmaId" Type="int" Nullable="false" />
+    <Property Name="Firma" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Tarih" Type="smalldatetime" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Sorumlu" Type="nvarchar" MaxLength="256" />
+    <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Vno" Type="nvarchar" MaxLength="50" />
+    <Property Name="Pax" Type="nvarchar" MaxLength="50" />
+    <Property Name="Musteri" Type="nvarchar" MaxLength="256" />
+    <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" />
+    <Property Name="Tur" Type="nvarchar" MaxLength="256" />
+    <Property Name="Otel" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_FirmaBakiye' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_FirmaBakiye">
+    <Key>
+      <PropertyRef Name="FirmaId" />
+    </Key>
+    <Property Name="FirmaId" Type="int" Nullable="false" />
+    <Property Name="Firma" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Cari_TL" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="Cari_Euro" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="Cari_Dollar" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="Odeme_TL" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="Odeme_Euro" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="Odeme_Dollar" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="Bakiye_TL" Type="numeric" Precision="38" Scale="2" />
+    <Property Name="Bakiye_Euro" Type="numeric" Precision="38" Scale="2" />
+    <Property Name="Bakiye_Dollar" Type="numeric" Precision="38" Scale="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_UyrukCariAdedi' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_UyrukCariAdedi">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Uniqueidentifier" Type="nvarchar" MaxLength="50" />
+    <Property Name="CariAdedi" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_YaklasanKayitlar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Tarih" Type="smalldatetime" />
+    <Property Name="FirmaIsmi" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Sorumlu" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="TL" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Euro" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Dollar" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="VN" Type="nvarchar" MaxLength="50" />
+    <Property Name="Pax" Type="nvarchar" MaxLength="50" />
+    <Property Name="Musteri" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Tur" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Otel" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Cari_Musteri">
+    <End Role="Musteri" Type="Self.Musteri" Multiplicity="0..1" />
+    <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Musteri">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cari">
+        <PropertyRef Name="MusteriId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cari_Otel">
+    <End Role="Otel" Type="Self.Otel" Multiplicity="0..1" />
+    <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Otel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cari">
+        <PropertyRef Name="OtelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cari_SatisSorumlusu">
+    <End Role="SatisSorumlusu" Type="Self.SatisSorumlusu" Multiplicity="0..1" />
+    <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SatisSorumlusu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cari">
+        <PropertyRef Name="SatisSorumlusu_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cari_Tur">
+    <End Role="Tur" Type="Self.Tur" Multiplicity="0..1" />
+    <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tur">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cari">
+        <PropertyRef Name="TurId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CariConfirmations_Cari">
+    <End Role="Cari" Type="Self.Cari" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CariConfirmations" Type="Self.CariConfirmations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cari">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CariConfirmations">
+        <PropertyRef Name="CariId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FirmaTemsilcisi_Firma">
+    <End Role="Firma" Type="Self.Firma" Multiplicity="1" />
+    <End Role="FirmaTemsilcisi" Type="Self.FirmaTemsilcisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Firma">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FirmaTemsilcisi">
+        <PropertyRef Name="FirmaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Musteri_Uyruk">
+    <End Role="Uyruk" Type="Self.Uyruk" Multiplicity="0..1" />
+    <End Role="Musteri" Type="Self.Musteri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uyruk">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Musteri">
+        <PropertyRef Name="Uyruk_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Odeme_Banka">
+    <End Role="Banka" Type="Self.Banka" Multiplicity="0..1" />
+    <End Role="Odeme" Type="Self.Odeme" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Banka">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Odeme">
+        <PropertyRef Name="Banka_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Odenecek_Firma">
+    <End Role="Firma" Type="Self.Firma" Multiplicity="1" />
+    <End Role="Cari" Type="Self.Cari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Firma">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cari">
+        <PropertyRef Name="FirmaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Odenen_Firma">
+    <End Role="Firma" Type="Self.Firma" Multiplicity="1" />
+    <End Role="Odeme" Type="Self.Odeme" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Firma">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Odeme">
+        <PropertyRef Name="FirmaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TravelInnModelStoreContainer">
+    <EntitySet Name="Banka" EntityType="Self.Banka" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cari" EntityType="Self.Cari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CariConfirmations" EntityType="Self.CariConfirmations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CariLog" EntityType="Self.CariLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Firma" EntityType="Self.Firma" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FirmaTemsilcisi" EntityType="Self.FirmaTemsilcisi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Musteri" EntityType="Self.Musteri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Odeme" EntityType="Self.Odeme" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OdemeLog" EntityType="Self.OdemeLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Otel" EntityType="Self.Otel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SatisSorumlusu" EntityType="Self.SatisSorumlusu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tur" EntityType="Self.Tur" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Uyruk" EntityType="Self.Uyruk" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="View_CariOdemeExcel" EntityType="Self.View_CariOdemeExcel" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_CariOdemeExcel].[Id] AS [Id], 
+    [View_CariOdemeExcel].[FirmaId] AS [FirmaId], 
+    [View_CariOdemeExcel].[Firma] AS [Firma], 
+    [View_CariOdemeExcel].[CTarih] AS [CTarih], 
+    [View_CariOdemeExcel].[CAciklama] AS [CAciklama], 
+    [View_CariOdemeExcel].[CTL] AS [CTL], 
+    [View_CariOdemeExcel].[CEuro] AS [CEuro], 
+    [View_CariOdemeExcel].[CDollar] AS [CDollar], 
+    [View_CariOdemeExcel].[CMusteri_AdiSoyadi] AS [CMusteri_AdiSoyadi], 
+    [View_CariOdemeExcel].[CTur_Adi] AS [CTur_Adi], 
+    [View_CariOdemeExcel].[COtel_Adi] AS [COtel_Adi], 
+    [View_CariOdemeExcel].[SatisSorumlusu] AS [SatisSorumlusu], 
+    [View_CariOdemeExcel].[OTarih] AS [OTarih], 
+    [View_CariOdemeExcel].[OAciklama] AS [OAciklama], 
+    [View_CariOdemeExcel].[OTL] AS [OTL], 
+    [View_CariOdemeExcel].[OEuro] AS [OEuro], 
+    [View_CariOdemeExcel].[ODollar] AS [ODollar], 
+    [View_CariOdemeExcel].[Banka_Adi] AS [Banka_Adi]
+    FROM [dbo].[View_CariOdemeExcel] AS [View_CariOdemeExcel]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_CariSearch" EntityType="Self.View_CariSearch" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_CariSearch].[Id] AS [Id], 
+    [View_CariSearch].[FirmaId] AS [FirmaId], 
+    [View_CariSearch].[Firma] AS [Firma], 
+    [View_CariSearch].[Tarih] AS [Tarih], 
+    [View_CariSearch].[Aciklama] AS [Aciklama], 
+    [View_CariSearch].[Sorumlu] AS [Sorumlu], 
+    [View_CariSearch].[Dollar] AS [Dollar], 
+    [View_CariSearch].[Euro] AS [Euro], 
+    [View_CariSearch].[TL] AS [TL], 
+    [View_CariSearch].[Vno] AS [Vno], 
+    [View_CariSearch].[Pax] AS [Pax], 
+    [View_CariSearch].[Musteri] AS [Musteri], 
+    [View_CariSearch].[Uyrugu] AS [Uyrugu], 
+    [View_CariSearch].[Tur] AS [Tur], 
+    [View_CariSearch].[Otel] AS [Otel]
+    FROM [dbo].[View_CariSearch] AS [View_CariSearch]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_FirmaBakiye" EntityType="Self.View_FirmaBakiye" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_FirmaBakiye].[FirmaId] AS [FirmaId], 
+    [View_FirmaBakiye].[Firma] AS [Firma], 
+    [View_FirmaBakiye].[Cari_TL] AS [Cari_TL], 
+    [View_FirmaBakiye].[Cari_Euro] AS [Cari_Euro], 
+    [View_FirmaBakiye].[Cari_Dollar] AS [Cari_Dollar], 
+    [View_FirmaBakiye].[Odeme_TL] AS [Odeme_TL], 
+    [View_FirmaBakiye].[Odeme_Euro] AS [Odeme_Euro], 
+    [View_FirmaBakiye].[Odeme_Dollar] AS [Odeme_Dollar], 
+    [View_FirmaBakiye].[Bakiye_TL] AS [Bakiye_TL], 
+    [View_FirmaBakiye].[Bakiye_Euro] AS [Bakiye_Euro], 
+    [View_FirmaBakiye].[Bakiye_Dollar] AS [Bakiye_Dollar]
+    FROM [dbo].[View_FirmaBakiye] AS [View_FirmaBakiye]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_UyrukCariAdedi" EntityType="Self.View_UyrukCariAdedi" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_UyrukCariAdedi].[Id] AS [Id], 
+    [View_UyrukCariAdedi].[Uyrugu] AS [Uyrugu], 
+    [View_UyrukCariAdedi].[Uniqueidentifier] AS [Uniqueidentifier], 
+    [View_UyrukCariAdedi].[CariAdedi] AS [CariAdedi]
+    FROM [dbo].[View_UyrukCariAdedi] AS [View_UyrukCariAdedi]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_YaklasanKayitlar" EntityType="Self.View_YaklasanKayitlar" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_YaklasanKayitlar].[Id] AS [Id], 
+    [View_YaklasanKayitlar].[Tarih] AS [Tarih], 
+    [View_YaklasanKayitlar].[FirmaIsmi] AS [FirmaIsmi], 
+    [View_YaklasanKayitlar].[Aciklama] AS [Aciklama], 
+    [View_YaklasanKayitlar].[Sorumlu] AS [Sorumlu], 
+    [View_YaklasanKayitlar].[TL] AS [TL], 
+    [View_YaklasanKayitlar].[Euro] AS [Euro], 
+    [View_YaklasanKayitlar].[Dollar] AS [Dollar], 
+    [View_YaklasanKayitlar].[VN] AS [VN], 
+    [View_YaklasanKayitlar].[Pax] AS [Pax], 
+    [View_YaklasanKayitlar].[Musteri] AS [Musteri], 
+    [View_YaklasanKayitlar].[Uyrugu] AS [Uyrugu], 
+    [View_YaklasanKayitlar].[Tur] AS [Tur], 
+    [View_YaklasanKayitlar].[Otel] AS [Otel]
+    FROM [dbo].[View_YaklasanKayitlar] AS [View_YaklasanKayitlar]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Cari_Musteri" Association="Self.FK_Cari_Musteri">
+      <End Role="Musteri" EntitySet="Musteri" />
+      <End Role="Cari" EntitySet="Cari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cari_Otel" Association="Self.FK_Cari_Otel">
+      <End Role="Otel" EntitySet="Otel" />
+      <End Role="Cari" EntitySet="Cari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cari_SatisSorumlusu" Association="Self.FK_Cari_SatisSorumlusu">
+      <End Role="SatisSorumlusu" EntitySet="SatisSorumlusu" />
+      <End Role="Cari" EntitySet="Cari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cari_Tur" Association="Self.FK_Cari_Tur">
+      <End Role="Tur" EntitySet="Tur" />
+      <End Role="Cari" EntitySet="Cari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CariConfirmations_Cari" Association="Self.FK_CariConfirmations_Cari">
+      <End Role="Cari" EntitySet="Cari" />
+      <End Role="CariConfirmations" EntitySet="CariConfirmations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FirmaTemsilcisi_Firma" Association="Self.FK_FirmaTemsilcisi_Firma">
+      <End Role="Firma" EntitySet="Firma" />
+      <End Role="FirmaTemsilcisi" EntitySet="FirmaTemsilcisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Musteri_Uyruk" Association="Self.FK_Musteri_Uyruk">
+      <End Role="Uyruk" EntitySet="Uyruk" />
+      <End Role="Musteri" EntitySet="Musteri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Odeme_Banka" Association="Self.FK_Odeme_Banka">
+      <End Role="Banka" EntitySet="Banka" />
+      <End Role="Odeme" EntitySet="Odeme" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Odenecek_Firma" Association="Self.FK_Odenecek_Firma">
+      <End Role="Firma" EntitySet="Firma" />
+      <End Role="Cari" EntitySet="Cari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Odenen_Firma" Association="Self.FK_Odenen_Firma">
+      <End Role="Firma" EntitySet="Firma" />
+      <End Role="Odeme" EntitySet="Odeme" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

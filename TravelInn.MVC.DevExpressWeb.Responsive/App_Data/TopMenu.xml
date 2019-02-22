@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <item Text="Cari ve Odemeler" NavigateUrl="/CariVeOdemeler" />
+  <item Text="Firmalar" NavigateUrl="/Firmalar"  />
+</items>

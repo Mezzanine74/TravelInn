@@ -1,0 +1,108 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewCariSearch";
+        settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "GridViewCariSearchPartial" };
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 15;
+        settings.Settings.ShowGroupPanel = false;
+
+        //settings.Settings.ShowFilterRow = true;
+        //settings.Settings.ShowFilterRowMenu = true;
+
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsPopup.HeaderFilter.Height = 300;
+        settings.SettingsPopup.HeaderFilter.SettingsAdaptivity.MinHeight = 300;
+
+        foreach(GridViewDataColumn column in settings.Columns)
+            column.SettingsHeaderFilter.Mode = GridHeaderFilterMode.List;
+
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Width = Request.Browser.IsMobileDevice ? System.Web.UI.WebControls.Unit.Pixel(660) : System.Web.UI.WebControls.Unit.Pixel(1080);
+
+        //settings.Columns.Add("Id");
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Firma";
+            column.Width = Unit.Pixel(100);
+            column.SetDataItemTemplateContent(container =>
+            {
+                Html.DevExpress().HyperLink(hyperlink =>
+                {
+                    hyperlink.Name = "hl" + container.VisibleIndex;
+                    hyperlink.Properties.Text = Convert.ToString(DataBinder.Eval(container.DataItem, "Firma"));
+                    hyperlink.NavigateUrl = "/CariVeOdemeler/?frmId=" + Convert.ToString(DataBinder.Eval(container.DataItem, "FirmaId"));
+                }).Render();
+            });
+        });
+
+
+
+        settings.Columns.Add(col => { col.FieldName = "Tarih"; col.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy"; });
+        settings.Columns.Add(col => { col.FieldName = "Aciklama"; col.CellStyle.Wrap = DefaultBoolean.True; col.Width = Unit.Pixel(200); });
+        settings.Columns.Add(col => { col.FieldName = "Sorumlu"; col.Width = Unit.Pixel(70);});
+        settings.Columns.Add(col => { col.FieldName = "Dollar"; col.Width = Unit.Pixel(70);
+            col.Settings.AllowHeaderFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(col => { col.FieldName = "Euro"; col.Width = Unit.Pixel(70);
+            col.Settings.AllowHeaderFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(col => { col.FieldName = "TL"; col.Width = Unit.Pixel(70);
+            col.Settings.AllowHeaderFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Vno";
+            col.Width = Unit.Pixel(70);
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Pax";
+            col.Width = Unit.Pixel(70);
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Musteri";
+            col.Width = Unit.Pixel(70);
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Uyrugu";
+            col.Width = Unit.Pixel(70);
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Tur";
+            col.Width = Unit.Pixel(70);
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Otel";
+            col.Width = Unit.Pixel(70);
+        });
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Dollar").DisplayFormat = "<b>{0:N}</b>";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Euro").DisplayFormat = "<b>{0:N}</b>";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "TL").DisplayFormat = "<b>{0:N}</b>";
+        settings.Settings.ShowFooter = true;
+
+
+    });
+}
+@grid.Bind(Model).GetHtml()

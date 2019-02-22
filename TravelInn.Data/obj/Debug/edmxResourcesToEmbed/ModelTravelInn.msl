@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TravelInnModelStoreContainer" CdmEntityContainer="TravelInnEntities">
+    <EntitySetMapping Name="Firmas">
+      <EntityTypeMapping TypeName="TravelInnModel.Firma">
+        <MappingFragment StoreEntitySet="Firma">
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="Adresi" ColumnName="Adresi" />
+          <ScalarProperty Name="Ismi" ColumnName="Ismi" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FirmaTemsilcisis">
+      <EntityTypeMapping TypeName="TravelInnModel.FirmaTemsilcisi">
+        <MappingFragment StoreEntitySet="FirmaTemsilcisi">
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="AdiSoyadi" ColumnName="AdiSoyadi" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="TravelInnModel.Log">
+        <MappingFragment StoreEntitySet="Log">
+          <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+          <ScalarProperty Name="LogString" ColumnName="LogString" />
+          <ScalarProperty Name="TableName" ColumnName="TableName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Odemes">
+      <EntityTypeMapping TypeName="TravelInnModel.Odeme">
+        <MappingFragment StoreEntitySet="Odeme">
+          <ScalarProperty Name="Banka_Id" ColumnName="Banka_Id" />
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+          <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+          <ScalarProperty Name="Euro" ColumnName="Euro" />
+          <ScalarProperty Name="TL" ColumnName="TL" />
+          <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OdemeLogs">
+      <EntityTypeMapping TypeName="TravelInnModel.OdemeLog">
+        <MappingFragment StoreEntitySet="OdemeLog">
+          <ScalarProperty Name="Banka" ColumnName="Banka" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="When" ColumnName="When" />
+          <ScalarProperty Name="Who" ColumnName="Who" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
+          <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+          <ScalarProperty Name="Euro" ColumnName="Euro" />
+          <ScalarProperty Name="TL" ColumnName="TL" />
+          <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Uyruks">
+      <EntityTypeMapping TypeName="TravelInnModel.Uyruk">
+        <MappingFragment StoreEntitySet="Uyruk">
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CariLogs">
+      <EntityTypeMapping TypeName="TravelInnModel.CariLog">
+        <MappingFragment StoreEntitySet="CariLog">
+          <ScalarProperty Name="SatisSorumlusu" ColumnName="SatisSorumlusu" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="When" ColumnName="When" />
+          <ScalarProperty Name="Who" ColumnName="Who" />
+          <ScalarProperty Name="OtelAdi" ColumnName="OtelAdi" />
+          <ScalarProperty Name="TurAdi" ColumnName="TurAdi" />
+          <ScalarProperty Name="MusteriAdi" ColumnName="MusteriAdi" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+          <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
+          <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+          <ScalarProperty Name="Euro" ColumnName="Euro" />
+          <ScalarProperty Name="TL" ColumnName="TL" />
+          <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_CariOdemeExcel">
+      <EntityTypeMapping TypeName="TravelInnModel.View_CariOdemeExcel">
+        <MappingFragment StoreEntitySet="View_CariOdemeExcel">
+          <ScalarProperty Name="Banka_Adi" ColumnName="Banka_Adi" />
+          <ScalarProperty Name="ODollar" ColumnName="ODollar" />
+          <ScalarProperty Name="OEuro" ColumnName="OEuro" />
+          <ScalarProperty Name="OTL" ColumnName="OTL" />
+          <ScalarProperty Name="OAciklama" ColumnName="OAciklama" />
+          <ScalarProperty Name="OTarih" ColumnName="OTarih" />
+          <ScalarProperty Name="SatisSorumlusu" ColumnName="SatisSorumlusu" />
+          <ScalarProperty Name="COtel_Adi" ColumnName="COtel_Adi" />
+          <ScalarProperty Name="CTur_Adi" ColumnName="CTur_Adi" />
+          <ScalarProperty Name="CMusteri_AdiSoyadi" ColumnName="CMusteri_AdiSoyadi" />
+          <ScalarProperty Name="CDollar" ColumnName="CDollar" />
+          <ScalarProperty Name="CEuro" ColumnName="CEuro" />
+          <ScalarProperty Name="CTL" ColumnName="CTL" />
+          <ScalarProperty Name="CAciklama" ColumnName="CAciklama" />
+          <ScalarProperty Name="CTarih" ColumnName="CTarih" />
+          <ScalarProperty Name="Firma" ColumnName="Firma" />
+          <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_FirmaBakiye">
+      <EntityTypeMapping TypeName="TravelInnModel.View_FirmaBakiye">
+        <MappingFragment StoreEntitySet="View_FirmaBakiye">
+          <ScalarProperty Name="Bakiye_Dollar" ColumnName="Bakiye_Dollar" />
+          <ScalarProperty Name="Bakiye_Euro" ColumnName="Bakiye_Euro" />
+          <ScalarProperty Name="Bakiye_TL" ColumnName="Bakiye_TL" />
+          <ScalarProperty Name="Odeme_Dollar" ColumnName="Odeme_Dollar" />
+          <ScalarProperty Name="Odeme_Euro" ColumnName="Odeme_Euro" />
+          <ScalarProperty Name="Odeme_TL" ColumnName="Odeme_TL" />
+          <ScalarProperty Name="Cari_Dollar" ColumnName="Cari_Dollar" />
+          <ScalarProperty Name="Cari_Euro" ColumnName="Cari_Euro" />
+          <ScalarProperty Name="Cari_TL" ColumnName="Cari_TL" />
+          <ScalarProperty Name="Firma" ColumnName="Firma" />
+          <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bankas">
+      <EntityTypeMapping TypeName="TravelInnModel.Banka">
+        <MappingFragment StoreEntitySet="Banka">
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="Adres" ColumnName="Adres" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Banka_Adi" ColumnName="Banka_Adi" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Musteris">
+      <EntityTypeMapping TypeName="TravelInnModel.Musteri">
+        <MappingFragment StoreEntitySet="Musteri">
+          <ScalarProperty Name="Uyruk_Id" ColumnName="Uyruk_Id" />
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="Adres" ColumnName="Adres" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Musteri_AdiSoyadi" ColumnName="Musteri_AdiSoyadi" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Otels">
+      <EntityTypeMapping TypeName="TravelInnModel.Otel">
+        <MappingFragment StoreEntitySet="Otel">
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="Adres" ColumnName="Adres" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Otel_Adi" ColumnName="Otel_Adi" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SatisSorumlusus">
+      <EntityTypeMapping TypeName="TravelInnModel.SatisSorumlusu">
+        <MappingFragment StoreEntitySet="SatisSorumlusu">
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="Adres" ColumnName="Adres" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Ismi" ColumnName="Ismi" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Turs">
+      <EntityTypeMapping TypeName="TravelInnModel.Tur">
+        <MappingFragment StoreEntitySet="Tur">
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="Adres" ColumnName="Adres" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Tur_Adi" ColumnName="Tur_Adi" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_YaklasanKayitlar">
+      <EntityTypeMapping TypeName="TravelInnModel.View_YaklasanKayitlar">
+        <MappingFragment StoreEntitySet="View_YaklasanKayitlar">
+          <ScalarProperty Name="Otel" ColumnName="Otel" />
+          <ScalarProperty Name="Tur" ColumnName="Tur" />
+          <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+          <ScalarProperty Name="Musteri" ColumnName="Musteri" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+          <ScalarProperty Name="VN" ColumnName="VN" />
+          <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+          <ScalarProperty Name="Euro" ColumnName="Euro" />
+          <ScalarProperty Name="TL" ColumnName="TL" />
+          <ScalarProperty Name="Sorumlu" ColumnName="Sorumlu" />
+          <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+          <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_UyrukCariAdedi">
+      <EntityTypeMapping TypeName="TravelInnModel.View_UyrukCariAdedi">
+        <MappingFragment StoreEntitySet="View_UyrukCariAdedi">
+          <ScalarProperty Name="CariAdedi" ColumnName="CariAdedi" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_CariSearch">
+      <EntityTypeMapping TypeName="TravelInnModel.View_CariSearch">
+        <MappingFragment StoreEntitySet="View_CariSearch">
+          <ScalarProperty Name="Otel" ColumnName="Otel" />
+          <ScalarProperty Name="Tur" ColumnName="Tur" />
+          <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+          <ScalarProperty Name="Musteri" ColumnName="Musteri" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+          <ScalarProperty Name="Vno" ColumnName="Vno" />
+          <ScalarProperty Name="TL" ColumnName="TL" />
+          <ScalarProperty Name="Euro" ColumnName="Euro" />
+          <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+          <ScalarProperty Name="Sorumlu" ColumnName="Sorumlu" />
+          <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Firma" ColumnName="Firma" />
+          <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Caris">
+      <EntityTypeMapping TypeName="TravelInnModel.Cari">
+        <MappingFragment StoreEntitySet="Cari">
+          <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+          <ScalarProperty Name="SatisSorumlusu_Id" ColumnName="SatisSorumlusu_Id" />
+          <ScalarProperty Name="OtelId" ColumnName="OtelId" />
+          <ScalarProperty Name="TurId" ColumnName="TurId" />
+          <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+          <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="FirmaId" ColumnName="FirmaId" />
+          <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+          <ScalarProperty Name="Euro" ColumnName="Euro" />
+          <ScalarProperty Name="TL" ColumnName="TL" />
+          <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CariConfirmations">
+      <EntityTypeMapping TypeName="TravelInnModel.CariConfirmation">
+        <MappingFragment StoreEntitySet="CariConfirmations">
+          <ScalarProperty Name="WhenUpdated" ColumnName="WhenUpdated" />
+          <ScalarProperty Name="WhenInserted" ColumnName="WhenInserted" />
+          <ScalarProperty Name="WhoDeleted" ColumnName="WhoDeleted" />
+          <ScalarProperty Name="WhoUpdated" ColumnName="WhoUpdated" />
+          <ScalarProperty Name="WhoInserted" ColumnName="WhoInserted" />
+          <ScalarProperty Name="WhenDeleted" ColumnName="WhenDeleted" />
+          <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+          <ScalarProperty Name="CariId" ColumnName="CariId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

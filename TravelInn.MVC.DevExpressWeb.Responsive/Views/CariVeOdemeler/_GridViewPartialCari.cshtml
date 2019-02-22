@@ -1,0 +1,815 @@
+@using TravelInn.Data
+@using TravelInn.Data.ViewModels
+
+@functions{
+    object GetEditingCari(ASPxGridView grid)
+    {
+        if (grid.IsNewRowEditing)
+            return new TravelInn.Data.ViewModels.CariViewModel();// Bu model editte gosterilenle ayni olacak
+        return grid.GetRow(grid.EditingRowVisibleIndex);
+    }
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        bool isMobile = Request.Browser.IsMobileDevice;
+
+        settings.Name = "GridViewCari";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "CariVeOdemeler",
+            Action = "GridViewPartialCari"
+        };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "CariVeOdemeler", Action = "GridViewPartialCariAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "CariVeOdemeler", Action = "GridViewPartialCariUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "CariVeOdemeler", Action = "GridViewPartialCariDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+
+        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.ClientSideEvents.BeginCallback = "function(s,e){gridCari_BeginCallback(s,e)}";
+        settings.ClientSideEvents.RowDblClick = "function(s,e){ onRowDblClick(s,e) }";
+        settings.ClientSideEvents.EndCallback = "function(s,e){onGridCariEndCallback(s,e)}";
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.Caption = " ";
+        settings.CommandColumn.Width = isMobile ? 50 : 74;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.SetHeaderTemplateContent(c =>
+        {
+            if (!isMobile)
+                ViewContext.Writer.Write(
+                Html.DevExpress().Button(btn =>
+                {
+                    btn.Name = "ExportCari";
+                    btn.Text = "";
+                    btn.ClientSideEvents.Click = "function(s,e){ OnExport(s,e)}";
+
+                    btn.RenderMode = ButtonRenderMode.Link;
+                    btn.Images.Image.IconID = "export_exporttoxls_16x16gray";
+                    btn.ImagePosition = ImagePosition.Right;
+                    btn.ToolTip = "Excele At";
+
+                }).GetHtml()
+           );
+        });
+
+        settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = false;
+        settings.SettingsPager.PageSize = Int32.MaxValue;
+        settings.Settings.ShowGroupPanel = false;
+//settings.Settings.ShowFilterRow = false;
+settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsPopup.HeaderFilter.Height = 300;
+        settings.SettingsPopup.HeaderFilter.SettingsAdaptivity.MinHeight = 300;
+
+        foreach (GridViewDataColumn column in settings.Columns)
+            column.SettingsHeaderFilter.Mode = GridHeaderFilterMode.List;
+
+// GENISLIK ICIN ******************************************************
+settings.Width = !isMobile ? System.Web.UI.WebControls.Unit.Pixel(1040) : System.Web.UI.WebControls.Unit.Pixel(667);
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+// ****************************************************** GENISLIK ICIN
+
+settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.SetEditFormTemplateContent(c =>
+        {
+            Html.DevExpress().FormLayout(flSettings =>
+            {
+                flSettings.Name = "CariEditForm";
+                flSettings.ColCount = 3;
+
+                flSettings.Items.AddGroupItem(grp =>
+                {
+                    grp.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+                    grp.ShowCaption = DefaultBoolean.False;
+                    grp.ColCount = 3;
+                    grp.ColSpan = 3;
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Aciklama";
+                        grpItem.ColSpan = 3;
+
+                        grpItem.NestedExtension().Memo(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    //settings.Height = System.Web.UI.WebControls.Unit.Pixel(400);
+                });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Tarih";
+
+                        grpItem.NestedExtension().DateEdit(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            tbx.Properties.ClientSideEvents.GotFocus = "function(s, e) { s.ShowDropDown(); }";
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "VoucherNo";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Pax";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                });
+
+                flSettings.Items.AddGroupItem(grp =>
+                {
+                    grp.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+                    grp.ShowCaption = DefaultBoolean.False;
+                    grp.ColCount = 3;
+                    grp.ColSpan = 3;
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Dollar";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Euro";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "TL";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+                });
+
+        // SATIS SORUMLUSU
+        flSettings.Items.AddGroupItem(grp =>
+                {
+                    grp.GroupBoxDecoration = GroupBoxDecoration.Box;
+                    grp.Caption = "Sorumlu";
+                    grp.ColCount = 4;
+                    grp.ColSpan = 3;
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "SatisSorumlusu_Idstr";
+                        grpItem.Caption = "Sorumlu";
+
+                        grpItem.NestedExtension().ComboBox(cbx =>
+                        {
+                            cbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            cbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            cbx.ShowModelErrors = true;
+                            cbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            cbx.Properties.DropDownStyle = DropDownStyle.DropDown;
+                            cbx.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                            cbx.Properties.TextField = "Ismi";
+                            cbx.Properties.ValueField = "Id";
+                            cbx.Properties.ValueType = typeof(int);
+                            cbx.Properties.DataSource = ViewBag.SatisSorumlusu;
+                            cbx.Properties.ClientSideEvents.GotFocus = "function(s, e) { s.ShowDropDown(); }";
+                            cbx.Properties.ClientSideEvents.ValueChanged = "function(s, e){ SatisSorumlusuValueChanged(s, e) }";
+
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "SatisSorumlusuTelefon";
+                        grpItem.Caption = "Telefon";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "SatisSorumlusuEmail";
+                        grpItem.Caption = "Email";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "SatisSorumlusuAdres";
+                        grpItem.Caption = "Adres";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                });
+
+        // MUSTERI
+        flSettings.Items.AddGroupItem(grp =>
+                {
+                    grp.GroupBoxDecoration = GroupBoxDecoration.Box;
+                    grp.Caption = "Musteri";
+                    grp.ColCount = 5;
+                    grp.ColSpan = 3;
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "MusteriIdstr";
+                        grpItem.Caption = "Adi Soyadi";
+
+                        grpItem.NestedExtension().ComboBox(cbx =>
+                        {
+                            cbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            cbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            cbx.ShowModelErrors = true;
+                            cbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            cbx.Properties.DropDownStyle = DropDownStyle.DropDown;
+                            cbx.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                            cbx.Properties.TextField = "Musteri_AdiSoyadi";
+                            cbx.Properties.ValueField = "Id";
+                            cbx.Properties.ValueType = typeof(int);
+                            cbx.Properties.DataSource = ViewBag.Musteri;
+                            cbx.Properties.ClientSideEvents.GotFocus = "function(s, e) { s.ShowDropDown(); }";
+                            cbx.Properties.ClientSideEvents.ValueChanged = "function(s, e){ MusteriValueChanged(s, e) }";
+
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Uyruk_Idstr";
+                        grpItem.Caption = "Uyrugu";
+
+                        grpItem.NestedExtension().ComboBox(cbx =>
+                        {
+                            cbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            cbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            cbx.ShowModelErrors = true;
+                            cbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            cbx.Properties.DropDownStyle = DropDownStyle.DropDown;
+                            cbx.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                            cbx.Properties.TextField = "Uyrugu";
+                            cbx.Properties.ValueField = "Id";
+                            cbx.Properties.ValueType = typeof(int);
+                            cbx.Properties.DataSource = ViewBag.Uyruk;
+                            cbx.Properties.ClientSideEvents.GotFocus = "function(s, e) { s.ShowDropDown(); }";
+
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "MusteriTelefon";
+                        grpItem.Caption = "Telefon";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "MusteriEmail";
+                        grpItem.Caption = "Email";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "MusteriAdres";
+                        grpItem.Caption = "Adres";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                });
+
+        // TUR
+        flSettings.Items.AddGroupItem(grp =>
+                {
+                    grp.GroupBoxDecoration = GroupBoxDecoration.Box;
+                    grp.Caption = "Tur";
+                    grp.ColCount = 4;
+                    grp.ColSpan = 3;
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "TurIdstr";
+                        grpItem.Caption = "Adi";
+
+                        grpItem.NestedExtension().ComboBox(cbx =>
+                        {
+                            cbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            cbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            cbx.ShowModelErrors = true;
+                            cbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            cbx.Properties.DropDownStyle = DropDownStyle.DropDown;
+                            cbx.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                            cbx.Properties.TextField = "Tur_Adi";
+                            cbx.Properties.ValueField = "Id";
+                            cbx.Properties.ValueType = typeof(int);
+                            cbx.Properties.DataSource = ViewBag.Tur;
+                            cbx.Properties.ClientSideEvents.GotFocus = "function(s, e) { s.ShowDropDown(); }";
+                            cbx.Properties.ClientSideEvents.ValueChanged = "function(s, e){ TurValueChanged(s, e) }";
+
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "TurTelefon";
+                        grpItem.Caption = "Telefon";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "TurEmail";
+                        grpItem.Caption = "Email";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "TurAdres";
+                        grpItem.Caption = "Adres";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+                });
+
+        // OTEL
+        flSettings.Items.AddGroupItem(grp =>
+                {
+                    grp.GroupBoxDecoration = GroupBoxDecoration.Box;
+                    grp.Caption = "Otel";
+                    grp.ColCount = 4;
+                    grp.ColSpan = 3;
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "OtelIdstr";
+                        grpItem.Caption = "Adi";
+
+                        grpItem.NestedExtension().ComboBox(cbx =>
+                        {
+                            cbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            cbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            cbx.ShowModelErrors = true;
+                            cbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            cbx.Properties.DropDownStyle = DropDownStyle.DropDown;
+                            cbx.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                            cbx.Properties.TextField = "Otel_Adi";
+                            cbx.Properties.ValueField = "Id";
+                            cbx.Properties.ValueType = typeof(int);
+                            cbx.Properties.DataSource = ViewBag.Otel;
+                            cbx.Properties.ClientSideEvents.GotFocus = "function(s, e) { s.ShowDropDown(); }";
+                            cbx.Properties.ClientSideEvents.ValueChanged = "function(s, e){ OtelValueChanged(s, e) }";
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "OtelTelefon";
+                        grpItem.Caption = "Telefon";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "OtelEmail";
+                        grpItem.Caption = "Email";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "OtelAdres";
+                        grpItem.Caption = "Adres";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        });
+                    });
+                });
+
+                flSettings.Items.AddGroupItem(grp =>
+                {
+                    grp.GroupBoxDecoration = GroupBoxDecoration.None;
+                    grp.Caption = "...";
+                    grp.ColCount = 3;
+                    grp.ColSpan = 3;
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.ShowCaption = DefaultBoolean.False;
+                    }).SetNestedContent(() =>
+                    {
+                        ViewContext.Writer.Write("<div style='float:right'>");
+                        Html.DevExpress().Button(btnSettings =>
+                        {
+                            btnSettings.Name = "btnUpdate";
+                            btnSettings.Text = "Guncelle";
+                    //btnSettings.UseSubmitBehavior = true;
+                    btnSettings.RenderMode = ButtonRenderMode.Link;
+                            btnSettings.ClientSideEvents.Click = "function(s, e){ GridViewCari.UpdateEdit(); }";
+                        }).Render();
+                        Html.DevExpress().Button(btnSettings =>
+                        {
+                            btnSettings.Name = "btnCancel";
+                            btnSettings.Text = "Iptal";
+                            btnSettings.RenderMode = ButtonRenderMode.Link;
+                            btnSettings.Style[HtmlTextWriterStyle.MarginLeft] = "5px";
+                            btnSettings.ClientSideEvents.Click = "function(s, e){ GridViewCari.CancelEdit(); }";
+                        }).Render();
+                        ViewContext.Writer.Write("</div>");
+                    });
+                });
+
+
+            }).Bind(ViewData["EditableCari"] ?? GetEditingCari(c.Grid))
+                .Render();
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tarih";
+            c.Caption = "Tarih";
+            if (!isMobile) c.Width = 70;
+            c.EditorProperties().DateEdit(p =>
+            {
+
+            });
+        });
+
+        settings.Columns.Add(col => { col.FieldName = "Aciklama"; col.CellStyle.Wrap = DefaultBoolean.True; if (!isMobile) col.Width = 160; });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SatisSorumlusu_Idstr";
+            c.Caption = " ";
+            if (!isMobile) c.Width = 50;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.DropDownStyle = DropDownStyle.DropDown;
+                p.TextField = "Ismi";
+                p.ValueField = "Id";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.SatisSorumlusu;
+            });
+
+            c.SetDataItemTemplateContent(dItem =>
+            {
+                Html.DevExpress().Button(lnkSettings =>
+                {
+                    int sorumluId = 0;
+                    Int32.TryParse(Convert.ToString(DataBinder.Eval(dItem.DataItem, "SatisSorumlusu_Idstr")), out sorumluId);
+                    IEnumerable<SatisSorumlusu>
+    satisSorumlulari = ViewBag.SatisSorumlusu;
+
+                    string description = satisSorumlulari.SingleOrDefault(cc => cc.Id == sorumluId) != null ? satisSorumlulari.SingleOrDefault(cc => cc.Id == sorumluId).Ismi : string.Empty;
+                    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
+                    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'sorumlu'); }";
+
+                    lnkSettings.Name = "btnSorumlu" + dItem.VisibleIndex;
+                    lnkSettings.EncodeHtml = false;
+                    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
+                    lnkSettings.Text = description.ToString();
+                    lnkSettings.RenderMode = ButtonRenderMode.Link;
+                    lnkSettings.ClientSideEvents.Click = clickEvent;
+                }).Render();
+            });
+
+        });
+
+        settings.Columns.Add(col =>
+{
+    col.FieldName = "Dollar";
+
+    col.SetHeaderCaptionTemplateContent(colHeader =>
+{
+    Html.DevExpress().Image(
+image =>
+{
+    image.Name = "CariImageDollar";
+    image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessDollarSvg16x16;
+}).GetHtml();
+});
+
+    if (!isMobile) col.Width = 70; col.PropertiesEdit.DisplayFormatString = "N";
+});
+        settings.Columns.Add(col =>
+{
+    col.FieldName = "Euro";
+    col.SetHeaderCaptionTemplateContent(colHeader =>
+{
+    Html.DevExpress().Image(
+image =>
+{
+    image.Name = "CariImageEuro";
+    image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessEuroSvg16x16;
+}).GetHtml();
+});
+
+    if (!isMobile) col.Width = 70; col.PropertiesEdit.DisplayFormatString = "N";
+});
+        settings.Columns.Add(col => { col.FieldName = "TL"; if (!isMobile) col.Width = 70; col.PropertiesEdit.DisplayFormatString = "N"; });
+
+        settings.Columns.Add(col =>
+{
+    col.FieldName = "VoucherNo";
+    col.Caption = "Vn"; if (!isMobile) col.Width = 50;
+});
+        settings.Columns.Add(col => { col.FieldName = "Pax"; if (!isMobile) col.Width = 50; });
+
+        settings.Columns.Add(c =>
+{
+    c.FieldName = "MusteriIdstr";
+    c.Caption = "Musteri Adi";
+    if (!isMobile) c.Width = 100;
+    c.EditorProperties().ComboBox(p =>
+{
+    p.DropDownStyle = DropDownStyle.DropDown;
+    p.TextField = "Musteri_AdiSoyadi";
+    p.ValueField = "Id";
+    p.ValueType = typeof(int);
+    p.DataSource = ViewBag.Musteri;
+});
+
+    c.SetDataItemTemplateContent(dItem =>
+{
+    Html.DevExpress().Button(lnkSettings =>
+{
+    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "MusteriAdi"));
+    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
+    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'musteri'); }";
+
+    lnkSettings.Name = "btnMusteri" + dItem.VisibleIndex;
+    lnkSettings.EncodeHtml = false;
+    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
+    lnkSettings.Text = description.ToString();
+    lnkSettings.RenderMode = ButtonRenderMode.Link;
+    lnkSettings.ClientSideEvents.Click = clickEvent;
+}).Render();
+});
+});
+
+        settings.Columns.Add(c =>
+{
+    c.FieldName = "MusteriUyrugu";
+    c.Caption = "Uyr.";
+    if (!isMobile) c.Width = 50;
+
+    c.SetDataItemTemplateContent(dItem =>
+{
+    Html.DevExpress().Button(lnkSettings =>
+{
+    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "MusteriUyrugu"));
+    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
+    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'uyruk'); }";
+
+    lnkSettings.Name = "btnUyruk" + dItem.VisibleIndex;
+    lnkSettings.EncodeHtml = false;
+    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
+    lnkSettings.Text = description.ToString();
+    lnkSettings.RenderMode = ButtonRenderMode.Link;
+    lnkSettings.ClientSideEvents.Click = clickEvent;
+}).Render();
+});
+
+});
+
+        settings.Columns.Add(c =>
+{
+    c.FieldName = "TurIdstr";
+    c.Caption = "Tur Adi";
+    if (!isMobile) c.Width = 100;
+    c.EditorProperties().ComboBox(p =>
+{
+    p.DropDownStyle = DropDownStyle.DropDown;
+    p.TextField = "Tur_Adi";
+    p.ValueField = "Id";
+    p.ValueType = typeof(int);
+    p.DataSource = ViewBag.Tur;
+});
+
+    c.SetDataItemTemplateContent(dItem =>
+{
+    Html.DevExpress().Button(lnkSettings =>
+{
+    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "TurAdi"));
+    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
+    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'tur'); }";
+
+    lnkSettings.Name = "btnTur" + dItem.VisibleIndex;
+    lnkSettings.EncodeHtml = false;
+    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
+    lnkSettings.Text = description.ToString();
+    lnkSettings.RenderMode = ButtonRenderMode.Link;
+    lnkSettings.ClientSideEvents.Click = clickEvent;
+}).Render();
+});
+
+});
+
+        settings.Columns.Add(c =>
+{
+    c.FieldName = "OtelIdstr";
+    c.Caption = "Otel Adi";
+    if (!isMobile) c.Width = 100;
+
+    c.EditorProperties().ComboBox(p =>
+{
+    p.DropDownStyle = DropDownStyle.DropDown;
+    p.TextField = "Otel_Adi";
+    p.ValueField = "Id";
+    p.ValueType = typeof(int);
+    p.DataSource = ViewBag.Otel;
+});
+
+    c.SetDataItemTemplateContent(dItem =>
+{
+    Html.DevExpress().Button(lnkSettings =>
+{
+    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "OtelAdi"));
+    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
+    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'otel'); }";
+
+    lnkSettings.Name = "btnOtel" + dItem.VisibleIndex;
+    lnkSettings.EncodeHtml = false;
+    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
+    lnkSettings.Text = description.ToString();
+    lnkSettings.RenderMode = ButtonRenderMode.Link;
+    lnkSettings.ClientSideEvents.Click = clickEvent;
+}).Render();
+});
+});
+
+        settings.HtmlRowPrepared = (s, e) =>
+{
+    if (e.RowType != GridViewRowType.Data) return;
+
+    Zamani zamani = (Zamani)e.GetValue("Zamani");
+
+// bugun
+if (zamani == Zamani.Bugun)
+    {
+        e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#E6B0AA");
+    }
+// gecmis
+else if (zamani == Zamani.Gecmis)
+    {
+        e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#E9F7EF");
+    }
+// gelecek
+else if (zamani == Zamani.Gelecek)
+    {
+        e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#F9E79F");
+    }
+};
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Dollar").DisplayFormat = "<b>{0:N}</b>";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Euro").DisplayFormat = "<b>{0:N}</b>";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "TL").DisplayFormat = "<b>{0:N}</b>";
+        settings.Settings.ShowFooter = true;
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

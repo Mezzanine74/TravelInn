@@ -1,0 +1,337 @@
+﻿@*MOBILE*@
+
+@model TravelInn.MVC.DevExpressWeb.Responsive.HelperClasses.FirmasTabData
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style type="text/css">
+    /*BUNLARI SONRA CUSTOM CSS E AL*/
+    .marginTop5px {
+        margin-top: 5px;
+    }
+
+
+    /*Theme Generator ile uretilenler oraya save edilmedi
+    Buraya direk kopyalandi*/
+
+    .dxsplControl_Metropolis .dxsplLCC{
+        padding: 4px;
+    }
+
+    .dxgvHeader_Metropolis {
+        background-color: #f0f0f0;
+        padding: 2px 2px 2px;
+    }
+
+    .dxgvControl_Metropolis,
+    .dxgvDisabled_Metropolis,
+    .dxbButton_Metropolis,
+    .dxeHyperlink_Metropolis {
+        font: 8px 'Segoe UI',Helvetica,'Droid Sans',Tahoma,Geneva,sans-serif;
+    }
+
+    .dxgvEditFormDisplayRow_Metropolis td.dxgv,
+    .dxgvDetailCell_Metropolis td.dxgv,
+    .dxgvDataRow_Metropolis td.dxgv,
+    .dxgvDetailRow_Metropolis.dxgvADR td.dxgvAIC {
+        padding: 2px 2px 2px;
+    }
+
+    /*Bakiye detay yuksekligi Bakiye mobil sayfasindan dolayi duzeltilir*/
+    .dxgvCSD{
+        height: 16px !important;
+    }
+
+</style>
+
+<script type="text/javascript">
+        'use strict';
+
+        var gridCari_BeginCallback = function (s, e) {
+            e.customArgs["frmId"] = @Request.Params["frmId"];
+        }
+
+        var gridOdeme_BeginCallback = function (s, e) {
+            e.customArgs["frmId"] = @Request.Params["frmId"];
+    }
+
+    var OnExport = function(s, e) {
+        window.open(
+            '/CariVeOdemeler/Export?frmId=' + @Request.Params["frmId"],
+            '_blank'
+        );
+    }
+
+        var onRowDblClick = function(s, e) {
+
+            s.GetRowValues(
+                e.visibleIndex,
+                "Uniqueidentifier",
+                function (value) {
+                    PopupLog.Show();
+                    GridViewLog.PerformCallback({ uniqeIdentifier: value });
+                });
+    }
+
+    var TabFirmalarTabClick = function(s, e) {
+        console.log(s);
+    }
+
+    var SatisSorumlusuValueChanged = function (s, e) {
+
+        $.getJSON('/SatisSorumlulari/GetByKey/' + s.GetValue()).done(function (data) {
+
+            if (data) {
+                SatisSorumlusuTelefon.SetValue(data.Telefon);
+                SatisSorumlusuAdres.SetValue(data.Adres);
+                SatisSorumlusuEmail.SetValue(data.Email);
+            };
+        });
+    }
+
+    var MusteriValueChanged = function (s, e) {
+
+            $.getJSON('/Musteriler/GetByKey/' + s.GetValue()).done(function (data) {
+                console.log(data);
+                if (data) {
+                    MusteriTelefon.SetValue(data.Telefon);
+                    MusteriAdres.SetValue(data.Adres);
+                    MusteriEmail.SetValue(data.Email);
+                    Uyruk_Idstr.SetValue(data.UyrukId);
+                };
+            });
+    }
+
+    var TurValueChanged = function (s, e) {
+
+            $.getJSON('/Turlar/GetByKey/' + s.GetValue()).done(function (data) {
+
+                if (data) {
+                    TurTelefon.SetValue(data.Telefon);
+                    TurAdres.SetValue(data.Adres);
+                    TurEmail.SetValue(data.Email);
+                };
+            });
+    }
+
+    var OtelValueChanged = function (s, e) {
+
+            $.getJSON('/Oteller/GetByKey/' + s.GetValue()).done(function (data) {
+
+                if (data) {
+                    OtelTelefon.SetValue(data.Telefon);
+                    OtelAdres.SetValue(data.Adres);
+                    OtelEmail.SetValue(data.Email);
+                };
+            });
+        }
+
+    //Cari Detay Gosterme Kismi
+    var description = "";
+        var hangisi = "";
+
+    var ButtonCariDetayClick = function (m, h) {
+        loadingPanel.Show();
+        description = m;
+        hangisi = h;
+
+        PopupSearchCari.PerformCallback();
+    }
+
+    var PopupSearchCariEndCallBack = function (s, e) {
+        s.Show();
+        loadingPanel.Hide();
+        PopupSearchCari.SetHeaderText(description + ' nin Cari Bilgileri')
+
+        switch (hangisi) {
+            case 'musteri':
+                GridViewCariSearch.AutoFilterByColumn('Musteri', description);
+                break;
+            case 'tur':
+                GridViewCariSearch.AutoFilterByColumn('Tur', description);
+                break;
+            case 'otel':
+                GridViewCariSearch.AutoFilterByColumn('Otel', description);
+                break;
+            case 'sorumlu':
+                GridViewCariSearch.AutoFilterByColumn('Sorumlu', description);
+                break;
+            case 'uyruk':
+                GridViewCariSearch.AutoFilterByColumn('Uyrugu', description);
+                break;
+
+            default:
+                GridViewCariSearch.AutoFilterByColumn('Musteri', '#$%$fdas3455#^');
+        }
+
+    }
+    // .................... Cari Detay Gosterme Kismi
+
+    var onGridCariEndCallback = function(s, e) {
+            if (s.IsEditing()) {
+                GridViewOdeme.CancelEdit();
+            };
+        }
+
+    var onGridOdemeEndCallback = function (s, e) {
+            if (s.IsEditing()) {
+                GridViewCari.CancelEdit();
+            };
+        }
+
+    // Update with Enter .........................
+
+    var prevOnLoad = window.onload;
+    window.onload = myOnLoad;
+    function myOnLoad() {
+        if (prevOnLoad != null)
+            prevOnLoad();
+        document.onkeydown = myOnKeyDown;
+    }
+    function myOnKeyDown() {
+
+        var grdCari = GridViewCari;
+        var grdOdeme = GridViewOdeme;
+
+        if (event.keyCode == 27)
+        {
+            if (grdCari.IsEditing()) { grdCari.CancelEdit(); }
+            if (grdOdeme.IsEditing()) { grdOdeme.CancelEdit(); }
+        }
+
+        if (event.keyCode == 13)
+        {
+            ASPxClientUtils.PreventEventAndBubble(event); //Enterin asagiya inmesini engeller
+            if (grdCari.IsEditing()) { grdCari.UpdateEdit(); }
+            if (grdOdeme.IsEditing()) { grdOdeme.UpdateEdit(); }
+        }
+
+    }
+    // ......................... Update with Enter
+
+</script>
+
+@Html.DevExpress().TabControl(
+        settings =>
+        {
+            settings.Name = "tabFirmalar";
+            settings.Width = 667;
+            settings.EnableTabScrolling = true; // genisligin devreye girmesini saglar
+            settings.TabAlign = TabAlign.Justify; // sag ve solda ok cikarir
+        }).Bind(Model).GetHtml()
+
+@Html.DevExpress().Splitter(settings =>
+{
+    settings.Name = "SplitterCariOdeme";
+    settings.Width = System.Web.UI.WebControls.Unit.Pixel(667);
+    settings.AllowResize = true;
+
+    settings.Panes.Add(contentPane =>
+    {
+        contentPane.Panes.Add(cariPane =>
+        {
+            cariPane.Size = System.Web.UI.WebControls.Unit.Pixel(667);
+            cariPane.AutoHeight = true;
+            cariPane.SetContent(() =>
+            {
+                ViewContext.Writer.Write("<h4 id='cariTitle' style='color: #757575; text-align:center;'>" + ViewBag.Firma + " 'Cari'</h4>");
+
+                using (Html.BeginForm())
+                {
+                    ViewContext.Writer.Write(@Html.Action("GridViewPartialCari","CariVeOdemeler"));
+                }
+
+                Html.DevExpress().Button(s =>
+                {
+                    s.Name = "AddCiro";
+                    s.Text = "+";
+                    s.ControlStyle.CssClass = "rndBtn marginTop5px";
+                    s.Width = 25;
+                    s.ClientSideEvents.Click = "function(s, e){GridViewCari.AddNewRow()}";
+                }).Render();
+
+            });
+        });
+
+        contentPane.Panes.Add(odemePane =>
+        {
+            odemePane.Size = System.Web.UI.WebControls.Unit.Pixel(667);
+            odemePane.AutoHeight = true;
+            odemePane.SetContent(() =>
+            {
+                ViewContext.Writer.Write(@Html.Action("GridViewPartialBakiye", "Bakiye", new { frmId = @Request.Params["frmId"] }));
+            });
+        });
+
+        contentPane.Panes.Add(odemePane =>
+        {
+            odemePane.Size = System.Web.UI.WebControls.Unit.Pixel(667);
+            odemePane.AutoHeight = true;
+            odemePane.SetContent(() =>
+            {
+                ViewContext.Writer.Write("<h4 id='odemeTitle' style='color: #757575; text-align:center;'>" + ViewBag.Firma + " 'Odeme'</h4>");
+
+                ViewContext.Writer.Write(@Html.Action("GridViewPartialOdeme","CariVeOdemeler"));
+
+                Html.DevExpress().Button(s =>
+                {
+                    s.Name = "AddOdeme";
+                    s.Text = "+";
+                    s.ControlStyle.CssClass = "rndBtn marginTop5px";
+                    s.Width = 25;
+                    s.ClientSideEvents.Click = "function(s, e){GridViewOdeme.AddNewRow()}";
+                }).Render();
+
+            });
+        });
+    });
+
+}).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "PopupLog";
+
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        settings.HeaderText = "Logs";
+        settings.Modal = true;
+        //settings.Height = Unit.Pixel(100);
+        //settings.ShowPageScrollbarWhenModal = true;
+        //settings.ScrollBars = ScrollBars.None;
+
+        settings.SetContent(() =>
+        {
+            Html.RenderAction("GridViewPartialLog","Log");
+        });
+    }).GetHtml()
+
+@*Cari Detay kismi*@
+<form>
+    @Html.DevExpress().PopupControl(
+        settings =>
+        {
+            settings.Name = "PopupSearchCari";
+            settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "GridViewCariSearchPartial" };
+            settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+            settings.HeaderText = "Cariler";
+            settings.Modal = true;
+            settings.ClientSideEvents.EndCallback = "function (s,e) { PopupSearchCariEndCallBack(s, e) }";
+
+        }).GetHtml()
+</form>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "loadingPanel";
+        settings.Modal = false;
+        settings.ContainerElementID = "SplitterCariOdeme";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+
+@*...................... Cari Detay kismi*@

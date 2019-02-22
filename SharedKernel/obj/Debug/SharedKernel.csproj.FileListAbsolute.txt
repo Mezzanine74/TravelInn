@@ -1,0 +1,15 @@
+c:\Users\USER\source\repos\Muhasebe\SharedKernel\bin\Debug\SharedKernel.dll
+c:\Users\USER\source\repos\Muhasebe\SharedKernel\bin\Debug\SharedKernel.pdb
+c:\Users\USER\source\repos\Muhasebe\SharedKernel\obj\Debug\SharedKernel.csproj.CoreCompileInputs.cache
+c:\Users\USER\source\repos\Muhasebe\SharedKernel\obj\Debug\SharedKernel.dll
+c:\Users\USER\source\repos\Muhasebe\SharedKernel\obj\Debug\SharedKernel.pdb
+C:\Users\USER\source\repos\TravellInn\SharedKernel\bin\Debug\SharedKernel.dll
+C:\Users\USER\source\repos\TravellInn\SharedKernel\bin\Debug\SharedKernel.pdb
+C:\Users\USER\source\repos\TravellInn\SharedKernel\bin\Debug\TravelInn.Common.dll
+C:\Users\USER\source\repos\TravellInn\SharedKernel\bin\Debug\TravelInn.Common.pdb
+C:\Users\USER\source\repos\TravellInn\SharedKernel\bin\Debug\TravelInn.Common.dll.config
+C:\Users\USER\source\repos\TravellInn\SharedKernel\obj\Debug\SharedKernel.csprojAssemblyReference.cache
+C:\Users\USER\source\repos\TravellInn\SharedKernel\obj\Debug\SharedKernel.csproj.CoreCompileInputs.cache
+C:\Users\USER\source\repos\TravellInn\SharedKernel\obj\Debug\SharedKernel.csproj.CopyComplete
+C:\Users\USER\source\repos\TravellInn\SharedKernel\obj\Debug\SharedKernel.dll
+C:\Users\USER\source\repos\TravellInn\SharedKernel\obj\Debug\SharedKernel.pdb

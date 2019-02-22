@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Turlar";
+}
+
+<style type="text/css">
+    /*BUNLARI SONRA CUSTOM CSS E AL*/
+    .marginTop5px {
+        margin-top: 5px;
+    }
+
+    .dxgvHeader_Metropolis {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<style type="text/css">
+    .cariDetay {
+        color: #6495ED;
+        /*font-size: small;*/
+    }
+
+    .noCursor {
+        cursor: default;
+    }
+
+    .cariYok {
+        color: gray;
+    }
+</style>
+
+<script>
+
+    var onRowDblClick = function (s, e) {
+
+        s.GetRowValues(
+            e.visibleIndex,
+            "Uniqueidentifier",
+            function (value) {
+                PopupLog.Show();
+                GridViewLog.PerformCallback({ uniqeIdentifier: value });
+            });
+    }
+
+    //Cari Detay Gosterme Kismi
+    var description = "";
+
+    var ButtonCariDetayClick = function (m) {
+        loadingPanel.Show();
+        description = m;
+        PopupSearchCari.PerformCallback();
+    }
+
+    var PopupSearchCariEndCallBack = function (s, e) {
+        s.Show();
+        loadingPanel.Hide();
+        PopupSearchCari.SetHeaderText(description + ' nin Cari Bilgileri')
+        GridViewCariSearch.AutoFilterByColumn('Tur', description)
+    }
+    // .................... Cari Detay Gosterme Kismi
+
+    // Update with Enter .........................
+
+    var prevOnLoad = window.onload;
+    window.onload = myOnLoad;
+    function myOnLoad() {
+        if (prevOnLoad != null)
+            prevOnLoad();
+        document.onkeydown = myOnKeyDown;
+    }
+    function myOnKeyDown() {
+        if (event.keyCode == 27)
+            GridViewTurlar.CancelEdit();
+        if (event.keyCode == 13)
+            GridViewTurlar.UpdateEdit();
+    }
+    // ......................... Update with Enter
+
+</script>
+
+@Html.Action("GridViewPartialTurlar")
+
+@Html.DevExpress().Button(s =>
+{
+    s.Name = "AddTur";
+    s.Text = "+";
+    s.ControlStyle.CssClass = "rndBtn marginTop5px";
+    s.Width = 25;
+    s.ClientSideEvents.Click = "function(s, e){GridViewTurlar.AddNewRow()}";
+}).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "PopupLog";
+
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+
+        settings.HeaderText = "Logs";
+        settings.Modal = true;
+
+        settings.SetContent(() =>
+        {
+            Html.RenderAction("GridViewPartialLog","Log");
+        });
+    }).GetHtml()
+
+
+@*Cari Detay kismi*@
+<form>
+    @Html.DevExpress().PopupControl(
+        settings =>
+        {
+            settings.Name = "PopupSearchCari";
+            settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "GridViewCariSearchPartial" };
+            settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+            settings.HeaderText = "Cariler";
+            settings.Modal = true;
+            settings.ClientSideEvents.EndCallback = "function (s,e) { PopupSearchCariEndCallBack(s, e) }";
+
+        }).GetHtml()
+</form>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "loadingPanel";
+        settings.Modal = false;
+        settings.ContainerElementID = "GridViewTurlar";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+
+@*...................... Cari Detay kismi*@

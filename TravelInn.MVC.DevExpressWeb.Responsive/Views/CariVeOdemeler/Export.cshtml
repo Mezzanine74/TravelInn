@@ -1,0 +1,36 @@
+﻿
+@model TravelInn.MVC.DevExpressWeb.Responsive.HelperClasses.FirmasTabData
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style type="text/css">
+    /*BUNLARI SONRA CUSTOM CSS E AL*/
+    .marginTop5px {
+        margin-top: 5px;
+    }
+
+    .dxgvHeader_Metropolis {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<script type="text/javascript">
+    'use strict';
+
+    var grid_BeginCallback = function (s, e) {
+        e.customArgs["frmId"] = @Request.Params["frmId"];
+    }
+
+    $(function() {
+        GridViewCariOdemeExcel.ExportTo(ASPxClientGridViewExportFormat.Xls);
+    })
+
+
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.Action("GridViewPartialCariOdemeExcel");
+}

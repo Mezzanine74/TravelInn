@@ -1,0 +1,60 @@
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewFirmalar";
+        settings.CallbackRouteValues = new { Controller = "Firmalar", Action = "GridViewFirmalarPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Firmalar", Action = "GridViewFirmalarPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Firmalar", Action = "GridViewFirmalarPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Firmalar", Action = "GridViewFirmalarPartialDelete" };
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+
+        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e){ onRowDblClick(s,e); }";
+        settings.ClientSideEvents.RowClick = "function(s,e){onGrdFirmalar_RowClick(s,e);}";
+        settings.ClientSideEvents.EndCallback = "function(s,e){onGrdFirmaEndCallback(s,e);}";
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.Caption = " ";
+        settings.CommandColumn.Width = 74;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = false;
+        settings.SettingsPager.PageSize = Int32.MaxValue;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        // GENISLIK ICIN ******************************************************
+        //settings.Width = System.Web.UI.WebControls.Unit.Pixel(900);
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        // ****************************************************** GENISLIK ICIN
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add(col => { col.FieldName = "Ismi"; col.Width = Unit.Pixel(250); col.CellStyle.Wrap = DefaultBoolean.True; });
+        settings.Columns.Add(col => { col.FieldName = "Adresi"; col.Width = Unit.Pixel(250); col.CellStyle.Wrap = DefaultBoolean.True; });
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
