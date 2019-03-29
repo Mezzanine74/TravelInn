@@ -1,0 +1,9 @@
+@Html.DevExpress().RichEdit(settings => {
+    settings.Name = "RichEditEmail";
+    settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "RichEditEmailPartial" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = Unit.Pixel(850);
+    settings.ReadOnly = true;
+    settings.RibbonMode = RichEditRibbonMode.None;
+    settings.WorkDirectory = Server.MapPath("~/Content/CariConfirmations/15/98/");
+}).Open((string)ViewBag.Email).GetHtml()

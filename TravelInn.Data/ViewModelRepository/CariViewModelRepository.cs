@@ -10,6 +10,7 @@ namespace TravelInn.Data.ViewModelRepository
     public class CariViewModelRepository
     {
         private TravelInn.Data.TravelInnEntities db = new TravelInnEntities();
+        private GenericRepository<Cari, Log> _repoCari;
         private GenericRepository<Musteri, Log> _repoMusteri;
         private GenericRepository<Tur, Log> _repoTur;
         private GenericRepository<Otel, Log> _repoOtel;
@@ -17,6 +18,7 @@ namespace TravelInn.Data.ViewModelRepository
 
         public CariViewModelRepository()
         {
+            _repoCari = new GenericRepository<Cari, Log>(db);
             _repoMusteri = new GenericRepository<Musteri, Log>(db);
             _repoTur = new GenericRepository<Tur, Log>(db);
             _repoOtel = new GenericRepository<Otel, Log>(db);
@@ -53,6 +55,8 @@ namespace TravelInn.Data.ViewModelRepository
                 SatisSorumlusuAdres = s.SatisSorumlusu.Adres,
                 SatisSorumlusuTelefon = s.SatisSorumlusu.Telefon,
                 SatisSorumlusuEmail = s.SatisSorumlusu.Email,
+
+                Confirmed = s.Confirmed,
 
                 Aciklama = s.Aciklama,
                 Dollar = s.Dollar,
@@ -178,6 +182,8 @@ namespace TravelInn.Data.ViewModelRepository
 
         public OperationResult Update(CariViewModel item)
         {
+            var confirmed = _repoCari.FindByKey(item.Id);
+
             var cari = new Cari()
             {
                 Id = item.Id,
@@ -192,7 +198,8 @@ namespace TravelInn.Data.ViewModelRepository
                 Tarih = item.Tarih,
                 TurId = item.TurId,
                 VoucherNo = item.VoucherNo,
-                SatisSorumlusu_Id = item.SatisSorumlusu_Id
+                SatisSorumlusu_Id = item.SatisSorumlusu_Id,
+                Confirmed = confirmed.Confirmed
             };
 
             var repoCari = new GenericRepository<Cari, Log>(db);
@@ -347,7 +354,6 @@ namespace TravelInn.Data.ViewModelRepository
 
             return new YaklasanTurBilgisi() { Yaklasiyor = false, Bilgileri = "" };
         }
-
 
     }
 

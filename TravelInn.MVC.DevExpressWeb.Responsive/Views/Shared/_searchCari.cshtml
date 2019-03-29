@@ -1,0 +1,57 @@
+﻿@*Cari Detay kismi*@
+<form>
+    @Html.DevExpress().PopupControl(
+        settings =>
+        {
+            settings.Name = "PopupSearchCari";
+            settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "GridViewCariSearchPartial" };
+            settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+            settings.HeaderText = "Cariler";
+            settings.Modal = true;
+            settings.ClientSideEvents.EndCallback = "function (s,e) { PopupSearchCariEndCallBack(s, e) }";
+
+        }).GetHtml()
+</form>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanelCariSearch";
+        settings.Modal = false;
+        //settings.ContainerElementID = "GridViewUyruklar";
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+
+@*...................... Cari Detay kismi*@
+
+
+<script type="text/javascript">
+        'use strict';
+
+        var ButtonCariDetayClick;
+        var PopupSearchCariEndCallBack;
+
+        $(function () {
+
+            //Cari Detay Gosterme Kismi
+            var kolonAdi = '';
+            var kolonFiltreDegeri = "";
+
+            ButtonCariDetayClick = function (k,f) {
+                LoadingPanelCariSearch.Show();
+                kolonAdi = k;
+                kolonFiltreDegeri = f;
+                PopupSearchCari.PerformCallback({ kolonAdi: kolonAdi, kolonFiltreDegeri: kolonFiltreDegeri });
+            }
+
+            PopupSearchCariEndCallBack = function (s, e) {
+                s.Show();
+                LoadingPanelCariSearch.Hide();
+                PopupSearchCari.SetHeaderText(kolonFiltreDegeri + ' nin Cari Bilgileri')
+            }
+            // .................... Cari Detay Gosterme Kismi
+
+        })
+</script>
+

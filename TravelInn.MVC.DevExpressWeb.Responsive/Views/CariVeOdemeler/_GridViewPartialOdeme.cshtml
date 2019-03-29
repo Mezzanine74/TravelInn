@@ -29,7 +29,7 @@
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.ClientSideEvents.BeginCallback = "function(s,e){gridOdeme_BeginCallback(s,e)}";
-        settings.ClientSideEvents.RowDblClick = "function(s,e){ onRowDblClick(s,e) }";
+        settings.ClientSideEvents.RowDblClick = "function(s,e){ onShowLog(s,e) }";
         settings.ClientSideEvents.EndCallback = "function(s,e){ onGridOdemeEndCallback(s,e)}";
 
         settings.CommandColumn.Visible = true;
@@ -227,7 +227,7 @@
                             btnSettings.Name = "btnUpdate";
                             btnSettings.Text = "Guncelle";
                             btnSettings.RenderMode = ButtonRenderMode.Link;
-                            btnSettings.ClientSideEvents.Click = "function(s, e){ GridViewOdeme.UpdateEdit(); }";
+                            btnSettings.ClientSideEvents.Click = "function(s, e){ updateGrid(" + settings.Name + "); }";
                         }).Render();
                         Html.DevExpress().Button(btnSettings =>
                         {
@@ -235,7 +235,7 @@
                             btnSettings.Text = "Iptal";
                             btnSettings.RenderMode = ButtonRenderMode.Link;
                             btnSettings.Style[HtmlTextWriterStyle.MarginLeft] = "5px";
-                            btnSettings.ClientSideEvents.Click = "function(s, e){ GridViewOdeme.CancelEdit(); }";
+                            btnSettings.ClientSideEvents.Click = "function(s, e){ cancelGrid(" + settings.Name + "); }";
                         }).Render();
                         ViewContext.Writer.Write("</div>");
                     });

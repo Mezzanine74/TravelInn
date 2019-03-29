@@ -4,10 +4,29 @@
 }
 
 <style type="text/css">
+    /*BUNLARI SONRA CUSTOM CSS E AL*/
     .marginTop5px {
         margin-top: 5px;
     }
+
+    .dxgvHeader_Metropolis {
+        background-color: #f0f0f0;
+    }
 </style>
+
+<script>
+    var onGrdFirmaEndCallback = function (s, e) {
+        if (s.IsEditing()) {
+            GridViewFirmaTemsilcileri.CancelEdit();
+        };
+    }
+
+    var onGrdFirmaTemsilcileriEndCallback = function (s, e) {
+        if (s.IsEditing()) {
+            GridViewFirmalar.CancelEdit();
+        };
+    }
+</script>
 
 @Html.DevExpress().Splitter(settings =>
 {
@@ -26,15 +45,6 @@
             {
                 ViewContext.Writer.Write(@Html.Action("GridViewFirmalarPartial", "Firmalar"));
 
-                Html.DevExpress().Button(s =>
-                {
-                    s.Name = "AddFirma";
-                    s.Text = "+";
-                    s.ControlStyle.CssClass = "rndBtn marginTop5px";
-                    s.Width = 25;
-                    s.ClientSideEvents.Click = "function(s, e){GridViewFirmalar.AddNewRow()}";
-                }).Render();
-
             });
         });
 
@@ -48,15 +58,6 @@
 
                 ViewContext.Writer.Write(@Html.Action("GridViewFirmaTemsilcileriPartial", "FirmaTemsilcileri"));
 
-                Html.DevExpress().Button(s =>
-                {
-                    s.Name = "AddFirmaTemsilcisi";
-                    s.Text = "+";
-                    s.ControlStyle.CssClass = "rndBtn marginTop5px";
-                    s.Width = 25;
-                    s.ClientSideEvents.Click = "function(s, e){GridViewFirmaTemsilcileri.AddNewRow()}";
-                }).Render();
-
             });
         });
 
@@ -69,16 +70,14 @@
 
         var frmId = 0;
 
-        onGrdFirmalar_RowClick = function (s, e)
-        {
+        onGrdFirmalar_RowClick = function (s, e) {
 
             frmId = GridViewFirmalar.GetRowKey(e.visibleIndex);
 
             GridViewFirmalar.GetRowValues(
                 e.visibleIndex,
                 'Ismi',
-                function (value)
-                {
+                function (value) {
                     document.getElementById('firmaTitle').innerHTML = value
                 })
 
@@ -86,9 +85,17 @@
 
         }
 
-        onGrdFirmaTemsilcileri_BeginCallback = function (s, e)
-        {
+        onGrdFirmaTemsilcileriBeginCallback = function (s, e) {
+
+            if (e.command === 'STARTEDIT') {
+                AdjustEnterKeyUpdate(s, e);
+            }
+
             e.customArgs["FirmaId"] = frmId;
+
+            if (frmId > 0) {
+                GridViewFirmaTemsilcileri.SetVisible(true);
+            }
         }
 
     })

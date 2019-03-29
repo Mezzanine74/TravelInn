@@ -1,0 +1,29 @@
+@model string
+
+@Html.DevExpress().FileManager(settings => {
+    settings.Name = "FileManagerCariConfirmation";
+    settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "FileManagerCariConfirmationPartial" };
+
+    settings.DownloadRouteValues = new { Controller = "CariVeOdemeler", Action = "FileManagerCariConfirmationPartialDownload" };
+    settings.SettingsEditing.AllowDownload = true;
+
+    settings.Settings.ThumbnailFolder = Url.Content("~/Content/FileManager/Thumbnails");
+
+    settings.Settings.EnableMultiSelect = false; // False olmali yoksa coklu secimde yuklemede sadece son dosya calisir
+    settings.SettingsEditing.AllowRename = false;
+    settings.SettingsEditing.AllowDelete = true;
+    settings.SettingsUpload.Enabled = true;
+    settings.Settings.AllowedFileExtensions = new string[] {".eml",".pst", ".doc", ".docx", ".txt"};
+    settings.SettingsUpload.UseAdvancedUploadMode = true;
+    settings.SettingsUpload.AdvancedModeSettings.EnableMultiSelect = false; // False olmali yoksa coklu secimde yuklemede sadece son dosya calisir
+    settings.SettingsFolders.Visible = false;
+
+    settings.Width = Unit.Pixel(600);
+    settings.Height = Unit.Pixel(350);
+
+    // events
+    settings.ClientSideEvents.FileUploaded = "function(s,e){OnFileUploaded(s,e)}";
+    settings.ClientSideEvents.ItemDeleted = "function(s,e){OnItemDeleted(s,e)}";
+
+    settings.SettingsFileList.View = DevExpress.Web.FileListView.Details;
+}).BindToFolder(Model).GetHtml()

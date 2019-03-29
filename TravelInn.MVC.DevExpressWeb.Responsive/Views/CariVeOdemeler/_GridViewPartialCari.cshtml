@@ -32,12 +32,12 @@
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.ClientSideEvents.BeginCallback = "function(s,e){gridCari_BeginCallback(s,e)}";
-        settings.ClientSideEvents.RowDblClick = "function(s,e){ onRowDblClick(s,e) }";
+        settings.ClientSideEvents.RowDblClick = "function(s,e){ onShowLog(s,e) }";
         settings.ClientSideEvents.EndCallback = "function(s,e){onGridCariEndCallback(s,e)}";
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.Caption = " ";
-        settings.CommandColumn.Width = isMobile ? 50 : 74;
+        settings.CommandColumn.Width = isMobile ? 50 : 90;
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
@@ -67,8 +67,8 @@
         settings.SettingsPager.Visible = false;
         settings.SettingsPager.PageSize = Int32.MaxValue;
         settings.Settings.ShowGroupPanel = false;
-//settings.Settings.ShowFilterRow = false;
-settings.SettingsBehavior.AllowSelectByRowClick = false;
+        //settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
 
         settings.Settings.ShowHeaderFilterButton = true;
         settings.SettingsPopup.HeaderFilter.Height = 300;
@@ -77,36 +77,56 @@ settings.SettingsBehavior.AllowSelectByRowClick = false;
         foreach (GridViewDataColumn column in settings.Columns)
             column.SettingsHeaderFilter.Mode = GridHeaderFilterMode.List;
 
-// GENISLIK ICIN ******************************************************
-settings.Width = !isMobile ? System.Web.UI.WebControls.Unit.Pixel(1040) : System.Web.UI.WebControls.Unit.Pixel(667);
+        // GENISLIK ICIN ******************************************************
+        settings.Width = !isMobile ? System.Web.UI.WebControls.Unit.Pixel(1040) : System.Web.UI.WebControls.Unit.Pixel(667);
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
         settings.SettingsBehavior.AllowEllipsisInText = true;
-// ****************************************************** GENISLIK ICIN
+        // ****************************************************** GENISLIK ICIN
 
-settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.CommandColumn.CustomButtons.Add(new GridViewCommandColumnCustomButton() { ID = "btnEmail", Text = "Email" });
+        settings.ClientSideEvents.CustomButtonClick =
+            string.Format("function(s, e) {{ EmailButtonClick(s, e, '{0}'); }}", Url.Action("ReadEmail", "CariVeOdemeler"));
+
+        settings.CustomButtonInitialize = (sender, e) =>
+        {
+            MVCxGridView g = sender as MVCxGridView;
+
+            var confirmed = (bool)g.GetRowValues(e.VisibleIndex, "Confirmed");
+            if (confirmed)
+            {
+                e.Visible = DefaultBoolean.True;
+            }
+            else
+            {
+                e.Visible = DefaultBoolean.False;
+            }
+
+        };
 
         settings.SetEditFormTemplateContent(c =>
         {
             Html.DevExpress().FormLayout(flSettings =>
             {
                 flSettings.Name = "CariEditForm";
-                flSettings.ColCount = 3;
+                flSettings.ColCount = 4;
 
                 flSettings.Items.AddGroupItem(grp =>
                 {
                     grp.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
                     grp.ShowCaption = DefaultBoolean.False;
-                    grp.ColCount = 3;
-                    grp.ColSpan = 3;
+                    grp.ColCount = 4;
+                    grp.ColSpan = 4;
 
                     grp.Items.Add(grpItem =>
                     {
                         grpItem.FieldName = "Aciklama";
-                        grpItem.ColSpan = 3;
+                        grpItem.ColSpan = 4;
 
                         grpItem.NestedExtension().Memo(tbx =>
                         {
@@ -114,8 +134,25 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
                             tbx.Properties.ValidationSettings.Display = Display.Dynamic;
                             tbx.ShowModelErrors = true;
                             tbx.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                    //settings.Height = System.Web.UI.WebControls.Unit.Pixel(400);
-                });
+                            //settings.Height = System.Web.UI.WebControls.Unit.Pixel(400);
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.Caption = "";
+
+                        grpItem.NestedExtension().Button(btn =>
+                        {
+                            string frmId = Request.QueryString["frmId"];
+                            btn.Name = "btnConfirmation";
+                            btn.Text = "Confirmation Email";
+                            btn.Width = Unit.Percentage(100);
+                            btn.CausesValidation = false;
+                            btn.Images.Image.IconID = "mail_emailtemplate_16x16office2013";
+                            btn.ClientEnabled = true;
+                            btn.ClientSideEvents.Click = @"function(){InitiateFileManager("+ c.VisibleIndex + ")}";
+                        });
                     });
 
                     grp.Items.Add(grpItem =>
@@ -207,8 +244,8 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
                     });
                 });
 
-        // SATIS SORUMLUSU
-        flSettings.Items.AddGroupItem(grp =>
+                // SATIS SORUMLUSU
+                flSettings.Items.AddGroupItem(grp =>
                 {
                     grp.GroupBoxDecoration = GroupBoxDecoration.Box;
                     grp.Caption = "Sorumlu";
@@ -282,8 +319,8 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
 
                 });
 
-        // MUSTERI
-        flSettings.Items.AddGroupItem(grp =>
+                // MUSTERI
+                flSettings.Items.AddGroupItem(grp =>
                 {
                     grp.GroupBoxDecoration = GroupBoxDecoration.Box;
                     grp.Caption = "Musteri";
@@ -379,8 +416,8 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
 
                 });
 
-        // TUR
-        flSettings.Items.AddGroupItem(grp =>
+                // TUR
+                flSettings.Items.AddGroupItem(grp =>
                 {
                     grp.GroupBoxDecoration = GroupBoxDecoration.Box;
                     grp.Caption = "Tur";
@@ -453,8 +490,8 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
                     });
                 });
 
-        // OTEL
-        flSettings.Items.AddGroupItem(grp =>
+                // OTEL
+                flSettings.Items.AddGroupItem(grp =>
                 {
                     grp.GroupBoxDecoration = GroupBoxDecoration.Box;
                     grp.Caption = "Otel";
@@ -543,9 +580,9 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
                         {
                             btnSettings.Name = "btnUpdate";
                             btnSettings.Text = "Guncelle";
-                    //btnSettings.UseSubmitBehavior = true;
-                    btnSettings.RenderMode = ButtonRenderMode.Link;
-                            btnSettings.ClientSideEvents.Click = "function(s, e){ GridViewCari.UpdateEdit(); }";
+                            //btnSettings.UseSubmitBehavior = true;
+                            btnSettings.RenderMode = ButtonRenderMode.Link;
+                            btnSettings.ClientSideEvents.Click = "function(s, e){ updateGrid(" + settings.Name + "); }";
                         }).Render();
                         Html.DevExpress().Button(btnSettings =>
                         {
@@ -553,7 +590,7 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
                             btnSettings.Text = "Iptal";
                             btnSettings.RenderMode = ButtonRenderMode.Link;
                             btnSettings.Style[HtmlTextWriterStyle.MarginLeft] = "5px";
-                            btnSettings.ClientSideEvents.Click = "function(s, e){ GridViewCari.CancelEdit(); }";
+                            btnSettings.ClientSideEvents.Click = "function(s, e){ cancelGrid(" + settings.Name + "); }";
                         }).Render();
                         ViewContext.Writer.Write("</div>");
                     });
@@ -598,16 +635,17 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
                     int sorumluId = 0;
                     Int32.TryParse(Convert.ToString(DataBinder.Eval(dItem.DataItem, "SatisSorumlusu_Idstr")), out sorumluId);
                     IEnumerable<SatisSorumlusu>
-    satisSorumlulari = ViewBag.SatisSorumlusu;
+                    satisSorumlulari = ViewBag.SatisSorumlusu;
 
-                    string description = satisSorumlulari.SingleOrDefault(cc => cc.Id == sorumluId) != null ? satisSorumlulari.SingleOrDefault(cc => cc.Id == sorumluId).Ismi : string.Empty;
-                    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
-                    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'sorumlu'); }";
+                    string kolonFiltreDegeri = satisSorumlulari.SingleOrDefault(cc => cc.Id == sorumluId) != null ? satisSorumlulari.SingleOrDefault(cc => cc.Id == sorumluId).Ismi : string.Empty;
+                    var kolonFiltrelenecek = "Sorumlu"; // ViewCariSearch modeldeki isim
+                    bool emptyDescription = string.IsNullOrWhiteSpace(kolonFiltreDegeri) || string.IsNullOrEmpty(kolonFiltreDegeri);
+                    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('"+ kolonFiltrelenecek + "', '" + kolonFiltreDegeri + "'); }";
 
                     lnkSettings.Name = "btnSorumlu" + dItem.VisibleIndex;
                     lnkSettings.EncodeHtml = false;
                     lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
-                    lnkSettings.Text = description.ToString();
+                    lnkSettings.Text = kolonFiltreDegeri.ToString();
                     lnkSettings.RenderMode = ButtonRenderMode.Link;
                     lnkSettings.ClientSideEvents.Click = clickEvent;
                 }).Render();
@@ -616,190 +654,202 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
         });
 
         settings.Columns.Add(col =>
-{
-    col.FieldName = "Dollar";
+        {
+            col.FieldName = "Dollar";
 
-    col.SetHeaderCaptionTemplateContent(colHeader =>
-{
-    Html.DevExpress().Image(
-image =>
-{
-    image.Name = "CariImageDollar";
-    image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessDollarSvg16x16;
-}).GetHtml();
-});
+            col.SetHeaderCaptionTemplateContent(colHeader =>
+            {
+                Html.DevExpress().Image(
+            image =>
+            {
+                image.Name = "CariImageDollar";
+                image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessDollarSvg16x16;
+            }).GetHtml();
+            });
 
-    if (!isMobile) col.Width = 70; col.PropertiesEdit.DisplayFormatString = "N";
-});
+            if (!isMobile) col.Width = 70; col.PropertiesEdit.DisplayFormatString = "N";
+        });
         settings.Columns.Add(col =>
-{
-    col.FieldName = "Euro";
-    col.SetHeaderCaptionTemplateContent(colHeader =>
-{
-    Html.DevExpress().Image(
-image =>
-{
-    image.Name = "CariImageEuro";
-    image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessEuroSvg16x16;
-}).GetHtml();
-});
+        {
+            col.FieldName = "Euro";
+            col.SetHeaderCaptionTemplateContent(colHeader =>
+            {
+                Html.DevExpress().Image(
+            image =>
+            {
+                image.Name = "CariImageEuro";
+                image.Properties.EmptyImage.IconID = DevExpress.Web.ASPxThemes.IconID.IconbuilderBusinessEuroSvg16x16;
+            }).GetHtml();
+            });
 
-    if (!isMobile) col.Width = 70; col.PropertiesEdit.DisplayFormatString = "N";
-});
+            if (!isMobile) col.Width = 70; col.PropertiesEdit.DisplayFormatString = "N";
+        });
         settings.Columns.Add(col => { col.FieldName = "TL"; if (!isMobile) col.Width = 70; col.PropertiesEdit.DisplayFormatString = "N"; });
 
         settings.Columns.Add(col =>
-{
-    col.FieldName = "VoucherNo";
-    col.Caption = "Vn"; if (!isMobile) col.Width = 50;
-});
+        {
+            col.FieldName = "VoucherNo";
+            col.Caption = "Vn"; if (!isMobile) col.Width = 50;
+        });
         settings.Columns.Add(col => { col.FieldName = "Pax"; if (!isMobile) col.Width = 50; });
 
         settings.Columns.Add(c =>
-{
-    c.FieldName = "MusteriIdstr";
-    c.Caption = "Musteri Adi";
-    if (!isMobile) c.Width = 100;
-    c.EditorProperties().ComboBox(p =>
-{
-    p.DropDownStyle = DropDownStyle.DropDown;
-    p.TextField = "Musteri_AdiSoyadi";
-    p.ValueField = "Id";
-    p.ValueType = typeof(int);
-    p.DataSource = ViewBag.Musteri;
-});
+        {
+            c.FieldName = "MusteriIdstr";
+            c.Caption = "Musteri Adi";
+            if (!isMobile) c.Width = 100;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.DropDownStyle = DropDownStyle.DropDown;
+                p.TextField = "Musteri_AdiSoyadi";
+                p.ValueField = "Id";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.Musteri;
+            });
 
-    c.SetDataItemTemplateContent(dItem =>
-{
-    Html.DevExpress().Button(lnkSettings =>
-{
-    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "MusteriAdi"));
-    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
-    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'musteri'); }";
+            c.SetDataItemTemplateContent(dItem =>
+            {
+                Html.DevExpress().Button(lnkSettings =>
+                {
+                    var kolonFiltreDegeri = Convert.ToString(DataBinder.Eval(dItem.DataItem, "MusteriAdi"));
+                    var kolonFiltrelenecek = "Musteri"; // ViewCariSearch modeldeki isim
+                    bool emptyDescription = string.IsNullOrWhiteSpace(kolonFiltreDegeri) || string.IsNullOrEmpty(kolonFiltreDegeri);
+                    var clickEvent = emptyDescription ? String.Empty : "function(){ ButtonCariDetayClick('"+ kolonFiltrelenecek + "', '" + kolonFiltreDegeri + "'); }";
 
-    lnkSettings.Name = "btnMusteri" + dItem.VisibleIndex;
-    lnkSettings.EncodeHtml = false;
-    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
-    lnkSettings.Text = description.ToString();
-    lnkSettings.RenderMode = ButtonRenderMode.Link;
-    lnkSettings.ClientSideEvents.Click = clickEvent;
-}).Render();
-});
-});
-
-        settings.Columns.Add(c =>
-{
-    c.FieldName = "MusteriUyrugu";
-    c.Caption = "Uyr.";
-    if (!isMobile) c.Width = 50;
-
-    c.SetDataItemTemplateContent(dItem =>
-{
-    Html.DevExpress().Button(lnkSettings =>
-{
-    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "MusteriUyrugu"));
-    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
-    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'uyruk'); }";
-
-    lnkSettings.Name = "btnUyruk" + dItem.VisibleIndex;
-    lnkSettings.EncodeHtml = false;
-    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
-    lnkSettings.Text = description.ToString();
-    lnkSettings.RenderMode = ButtonRenderMode.Link;
-    lnkSettings.ClientSideEvents.Click = clickEvent;
-}).Render();
-});
-
-});
+                    lnkSettings.Name = "btnMusteri" + dItem.VisibleIndex;
+                    lnkSettings.EncodeHtml = false;
+                    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
+                    lnkSettings.Text = kolonFiltreDegeri.ToString();
+                    lnkSettings.RenderMode = ButtonRenderMode.Link;
+                    lnkSettings.ClientSideEvents.Click = clickEvent;
+                }).Render();
+            });
+        });
 
         settings.Columns.Add(c =>
-{
-    c.FieldName = "TurIdstr";
-    c.Caption = "Tur Adi";
-    if (!isMobile) c.Width = 100;
-    c.EditorProperties().ComboBox(p =>
-{
-    p.DropDownStyle = DropDownStyle.DropDown;
-    p.TextField = "Tur_Adi";
-    p.ValueField = "Id";
-    p.ValueType = typeof(int);
-    p.DataSource = ViewBag.Tur;
-});
+        {
+            c.FieldName = "MusteriUyrugu";
+            c.Caption = "Uyr.";
+            if (!isMobile) c.Width = 50;
 
-    c.SetDataItemTemplateContent(dItem =>
-{
-    Html.DevExpress().Button(lnkSettings =>
-{
-    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "TurAdi"));
-    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
-    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'tur'); }";
+            c.SetDataItemTemplateContent(dItem =>
+            {
+                Html.DevExpress().Button(lnkSettings =>
+                {
+                    var kolonFiltreDegeri = Convert.ToString(DataBinder.Eval(dItem.DataItem, "MusteriUyrugu"));
+                    var kolonFiltrelenecek = "Uyrugu"; // ViewCariSearch modeldeki isim
+                    bool emptyDescription = string.IsNullOrWhiteSpace(kolonFiltreDegeri) || string.IsNullOrEmpty(kolonFiltreDegeri);
+                    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('"+ kolonFiltrelenecek + "', '" + kolonFiltreDegeri + "'); }";
 
-    lnkSettings.Name = "btnTur" + dItem.VisibleIndex;
-    lnkSettings.EncodeHtml = false;
-    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
-    lnkSettings.Text = description.ToString();
-    lnkSettings.RenderMode = ButtonRenderMode.Link;
-    lnkSettings.ClientSideEvents.Click = clickEvent;
-}).Render();
-});
+                    lnkSettings.Name = "btnUyruk" + dItem.VisibleIndex;
+                    lnkSettings.EncodeHtml = false;
+                    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
+                    lnkSettings.Text = kolonFiltreDegeri.ToString();
+                    lnkSettings.RenderMode = ButtonRenderMode.Link;
+                    lnkSettings.ClientSideEvents.Click = clickEvent;
+                }).Render();
+            });
 
-});
+        });
 
         settings.Columns.Add(c =>
-{
-    c.FieldName = "OtelIdstr";
-    c.Caption = "Otel Adi";
-    if (!isMobile) c.Width = 100;
+        {
+            c.FieldName = "TurIdstr";
+            c.Caption = "Tur Adi";
+            if (!isMobile) c.Width = 100;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.DropDownStyle = DropDownStyle.DropDown;
+                p.TextField = "Tur_Adi";
+                p.ValueField = "Id";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.Tur;
+            });
 
-    c.EditorProperties().ComboBox(p =>
-{
-    p.DropDownStyle = DropDownStyle.DropDown;
-    p.TextField = "Otel_Adi";
-    p.ValueField = "Id";
-    p.ValueType = typeof(int);
-    p.DataSource = ViewBag.Otel;
-});
+            c.SetDataItemTemplateContent(dItem =>
+            {
+                Html.DevExpress().Button(lnkSettings =>
+                {
+                    var kolonFiltreDegeri = Convert.ToString(DataBinder.Eval(dItem.DataItem, "TurAdi"));
+                    var kolonFiltrelenecek = "Tur"; // ViewCariSearch modeldeki isim
+                    bool emptyDescription = string.IsNullOrWhiteSpace(kolonFiltreDegeri) || string.IsNullOrEmpty(kolonFiltreDegeri);
+                    var clickEvent = emptyDescription ? String.Empty : "function(){ ButtonCariDetayClick('"+ kolonFiltrelenecek + "', '" + kolonFiltreDegeri + "'); }";
 
-    c.SetDataItemTemplateContent(dItem =>
-{
-    Html.DevExpress().Button(lnkSettings =>
-{
-    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "OtelAdi"));
-    bool emptyDescription = string.IsNullOrWhiteSpace(description) || string.IsNullOrEmpty(description);
-    var clickEvent = emptyDescription ? String.Empty : "function(m){ ButtonCariDetayClick('" + description + "', 'otel'); }";
+                    lnkSettings.Name = "btnTur" + dItem.VisibleIndex;
+                    lnkSettings.EncodeHtml = false;
+                    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
+                    lnkSettings.Text = kolonFiltreDegeri.ToString();
+                    lnkSettings.RenderMode = ButtonRenderMode.Link;
+                    lnkSettings.ClientSideEvents.Click = clickEvent;
+                }).Render();
+            });
 
-    lnkSettings.Name = "btnOtel" + dItem.VisibleIndex;
-    lnkSettings.EncodeHtml = false;
-    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
-    lnkSettings.Text = description.ToString();
-    lnkSettings.RenderMode = ButtonRenderMode.Link;
-    lnkSettings.ClientSideEvents.Click = clickEvent;
-}).Render();
-});
-});
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "OtelIdstr";
+            c.Caption = "Otel Adi";
+            if (!isMobile) c.Width = 100;
+
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.DropDownStyle = DropDownStyle.DropDown;
+                p.TextField = "Otel_Adi";
+                p.ValueField = "Id";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.Otel;
+            });
+
+            c.SetDataItemTemplateContent(dItem =>
+            {
+                Html.DevExpress().Button(lnkSettings =>
+                {
+                    var kolonFiltreDegeri = Convert.ToString(DataBinder.Eval(dItem.DataItem, "OtelAdi"));
+                    var kolonFiltrelenecek = "Otel"; // ViewCariSearch modeldeki isim
+                    bool emptyDescription = string.IsNullOrWhiteSpace(kolonFiltreDegeri) || string.IsNullOrEmpty(kolonFiltreDegeri);
+                    var clickEvent = emptyDescription ? String.Empty : "function(){ ButtonCariDetayClick('"+ kolonFiltrelenecek + "','" + kolonFiltreDegeri + "'); }";
+
+                    lnkSettings.Name = "btnOtel" + dItem.VisibleIndex;
+                    lnkSettings.EncodeHtml = false;
+                    lnkSettings.Styles.Style.CssClass = emptyDescription ? "noCursor" : String.Empty;
+                    lnkSettings.Text = kolonFiltreDegeri.ToString();
+                    lnkSettings.RenderMode = ButtonRenderMode.Link;
+                    lnkSettings.ClientSideEvents.Click = clickEvent;
+                }).Render();
+            });
+        });
 
         settings.HtmlRowPrepared = (s, e) =>
-{
-    if (e.RowType != GridViewRowType.Data) return;
+        {
+            if (e.RowType != GridViewRowType.Data) return;
 
-    Zamani zamani = (Zamani)e.GetValue("Zamani");
+            Zamani zamani = (Zamani)e.GetValue("Zamani");
 
-// bugun
-if (zamani == Zamani.Bugun)
-    {
-        e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#E6B0AA");
-    }
-// gecmis
-else if (zamani == Zamani.Gecmis)
-    {
-        e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#E9F7EF");
-    }
-// gelecek
-else if (zamani == Zamani.Gelecek)
-    {
-        e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#F9E79F");
-    }
-};
+            // bugun
+            if (zamani == Zamani.Bugun)
+            {
+                e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#E6B0AA");
+            }
+            // gecmis
+            else if (zamani == Zamani.Gecmis)
+            {
+                e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#E9F7EF");
+            }
+            // gelecek
+            else if (zamani == Zamani.Gelecek)
+            {
+                e.Row.BackColor = System.Drawing.ColorTranslator.FromHtml("#F9E79F");
+            }
+
+            bool confirmed = (bool) e.GetValue("Confirmed");
+
+            if (confirmed)
+            {
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.BackgroundColor, "Chartreuse");
+            }
+
+        };
 
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Dollar").DisplayFormat = "<b>{0:N}</b>";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Euro").DisplayFormat = "<b>{0:N}</b>";

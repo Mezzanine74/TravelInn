@@ -1,4 +1,5 @@
 ﻿using SharedKernel;
+using System.ComponentModel.DataAnnotations;
 using TravelInn.Common;
 using TravelInn.Data.Interface;
 
@@ -9,6 +10,7 @@ namespace TravelInn.Data.ViewModels
         public int Id { get; set; }
 
         public string MusteriIdstr { get; set; }
+        [Required]
         public string Musteri_AdiSoyadi { get; set; }
         public string Uniqueidentifier { get; set; }
 

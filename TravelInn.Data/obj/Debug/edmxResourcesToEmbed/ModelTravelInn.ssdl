@@ -242,7 +242,7 @@
     <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_CariOdemeExcel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_CariOdemeExcel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="View_CariOdemeExcel">
     <Key>
       <PropertyRef Name="Id" />
@@ -267,7 +267,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_CariOdemeExcel' does no
     <Property Name="Banka_Adi" Type="nvarchar" MaxLength="256" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_CariSearch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_CariSearch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="View_CariSearch">
     <Key>
       <PropertyRef Name="Id" />
@@ -289,7 +289,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_CariSearch' does not ha
     <Property Name="Otel" Type="nvarchar" MaxLength="256" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_FirmaBakiye' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_FirmaBakiye' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="View_FirmaBakiye">
     <Key>
       <PropertyRef Name="FirmaId" />
@@ -307,7 +307,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_FirmaBakiye' does not h
     <Property Name="Bakiye_Dollar" Type="numeric" Precision="38" Scale="2" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_UyrukCariAdedi' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_UyrukCariAdedi' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="View_UyrukCariAdedi">
     <Key>
       <PropertyRef Name="Id" />
@@ -318,7 +318,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_UyrukCariAdedi' does no
     <Property Name="CariAdedi" Type="int" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_YaklasanKayitlar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="View_YaklasanKayitlar">
     <Key>
       <PropertyRef Name="Id" />
@@ -337,6 +337,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
     <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="Tur" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="Otel" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Confirmed" Type="bit" Nullable="false" />
   </EntityType>
   <Association Name="FK_Cari_Musteri">
     <End Role="Musteri" Type="Self.Musteri" Multiplicity="0..1" />
@@ -554,7 +555,8 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
     [View_YaklasanKayitlar].[Musteri] AS [Musteri], 
     [View_YaklasanKayitlar].[Uyrugu] AS [Uyrugu], 
     [View_YaklasanKayitlar].[Tur] AS [Tur], 
-    [View_YaklasanKayitlar].[Otel] AS [Otel]
+    [View_YaklasanKayitlar].[Otel] AS [Otel], 
+    [View_YaklasanKayitlar].[Confirmed] AS [Confirmed]
     FROM [dbo].[View_YaklasanKayitlar] AS [View_YaklasanKayitlar]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_Cari_Musteri" Association="Self.FK_Cari_Musteri">

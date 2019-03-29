@@ -1,3 +1,11 @@
+@functions{
+    object GetEditing(ASPxGridView grid)
+    {
+        if (grid.IsNewRowEditing)
+            return new TravelInn.Data.ViewModels.TurViewModel();// Bu model editte gosterilenle ayni olacak
+        return grid.GetRow(grid.EditingRowVisibleIndex);
+    }
+}
 
 @{
     var grid = Html.DevExpress().GridView(settings =>
@@ -8,42 +16,113 @@
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Turlar", Action = "GridViewPartialTurlarAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Turlar", Action = "GridViewPartialTurlarUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Turlar", Action = "GridViewPartialTurlarDelete" };
-        settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
 
-        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+        settings.ClientSideEvents.RowDblClick = "function(s,e){ onShowLog(s,e) }";
+        settings.ClientSideEvents.Init = "function(s, e){ AdjustEnterKeyUpdate(s, e);}";
 
-        settings.ClientSideEvents.RowDblClick = "function(s,e){ onRowDblClick(s,e) }";
-
-        settings.SettingsBehavior.ConfirmDelete = true;
-
-        settings.CommandColumn.Visible = true;
-        settings.CommandColumn.Caption = " ";
         settings.CommandColumn.Width = 74;
-        settings.CommandColumn.ShowNewButton = false;
-        settings.CommandColumn.ShowEditButton = true;
-        settings.CommandColumn.ShowDeleteButton = true;
 
-        settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+        settings.Width = System.Web.UI.WebControls.Unit.Pixel(800);
 
-        settings.KeyFieldName = "Id";
+        settings.SetEditFormTemplateContent(c =>
+        {
+            Html.DevExpress().FormLayout(frmSettings =>
+            {
+                frmSettings.Name = "TurEditForm";
+                frmSettings.Width = Unit.Percentage(100);
 
-        settings.SettingsPager.Visible = true;
-        settings.SettingsPager.PageSize = Int32.MaxValue;
-        settings.Settings.ShowGroupPanel = false;
-        settings.Settings.ShowFilterRow = false;
-        settings.SettingsBehavior.AllowSelectByRowClick = false;
+                frmSettings.Items.AddGroupItem(grp =>
+                {
+                    grp.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+                    grp.ShowCaption = DefaultBoolean.False;
 
-// GENISLIK ICIN ******************************************************
-settings.Width = System.Web.UI.WebControls.Unit.Pixel(800);
-        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
-        settings.SettingsBehavior.AllowEllipsisInText = true;
-// ****************************************************** GENISLIK ICIN
+                    // Tur
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Tur_Adi";
 
-settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
-        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
-        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
-        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Width = Unit.Percentage(100);
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                        });
+                    });
+
+                    // Telefon
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Telefon";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Width = Unit.Percentage(100);
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                        });
+                    });
+
+                    // Email
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Email";
+
+                        grpItem.NestedExtension().TextBox(tbx =>
+                        {
+                            tbx.Width = Unit.Percentage(100);
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                        });
+                    });
+
+                    // Adres
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.FieldName = "Adres";
+
+                        grpItem.NestedExtension().Memo(tbx =>
+                        {
+                            tbx.Width = Unit.Percentage(100);
+                            tbx.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
+                            tbx.Properties.ValidationSettings.Display = Display.Dynamic;
+                            tbx.ShowModelErrors = true;
+                            tbx.ControlStyle.Wrap = DefaultBoolean.True;
+                        });
+                    });
+
+                    grp.Items.Add(grpItem =>
+                    {
+                        grpItem.ShowCaption = DefaultBoolean.False;
+                    }).SetNestedContent(() =>
+                    {
+                        ViewContext.Writer.Write("<div style='float:right'>");
+                        Html.DevExpress().Button(btnSettings =>
+                        {
+                            btnSettings.Name = "btnUpdate";
+                            btnSettings.Text = "Guncelle";
+                            btnSettings.RenderMode = ButtonRenderMode.Link;
+                            btnSettings.ClientSideEvents.Click = "function(s, e){ updateGrid(" + settings.Name + "); }";
+                        }).Render();
+                        Html.DevExpress().Button(btnSettings =>
+                        {
+                            btnSettings.Name = "btnCancel";
+                            btnSettings.Text = "Iptal";
+                            btnSettings.RenderMode = ButtonRenderMode.Link;
+                            btnSettings.Style[HtmlTextWriterStyle.MarginLeft] = "5px";
+                            btnSettings.ClientSideEvents.Click = "function(s, e){ cancelGrid(" + settings.Name + "); }";
+                        }).Render();
+                        ViewContext.Writer.Write("</div>");
+                    });
+
+                });
+
+            }).Bind(ViewData["Editable"] ?? GetEditing(c.Grid)).Render();
+        });
+
 
         settings.Columns.Add(col =>
         {
@@ -64,17 +143,18 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
             {
                 Html.DevExpress().Button(lnkSettings =>
                 {
-                    var description = Convert.ToString(DataBinder.Eval(dItem.DataItem, "Tur_Adi"));
+                    var kolonFiltreDegeri = Convert.ToString(DataBinder.Eval(dItem.DataItem, "Tur_Adi"));
+                    var kolonFiltrelenecek = "Tur"; // ViewCariSearch modeldeki isim
                     var cariAdedi = Convert.ToInt16(DataBinder.Eval(dItem.DataItem, "CariAdedi"));
-                    var cariGoster = cariAdedi > 0 
-                        ? " <span class='cariDetay'>(" + cariAdedi.ToString() + " adet cari)</span>" 
+                    var cariGoster = cariAdedi > 0
+                        ? " <span class='cariDetay'>(" + cariAdedi.ToString() + " adet cari)</span>"
                         : " <i class='cariYok'>(cari yok)</i>";
-                    var clickEvent = cariAdedi > 0 ? "function(m){ ButtonCariDetayClick('" + description + "'); }" : "function(){alert('kayitli bir cari yok')}";
+                    var clickEvent = cariAdedi > 0 ? "function(){ ButtonCariDetayClick('" + kolonFiltrelenecek + "', '" + kolonFiltreDegeri + "'); }" : "function(){alert('kayitli bir cari yok')}";
 
                     lnkSettings.Name = "btn" + dItem.VisibleIndex;
                     lnkSettings.EncodeHtml = false;
                     lnkSettings.Styles.Style.CssClass = cariAdedi > 0 ? String.Empty : "noCursor";
-                    lnkSettings.Text =description.ToString() + cariGoster;
+                    lnkSettings.Text = kolonFiltreDegeri.ToString() + cariGoster;
                     lnkSettings.RenderMode = ButtonRenderMode.Link;
                     lnkSettings.ClientSideEvents.Click = clickEvent;
                 }).Render();
@@ -85,6 +165,9 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
         settings.Columns.Add(col => { col.FieldName = "Telefon"; });
         settings.Columns.Add(col => { col.FieldName = "Email"; });
         settings.Columns.Add(col => { col.FieldName = "Adres"; col.CellStyle.Wrap = DefaultBoolean.True; });
+
+        // Common settings
+        TravelInn.MVC.DevExpressWeb.Responsive.HelperClasses.DevExpressGridCommonSettings.Set(settings);
 
     });
     if (ViewData["EditError"] != null)

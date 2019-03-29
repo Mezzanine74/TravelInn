@@ -1,5 +1,6 @@
 ﻿using SharedKernel;
 using System;
+using System.ComponentModel.DataAnnotations;
 using TravelInn.Common;
 using TravelInn.Data.Interface;
 
@@ -9,6 +10,7 @@ namespace TravelInn.Data.ViewModels
     {
         public int Id { get; set; }
         public DateTime? Tarih { get; set; }
+        [Required]
         public string Aciklama { get; set; }
         public decimal? TL { get; set; }
         public decimal? Euro { get; set; }

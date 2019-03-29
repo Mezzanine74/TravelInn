@@ -1,7 +1,7 @@
 C:\Users\USER\source\repos\TravellInn\TravelInn.Common\bin\Debug\TravelInn.Common.dll.config
 C:\Users\USER\source\repos\TravellInn\TravelInn.Common\bin\Debug\TravelInn.Common.dll
 C:\Users\USER\source\repos\TravellInn\TravelInn.Common\bin\Debug\TravelInn.Common.pdb
-C:\Users\USER\source\repos\TravellInn\TravelInn.Common\obj\Debug\TravelInn.Common.csprojAssemblyReference.cache
 C:\Users\USER\source\repos\TravellInn\TravelInn.Common\obj\Debug\TravelInn.Common.csproj.CoreCompileInputs.cache
 C:\Users\USER\source\repos\TravellInn\TravelInn.Common\obj\Debug\TravelInn.Common.dll
 C:\Users\USER\source\repos\TravellInn\TravelInn.Common\obj\Debug\TravelInn.Common.pdb
+C:\Users\USER\source\repos\TravellInn\TravelInn.Common\obj\Debug\TravelInn.Common.csprojAssemblyReference.cache

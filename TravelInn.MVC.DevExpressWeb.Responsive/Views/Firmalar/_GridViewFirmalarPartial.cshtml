@@ -9,47 +9,21 @@
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Firmalar", Action = "GridViewFirmalarPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Firmalar", Action = "GridViewFirmalarPartialDelete" };
 
-        settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
 
-        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
 
-        settings.SettingsBehavior.ConfirmDelete = true;
-
-        settings.ClientSideEvents.RowDblClick = "function(s,e){ onRowDblClick(s,e); }";
+        settings.ClientSideEvents.RowDblClick = "function(s,e){ onShowLog(s,e) }";
         settings.ClientSideEvents.RowClick = "function(s,e){onGrdFirmalar_RowClick(s,e);}";
         settings.ClientSideEvents.EndCallback = "function(s,e){onGrdFirmaEndCallback(s,e);}";
+        settings.ClientSideEvents.BeginCallback = "function(s,e){ if (e.command === 'STARTEDIT') { AdjustEnterKeyUpdate(s, e);} }";
 
-        settings.CommandColumn.Visible = true;
-        settings.CommandColumn.Caption = " ";
         settings.CommandColumn.Width = 74;
-        settings.CommandColumn.ShowNewButton = false;
-        settings.CommandColumn.ShowEditButton = true;
-        settings.CommandColumn.ShowDeleteButton = true;
-
-        settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
-
-        settings.KeyFieldName = "Id";
-
-        settings.SettingsPager.Visible = false;
-        settings.SettingsPager.PageSize = Int32.MaxValue;
-        settings.Settings.ShowGroupPanel = false;
-        settings.Settings.ShowFilterRow = false;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
-
-        // GENISLIK ICIN ******************************************************
-        //settings.Width = System.Web.UI.WebControls.Unit.Pixel(900);
-        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
-        settings.SettingsBehavior.AllowEllipsisInText = true;
-        // ****************************************************** GENISLIK ICIN
-
-        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
-        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
-        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
-        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
         settings.Columns.Add(col => { col.FieldName = "Ismi"; col.Width = Unit.Pixel(250); col.CellStyle.Wrap = DefaultBoolean.True; });
         settings.Columns.Add(col => { col.FieldName = "Adresi"; col.Width = Unit.Pixel(250); col.CellStyle.Wrap = DefaultBoolean.True; });
+
+        // Common settings
+        TravelInn.MVC.DevExpressWeb.Responsive.HelperClasses.DevExpressGridCommonSettings.Set(settings);
 
     });
     if (ViewData["EditError"] != null)

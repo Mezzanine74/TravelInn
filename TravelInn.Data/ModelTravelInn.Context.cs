@@ -39,10 +39,10 @@ namespace TravelInn.Data
         public virtual DbSet<Otel> Otels { get; set; }
         public virtual DbSet<SatisSorumlusu> SatisSorumlusus { get; set; }
         public virtual DbSet<Tur> Turs { get; set; }
-        public virtual DbSet<View_YaklasanKayitlar> View_YaklasanKayitlar { get; set; }
         public virtual DbSet<View_UyrukCariAdedi> View_UyrukCariAdedi { get; set; }
         public virtual DbSet<View_CariSearch> View_CariSearch { get; set; }
         public virtual DbSet<Cari> Caris { get; set; }
         public virtual DbSet<CariConfirmation> CariConfirmations { get; set; }
+        public virtual DbSet<View_YaklasanKayitlar> View_YaklasanKayitlar { get; set; }
     }
 }

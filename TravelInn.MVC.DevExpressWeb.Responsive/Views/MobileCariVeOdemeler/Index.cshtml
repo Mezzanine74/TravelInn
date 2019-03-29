@@ -16,34 +16,26 @@
     /*Theme Generator ile uretilenler oraya save edilmedi
     Buraya direk kopyalandi*/
 
-    .dxsplControl_Metropolis .dxsplLCC{
-        padding: 4px;
-    }
-
     .dxgvHeader_Metropolis {
         background-color: #f0f0f0;
-        padding: 2px 2px 2px;
+        padding: 2px 4px 2px;
     }
 
     .dxgvControl_Metropolis,
-    .dxgvDisabled_Metropolis,
-    .dxbButton_Metropolis,
-    .dxeHyperlink_Metropolis {
-        font: 8px 'Segoe UI',Helvetica,'Droid Sans',Tahoma,Geneva,sans-serif;
+    .dxgvDisabled_Metropolis {
+        font: 11px 'Segoe UI',Helvetica,'Droid Sans',Tahoma,Geneva,sans-serif;
     }
+
+        .dxgvControl_Metropolis a {
+            color: black;
+        }
 
     .dxgvEditFormDisplayRow_Metropolis td.dxgv,
     .dxgvDetailCell_Metropolis td.dxgv,
     .dxgvDataRow_Metropolis td.dxgv,
     .dxgvDetailRow_Metropolis.dxgvADR td.dxgvAIC {
-        padding: 2px 2px 2px;
+        padding: 2px 4px 2px;
     }
-
-    /*Bakiye detay yuksekligi Bakiye mobil sayfasindan dolayi duzeltilir*/
-    .dxgvCSD{
-        height: 16px !important;
-    }
-
 </style>
 
 <script type="text/javascript">
@@ -62,17 +54,6 @@
             '/CariVeOdemeler/Export?frmId=' + @Request.Params["frmId"],
             '_blank'
         );
-    }
-
-        var onRowDblClick = function(s, e) {
-
-            s.GetRowValues(
-                e.visibleIndex,
-                "Uniqueidentifier",
-                function (value) {
-                    PopupLog.Show();
-                    GridViewLog.PerformCallback({ uniqeIdentifier: value });
-                });
     }
 
     var TabFirmalarTabClick = function(s, e) {
@@ -190,26 +171,133 @@
             prevOnLoad();
         document.onkeydown = myOnKeyDown;
     }
-    function myOnKeyDown() {
 
-        var grdCari = GridViewCari;
-        var grdOdeme = GridViewOdeme;
+        function myOnKeyDown() {
 
-        if (event.keyCode == 27)
-        {
-            if (grdCari.IsEditing()) { grdCari.CancelEdit(); }
-            if (grdOdeme.IsEditing()) { grdOdeme.CancelEdit(); }
+            var grdCari = GridViewCari;
+            var grdOdeme = GridViewOdeme;
+
+            if (event.keyCode == 27)
+            {
+                if (grdCari.IsEditing()) { cancelGrid(grdCari); }
+                if (grdOdeme.IsEditing()) { cancelGrid(grdOdeme); }
+            }
+
+            if (event.keyCode == 13)
+            {
+                ASPxClientUtils.PreventEventAndBubble(event); //Enterin asagiya inmesini engeller
+                if (grdCari.IsEditing()) { updateGrid(grdCari); }
+                if (grdOdeme.IsEditing()) { updateGrid(grdOdeme); }
+            }
+
         }
 
-        if (event.keyCode == 13)
-        {
-            ASPxClientUtils.PreventEventAndBubble(event); //Enterin asagiya inmesini engeller
-            if (grdCari.IsEditing()) { grdCari.UpdateEdit(); }
-            if (grdOdeme.IsEditing()) { grdOdeme.UpdateEdit(); }
+        function updateGrid(grid) {
+            if (ASPxClientEdit.ValidateEditorsInContainer(grid.GetMainElement())) {
+                grid.UpdateEdit();
+            }
         }
 
-    }
+        function cancelGrid(grid) {
+            grid.CancelEdit();
+        }
+
     // ......................... Update with Enter
+
+    var EmailButtonClick = function (s, e, g) {
+
+        if (e.buttonID == 'btnEmail') {
+            var key = s.GetRowKey(e.visibleIndex);
+            window.open(g + '/' + key, '_blank');
+        };
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    'use strict';
+
+    var rootFolder = '';
+    var id = 0;
+    var aciklama = '';
+    var voucherNo = '';
+
+    DevExpress.ui.dxOverlay.baseZIndex(20000);
+
+
+    //onemli not
+    //upload ya da remove dan sonra grid cancelEdit yapilmali.
+    //cunku Confirmed model icinde henuz olmadigindan eski haline geri donuyor.
+    //Confirmed model icine alininca bu degisebilir.
+
+    var OnFileUploaded = function(s, e) {
+
+        console.log(e);
+        console.log(rootFolder + '/' + e.fileName);
+
+        $.post('@Url.Action("ConfirmationUpload", "CariVeOdemeler")', { path: rootFolder + '/' + e.fileName, id: id})
+            .done(function (data) {
+                console.log(data);
+                if (data.MessageList[0]) {
+                    if (data.MessageList[0] === 'confirmed') {
+                        var res = DevExpress.ui.dialog.alert(e.fileName + " eklendi", 'Confirmed', true);
+                        res.done(function() {
+                            PopupAddFileManager.Hide();
+                            GridViewCari.CancelEdit()
+                        })
+                    }
+                }
+            })
+            .fail(function() {
+                console.log('failed');
+            })
+    }
+
+    var OnItemDeleted = function(s, e) {
+
+        console.log(e);
+        console.log(rootFolder + '/' + e.name);
+
+        $.post('@Url.Action("ConfirmationRemove", "CariVeOdemeler")',{ path: rootFolder + '/' + e.name, id: id })
+            .done(function(data) {
+                console.log(data);
+                if (data.MessageList[0]) {
+                    if (data.MessageList[0] === 'unconfirmed') {
+                        var res = DevExpress.ui.dialog.alert(" Tum confirm emailleri silindi", 'Unconfirmed!', true);
+                        res.done(function() {
+                            PopupAddFileManager.Hide();
+                            GridViewCari.CancelEdit()
+                        })
+                    }
+                }
+            })
+            .fail(function() {
+                console.log('failed');
+            });
+    }
+
+    var InitiateFileManager = function (i) {
+
+        GridViewCari.GetRowValues(
+            i,
+            'Id;FirmaId;VoucherNo;Aciklama',
+            function (value)
+            {
+                id = value[0];
+                rootFolder = '~/Content/CariConfirmations/' + value[1] + '/' + value[0];
+                voucherNo = value[2];
+                aciklama = value[3];
+
+                console.log(value);
+
+                PopupAddFileManager.PerformCallback({ rootFolder: rootFolder });
+
+                var aciklamaT = 'Voucher No:' + voucherNo + ' / ' + aciklama;
+                PopupAddFileManager.SetHeaderText(aciklamaT.length > 60 ? aciklamaT.substring(0, 60) + '...' : aciklamaT);
+
+            });
+    }
 
 </script>
 
@@ -290,24 +378,26 @@
 
 }).GetHtml()
 
-@Html.DevExpress().PopupControl(
-    settings =>
-    {
-        settings.Name = "PopupLog";
 
-        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
-        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
-        settings.HeaderText = "Logs";
-        settings.Modal = true;
-        //settings.Height = Unit.Pixel(100);
-        //settings.ShowPageScrollbarWhenModal = true;
-        //settings.ScrollBars = ScrollBars.None;
-
-        settings.SetContent(() =>
+@*FileManager*@
+<form>
+    @Html.DevExpress().PopupControl(
+        settings =>
         {
-            Html.RenderAction("GridViewPartialLog","Log");
-        });
-    }).GetHtml()
+            settings.Name = "PopupAddFileManager";
+
+            settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "FileManagerCariConfirmationPartial"};
+            settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+            settings.HeaderText = "FirmaAdi / Musteri / CariAciklama";
+            settings.Modal = true;
+
+            settings.ClientSideEvents.EndCallback = "function (s,e) { s.Show();}";
+
+        }).GetHtml()
+</form>
+@*..... File Manager*@
+
 
 @*Cari Detay kismi*@
 <form>

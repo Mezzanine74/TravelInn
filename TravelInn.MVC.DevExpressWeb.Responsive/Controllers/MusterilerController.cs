@@ -51,13 +51,14 @@ namespace TravelInn.MVC.DevExpressWeb.Responsive.Controllers
                 }
 
                 ViewBag.Uyruk = repoUyruk.All();
-
+                ViewData["Editable"] = item;
                 return PartialView("_GridViewPartialMusteriler", repoViewModel.GetList());
 
             }
             else
                 ViewData["EditError"] = "Please, correct all errors.";
 
+            ViewData["Editable"] = item;
             return PartialView("_GridViewPartialMusteriler", repoViewModel.GetList());
 
         }
@@ -76,13 +77,14 @@ namespace TravelInn.MVC.DevExpressWeb.Responsive.Controllers
                 }
 
                 ViewBag.Uyruk = repoUyruk.All();
-
+                ViewData["Editable"] = item;
                 return PartialView("_GridViewPartialMusteriler", repoViewModel.GetList());
 
             }
             else
                 ViewData["EditError"] = "Please, correct all errors.";
 
+            ViewData["Editable"] = item;
             return PartialView("_GridViewPartialMusteriler", repoViewModel.GetList());
         }
 

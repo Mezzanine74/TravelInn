@@ -10,45 +10,20 @@
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Bankalar", Action = "GridViewPartialBankalarDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
 
-        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+        settings.ClientSideEvents.RowDblClick = "function(s,e){ onShowLog(s,e) }";
+        settings.ClientSideEvents.Init = "function(s, e){ AdjustEnterKeyUpdate(s, e);}";
 
-        settings.SettingsBehavior.ConfirmDelete = true;
-
-        settings.ClientSideEvents.RowDblClick = "function(s,e){ onRowDblClick(s,e) }";
-
-        settings.CommandColumn.Visible = true;
-        settings.CommandColumn.Caption = " ";
         settings.CommandColumn.Width = 74;
-        settings.CommandColumn.ShowNewButton = false;
-        settings.CommandColumn.ShowEditButton = true;
-        settings.CommandColumn.ShowDeleteButton = true;
 
-        settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
-
-        settings.KeyFieldName = "Id";
-
-        settings.SettingsPager.Visible = true;
-        settings.SettingsPager.PageSize = Int32.MaxValue;
-        settings.Settings.ShowGroupPanel = false;
-        settings.Settings.ShowFilterRow = false;
-        settings.SettingsBehavior.AllowSelectByRowClick = false;
-
-        // GENISLIK ICIN ******************************************************
         settings.Width = System.Web.UI.WebControls.Unit.Pixel(800);
-        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
-        settings.SettingsBehavior.AllowEllipsisInText = true;
-        // ****************************************************** GENISLIK ICIN
-
-        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
-        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
-        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
-        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
         settings.Columns.Add(col => { col.FieldName = "Banka_Adi"; col.Width = Unit.Pixel(200); });
         settings.Columns.Add(col => { col.FieldName = "Telefon"; });
         settings.Columns.Add(col => { col.FieldName = "Email"; });
         settings.Columns.Add(col => { col.FieldName = "Adres"; col.CellStyle.Wrap = DefaultBoolean.True; });
+
+        // Common settings
+        TravelInn.MVC.DevExpressWeb.Responsive.HelperClasses.DevExpressGridCommonSettings.Set(settings);
 
     });
     if (ViewData["EditError"] != null)

@@ -1,4 +1,5 @@
 ﻿using SharedKernel;
+using System.ComponentModel.DataAnnotations;
 using TravelInn.Common;
 using TravelInn.Data.Interface;
 
@@ -8,6 +9,7 @@ namespace TravelInn.Data.ViewModels
     {
         public int Id { get; set; }
         public string SatisSorumlusu_Idstr { get; set; }
+        [Required]
         public string Ismi { get; set; }
         public string Uniqueidentifier { get; set; }
         public string Telefon { get; set; }

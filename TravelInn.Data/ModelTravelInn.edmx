@@ -247,7 +247,7 @@
           <Property Name="WhenDeleted" Type="datetime2" Precision="7" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_CariOdemeExcel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_CariOdemeExcel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_CariOdemeExcel">
           <Key>
             <PropertyRef Name="Id" />
@@ -274,7 +274,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_CariOdemeExcel' does no
           <Property Name="Banka_Adi" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_CariSearch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_CariSearch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_CariSearch">
           <Key>
             <PropertyRef Name="Id" />
@@ -299,7 +299,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_CariSearch' does not ha
           <Property Name="Otel" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_FirmaBakiye' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_FirmaBakiye' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_FirmaBakiye">
           <Key>
             <PropertyRef Name="FirmaId" />
@@ -324,7 +324,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_FirmaBakiye' does not h
           <Property Name="Bakiye_Dollar" Type="numeric" Precision="38" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_UyrukCariAdedi' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_UyrukCariAdedi' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_UyrukCariAdedi">
           <Key>
             <PropertyRef Name="Id" />
@@ -337,17 +337,10 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_UyrukCariAdedi' does no
           <Property Name="CariAdedi" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TravelInn20190226.dbo.View_YaklasanKayitlar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_YaklasanKayitlar">
           <Key>
             <PropertyRef Name="Id" />
-            
-            
-            
-            
-            
-            
-            
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Tarih" Type="smalldatetime" />
@@ -363,6 +356,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
           <Property Name="Uyrugu" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Tur" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Otel" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Confirmed" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Cari_Musteri">
           <End Role="Musteri" Type="Self.Musteri" Multiplicity="0..1" />
@@ -580,7 +574,8 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
     [View_YaklasanKayitlar].[Musteri] AS [Musteri], 
     [View_YaklasanKayitlar].[Uyrugu] AS [Uyrugu], 
     [View_YaklasanKayitlar].[Tur] AS [Tur], 
-    [View_YaklasanKayitlar].[Otel] AS [Otel]
+    [View_YaklasanKayitlar].[Otel] AS [Otel], 
+    [View_YaklasanKayitlar].[Confirmed] AS [Confirmed]
     FROM [dbo].[View_YaklasanKayitlar] AS [View_YaklasanKayitlar]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Cari_Musteri" Association="Self.FK_Cari_Musteri">
@@ -659,7 +654,6 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
             <End Role="Uyruk" EntitySet="Uyruks" />
             <End Role="Musteri" EntitySet="Musteris" />
           </AssociationSet>
-          <EntitySet Name="View_YaklasanKayitlar" EntityType="TravelInnModel.View_YaklasanKayitlar" />
           <EntitySet Name="View_UyrukCariAdedi" EntityType="TravelInnModel.View_UyrukCariAdedi" />
           <EntitySet Name="View_CariSearch" EntityType="TravelInnModel.View_CariSearch" />
           <EntitySet Name="Caris" EntityType="TravelInnModel.Cari" />
@@ -688,6 +682,7 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
             <End Role="Cari" EntitySet="Caris" />
             <End Role="CariConfirmation" EntitySet="CariConfirmations" />
           </AssociationSet>
+          <EntitySet Name="View_YaklasanKayitlar" EntityType="TravelInnModel.View_YaklasanKayitlar" />
           </EntityContainer>
         <EntityType Name="Firma">
           <Key>
@@ -989,25 +984,6 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="View_YaklasanKayitlar">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Tarih" Type="DateTime" Precision="0" />
-          <Property Name="FirmaIsmi" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Sorumlu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="VN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Pax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Musteri" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Uyrugu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Tur" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Otel" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="View_UyrukCariAdedi">
           <Key>
             <PropertyRef Name="Id" />
@@ -1159,6 +1135,26 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="View_YaklasanKayitlar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <Property Name="FirmaIsmi" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Sorumlu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="VN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Musteri" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Uyrugu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Tur" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Otel" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Confirmed" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1418,26 +1414,6 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="View_YaklasanKayitlar">
-            <EntityTypeMapping TypeName="TravelInnModel.View_YaklasanKayitlar">
-              <MappingFragment StoreEntitySet="View_YaklasanKayitlar">
-                <ScalarProperty Name="Otel" ColumnName="Otel" />
-                <ScalarProperty Name="Tur" ColumnName="Tur" />
-                <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
-                <ScalarProperty Name="Musteri" ColumnName="Musteri" />
-                <ScalarProperty Name="Pax" ColumnName="Pax" />
-                <ScalarProperty Name="VN" ColumnName="VN" />
-                <ScalarProperty Name="Dollar" ColumnName="Dollar" />
-                <ScalarProperty Name="Euro" ColumnName="Euro" />
-                <ScalarProperty Name="TL" ColumnName="TL" />
-                <ScalarProperty Name="Sorumlu" ColumnName="Sorumlu" />
-                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
-                <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
-                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="View_UyrukCariAdedi">
             <EntityTypeMapping TypeName="TravelInnModel.View_UyrukCariAdedi">
               <MappingFragment StoreEntitySet="View_UyrukCariAdedi">
@@ -1508,6 +1484,27 @@ warning 6002: The table/view 'TravelInn20190219.dbo.View_YaklasanKayitlar' does 
                 <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
                 <ScalarProperty Name="FilePath" ColumnName="FilePath" />
                 <ScalarProperty Name="CariId" ColumnName="CariId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_YaklasanKayitlar">
+            <EntityTypeMapping TypeName="TravelInnModel.View_YaklasanKayitlar">
+              <MappingFragment StoreEntitySet="View_YaklasanKayitlar">
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+                <ScalarProperty Name="Otel" ColumnName="Otel" />
+                <ScalarProperty Name="Tur" ColumnName="Tur" />
+                <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+                <ScalarProperty Name="Musteri" ColumnName="Musteri" />
+                <ScalarProperty Name="Pax" ColumnName="Pax" />
+                <ScalarProperty Name="VN" ColumnName="VN" />
+                <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+                <ScalarProperty Name="Euro" ColumnName="Euro" />
+                <ScalarProperty Name="TL" ColumnName="TL" />
+                <ScalarProperty Name="Sorumlu" ColumnName="Sorumlu" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

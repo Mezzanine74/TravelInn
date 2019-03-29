@@ -28,5 +28,6 @@ namespace TravelInn.Data
         public string Uyrugu { get; set; }
         public string Tur { get; set; }
         public string Otel { get; set; }
+        public bool Confirmed { get; set; }
     }
 }

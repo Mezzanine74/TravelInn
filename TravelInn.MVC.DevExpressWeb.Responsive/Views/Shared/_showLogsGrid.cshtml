@@ -1,0 +1,43 @@
+﻿
+    @*LOG GOSTERME ********************************************************************************************* *@
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "PopupLog";
+        settings.CallbackRouteValues = new { Controller = "Log", Action = "GridViewPartialLog" };
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        settings.HeaderText = "Logs";
+        settings.Modal = true;
+        settings.ClientSideEvents.EndCallback = "function (s,e) { LoadingPanelLog.Hide(); s.Show(); }";
+
+    }).GetHtml()
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanelLog";
+        settings.Modal = false;
+        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
+    }).GetHtml()
+
+<script type="text/javascript">
+    'use strict';
+    var onShowLog;
+    $(function () {
+        onShowLog = function (s, e) {
+            if (s) {
+                s.GetRowValues(
+                    e.visibleIndex,
+                    "Uniqueidentifier",
+                    function (value) {
+                        LoadingPanelLog.Show();
+                        PopupLog.PerformCallback({ uniqeIdentifier: value });
+                    });
+            }
+        }
+    })
+</script>
+
+@* ********************************************************************************************* // LOG GOSTERME *@

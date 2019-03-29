@@ -25,9 +25,9 @@
         font: 11px 'Segoe UI',Helvetica,'Droid Sans',Tahoma,Geneva,sans-serif;
     }
 
-    .dxgvControl_Metropolis a {
-        color: black;
-    }
+        .dxgvControl_Metropolis a {
+            color: black;
+        }
 
     .dxgvEditFormDisplayRow_Metropolis td.dxgv,
     .dxgvDetailCell_Metropolis td.dxgv,
@@ -40,11 +40,20 @@
 <script type="text/javascript">
         'use strict';
 
-        var gridCari_BeginCallback = function (s, e) {
+    var gridCari_BeginCallback = function (s, e) {
+
+        if (e.command === 'STARTEDIT') {
+            AdjustEnterKeyUpdate(s, e);
+        }
+
             e.customArgs["frmId"] = @Request.Params["frmId"];
         }
 
-        var gridOdeme_BeginCallback = function (s, e) {
+    var gridOdeme_BeginCallback = function (s, e) {
+        if (e.command === 'STARTEDIT') {
+            AdjustEnterKeyUpdate(s, e);
+        }
+
             e.customArgs["frmId"] = @Request.Params["frmId"];
     }
 
@@ -53,17 +62,6 @@
             '/CariVeOdemeler/Export?frmId=' + @Request.Params["frmId"],
             '_blank'
         );
-    }
-
-        var onRowDblClick = function(s, e) {
-
-            s.GetRowValues(
-                e.visibleIndex,
-                "Uniqueidentifier",
-                function (value) {
-                    PopupLog.Show();
-                    GridViewLog.PerformCallback({ uniqeIdentifier: value });
-                });
     }
 
     var TabFirmalarTabClick = function(s, e) {
@@ -119,47 +117,6 @@
             });
         }
 
-    //Cari Detay Gosterme Kismi
-    var description = "";
-        var hangisi = "";
-
-    var ButtonCariDetayClick = function (m, h) {
-        loadingPanel.Show();
-        description = m;
-        hangisi = h;
-
-        PopupSearchCari.PerformCallback();
-    }
-
-    var PopupSearchCariEndCallBack = function (s, e) {
-        s.Show();
-        loadingPanel.Hide();
-        PopupSearchCari.SetHeaderText(description + ' nin Cari Bilgileri')
-
-        switch (hangisi) {
-            case 'musteri':
-                GridViewCariSearch.AutoFilterByColumn('Musteri', description);
-                break;
-            case 'tur':
-                GridViewCariSearch.AutoFilterByColumn('Tur', description);
-                break;
-            case 'otel':
-                GridViewCariSearch.AutoFilterByColumn('Otel', description);
-                break;
-            case 'sorumlu':
-                GridViewCariSearch.AutoFilterByColumn('Sorumlu', description);
-                break;
-            case 'uyruk':
-                GridViewCariSearch.AutoFilterByColumn('Uyrugu', description);
-                break;
-
-            default:
-                GridViewCariSearch.AutoFilterByColumn('Musteri', '#$%$fdas3455#^');
-        }
-
-    }
-    // .................... Cari Detay Gosterme Kismi
-
     var onGridCariEndCallback = function(s, e) {
             if (s.IsEditing()) {
                 GridViewOdeme.CancelEdit();
@@ -172,35 +129,100 @@
             };
         }
 
-    // Update with Enter .........................
+    var EmailButtonClick = function (s, e, g) {
 
-    var prevOnLoad = window.onload;
-    window.onload = myOnLoad;
-    function myOnLoad() {
-        if (prevOnLoad != null)
-            prevOnLoad();
-        document.onkeydown = myOnKeyDown;
+        if (e.buttonID == 'btnEmail') {
+            var key = s.GetRowKey(e.visibleIndex);
+            window.open(g + '/' + key, '_blank');
+        };
     }
-    function myOnKeyDown() {
 
-        var grdCari = GridViewCari;
-        var grdOdeme = GridViewOdeme;
+</script>
 
-        if (event.keyCode == 27)
-        {
-            if (grdCari.IsEditing()) { grdCari.CancelEdit(); }
-            if (grdOdeme.IsEditing()) { grdOdeme.CancelEdit(); }
-        }
+<script type="text/javascript">
 
-        if (event.keyCode == 13)
-        {
-            ASPxClientUtils.PreventEventAndBubble(event); //Enterin asagiya inmesini engeller
-            if (grdCari.IsEditing()) { grdCari.UpdateEdit(); }
-            if (grdOdeme.IsEditing()) { grdOdeme.UpdateEdit(); }
-        }
+    'use strict';
 
+    var rootFolder = '';
+    var id = 0;
+    var aciklama = '';
+    var voucherNo = '';
+
+    DevExpress.ui.dxOverlay.baseZIndex(20000);
+
+
+    //onemli not
+    //upload ya da remove dan sonra grid cancelEdit yapilmali.
+    //cunku Confirmed model icinde henuz olmadigindan eski haline geri donuyor.
+    //Confirmed model icine alininca bu degisebilir.
+
+    var OnFileUploaded = function(s, e) {
+
+        console.log(e);
+        console.log(rootFolder + '/' + e.fileName);
+
+        $.post('@Url.Action("ConfirmationUpload", "CariVeOdemeler")', { path: rootFolder + '/' + e.fileName, id: id})
+            .done(function (data) {
+                console.log(data);
+                if (data.MessageList[0]) {
+                    if (data.MessageList[0] === 'confirmed') {
+                        var res = DevExpress.ui.dialog.alert(e.fileName + " eklendi", 'Confirmed', true);
+                        res.done(function() {
+                            PopupAddFileManager.Hide();
+                            GridViewCari.CancelEdit()
+                        })
+                    }
+                }
+            })
+            .fail(function() {
+                console.log('failed');
+            })
     }
-    // ......................... Update with Enter
+
+    var OnItemDeleted = function(s, e) {
+
+        console.log(e);
+        console.log(rootFolder + '/' + e.name);
+
+        $.post('@Url.Action("ConfirmationRemove", "CariVeOdemeler")',{ path: rootFolder + '/' + e.name, id: id })
+            .done(function(data) {
+                console.log(data);
+                if (data.MessageList[0]) {
+                    if (data.MessageList[0] === 'unconfirmed') {
+                        var res = DevExpress.ui.dialog.alert(" Tum confirm emailleri silindi", 'Unconfirmed!', true);
+                        res.done(function() {
+                            PopupAddFileManager.Hide();
+                            GridViewCari.CancelEdit()
+                        })
+                    }
+                }
+            })
+            .fail(function() {
+                console.log('failed');
+            });
+    }
+
+    var InitiateFileManager = function (i) {
+
+        GridViewCari.GetRowValues(
+            i,
+            'Id;FirmaId;VoucherNo;Aciklama',
+            function (value)
+            {
+                id = value[0];
+                rootFolder = '~/Content/CariConfirmations/' + value[1] + '/' + value[0];
+                voucherNo = value[2];
+                aciklama = value[3];
+
+                console.log(value);
+
+                PopupAddFileManager.PerformCallback({ rootFolder: rootFolder });
+
+                var aciklamaT = 'Voucher No:' + voucherNo + ' / ' + aciklama;
+                PopupAddFileManager.SetHeaderText(aciklamaT.length > 60 ? aciklamaT.substring(0, 60) + '...' : aciklamaT);
+
+            });
+    }
 
 </script>
 
@@ -283,48 +305,22 @@
 
 }).GetHtml()
 
-@Html.DevExpress().PopupControl(
-    settings =>
-    {
-        settings.Name = "PopupLog";
 
-        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
-        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
-        settings.HeaderText = "Logs";
-        settings.Modal = true;
-        //settings.Height = Unit.Pixel(100);
-        //settings.ShowPageScrollbarWhenModal = true;
-        //settings.ScrollBars = ScrollBars.None;
-
-        settings.SetContent(() =>
-        {
-            Html.RenderAction("GridViewPartialLog","Log");
-        });
-    }).GetHtml()
-
-@*Cari Detay kismi*@
+@*FileManager*@
 <form>
     @Html.DevExpress().PopupControl(
         settings =>
         {
-            settings.Name = "PopupSearchCari";
-            settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "GridViewCariSearchPartial" };
+            settings.Name = "PopupAddFileManager";
+
+            settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "FileManagerCariConfirmationPartial"};
             settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
-            settings.PopupVerticalAlign = PopupVerticalAlign.Above;
-            settings.HeaderText = "Cariler";
+            settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+            settings.HeaderText = "FirmaAdi / Musteri / CariAciklama";
             settings.Modal = true;
-            settings.ClientSideEvents.EndCallback = "function (s,e) { PopupSearchCariEndCallBack(s, e) }";
+
+            settings.ClientSideEvents.EndCallback = "function (s,e) { s.Show();}";
 
         }).GetHtml()
 </form>
-
-@Html.DevExpress().LoadingPanel(
-    settings =>
-    {
-        settings.Name = "loadingPanel";
-        settings.Modal = false;
-        settings.ContainerElementID = "SplitterCariOdeme";
-        settings.Styles.LoadingDiv.BackColor = System.Drawing.Color.White;
-    }).GetHtml()
-
-@*...................... Cari Detay kismi*@
+@*..... File Manager*@

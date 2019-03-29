@@ -45,12 +45,14 @@ namespace TravelInn.MVC.DevExpressWeb.Responsive.Controllers
                     ViewData["EditError"] = opr.MessageList[0];
                 }
 
+                ViewData["Editable"] = item;
                 return PartialView("_GridViewPartialOteller", repoViewModel.GetList());
 
             }
             else
                 ViewData["EditError"] = "Please, correct all errors.";
 
+            ViewData["Editable"] = item;
             return PartialView("_GridViewPartialOteller", repoViewModel.GetList());
 
         }
@@ -67,12 +69,14 @@ namespace TravelInn.MVC.DevExpressWeb.Responsive.Controllers
                     ViewData["EditError"] = opr.MessageList[0];
                 }
 
+                ViewData["Editable"] = item;
                 return PartialView("_GridViewPartialOteller", repoViewModel.GetList());
 
             }
             else
                 ViewData["EditError"] = "Please, correct all errors.";
 
+            ViewData["Editable"] = item;
             return PartialView("_GridViewPartialOteller", repoViewModel.GetList());
 
         }

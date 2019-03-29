@@ -1,5 +1,9 @@
-﻿using SharedKernel.Data;
+﻿using DevExpress.Web.Mvc;
+using SharedKernel.Data;
+using System;
+using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 using TravelInn.Common;
 using TravelInn.Data;
@@ -306,9 +310,26 @@ namespace TravelInn.MVC.DevExpressWeb.Responsive.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewCariSearchPartial()
+        public ActionResult GridViewCariSearchPartial(string kolonAdi, string kolonFiltreDegeri)
         {
-            return PartialView("_GridViewCariSearchPartial", repoView_CariSearch.All());
+
+            var parameter = Expression.Parameter(typeof(View_CariSearch), "t");
+
+            // t.Total
+            var propertyExpression = Expression.PropertyOrField(parameter, kolonAdi);
+
+            // "ARJANTIN"
+            var constant = Expression.Constant(kolonFiltreDegeri, typeof(string));
+
+            // t.Uyrugu == "ARJANTIN"
+            var equalExpression = Expression.Equal(propertyExpression, constant);
+
+            // t => t.Uyrugu == "ARJANTIN"
+            var lambda = Expression.Lambda(equalExpression, parameter);
+
+            var typedExpression = (Expression<Func<View_CariSearch, bool>>)lambda;
+
+            return PartialView("_GridViewCariSearchPartial", repoView_CariSearch.FindBy(typedExpression).ToList());
         }
 
         public ActionResult ComboBoxVNPartial()
@@ -386,20 +407,67 @@ namespace TravelInn.MVC.DevExpressWeb.Responsive.Controllers
                         }));
         }
 
-        [HttpPost]
-        public JsonResult ConfirmationUpload(string path, int id)
+        // File Manager
+        [ValidateInput(false)]
+        public ActionResult FileManagerCariConfirmationPartial(string rootFolder)
         {
-            //return Json(new { success = repoCariConfirmationRepository.Upload(path, id).Success });
-            return Json("ConfirmationUpload");
+            //if (rootFolder != null)
+            //{
+            //    DirectoryInfo di = Directory.CreateDirectory(Server.MapPath(rootFolder));
+            //    TestControllerFileManagerCariConfirmationSettings.RootFolder = rootFolder;
+            //}
+
+            if (rootFolder != null)
+            {
+                DirectoryInfo di = Directory.CreateDirectory(Server.MapPath(rootFolder));
+                TestControllerFileManagerCariConfirmationSettings.RootFolder = rootFolder;
+            }
+
+            return PartialView("_FileManagerCariConfirmationPartial", TestControllerFileManagerCariConfirmationSettings.Model);
+        }
+
+        public FileStreamResult FileManagerCariConfirmationPartialDownload()
+        {
+            return FileManagerExtension.DownloadFiles(TestControllerFileManagerCariConfirmationSettings.DownloadSettings, TestControllerFileManagerCariConfirmationSettings.Model);
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmationUpload(string path, int id)
+        {
+            return Json(repoCariConfirmationRepository.Upload(path, id));
         }
 
         [HttpPost]
         public JsonResult ConfirmationRemove(string path, int id)
         {
-            //return Json(new { success = repoCariConfirmationRepository.Remove(path, id).Success });
-            return Json("ConfirmationRemove");
+            return Json(repoCariConfirmationRepository.Remove(path, id));
         }
 
+        public ActionResult ReadEmail(int id = 0)
+        {
+            return View();
+        }
+
+        public ActionResult RichEditEmailPartial(int id = 0)
+        {
+            ViewBag.Email = repoCariConfirmationRepository.GetEmailPath(id) == String.Empty ? string.Empty : Server.MapPath(repoCariConfirmationRepository.GetEmailPath(id));
+            return PartialView("_RichEditEmailPartial");
+        }
     }
 
+    public class TestControllerFileManagerCariConfirmationSettings
+    {
+        public static string RootFolder = @"~\Content\CariConfirmations\";
+
+        public static string Model { get { return RootFolder; } }
+        public static DevExpress.Web.Mvc.FileManagerSettings DownloadSettings
+        {
+            get
+            {
+                var settings = new DevExpress.Web.Mvc.FileManagerSettings { Name = "FileManagerCariConfirmation" };
+                settings.SettingsEditing.AllowDownload = true;
+                return settings;
+            }
+        }
+    }
 }

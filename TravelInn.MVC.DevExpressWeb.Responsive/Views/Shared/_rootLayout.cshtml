@@ -7,7 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
     <title>@ViewBag.Title</title>
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -18,12 +18,16 @@
 
     @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
-        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
-    )
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView })
+
+    @RenderSection("DevExpressStyle", false)
+
     @Html.DevExpress().GetScripts(
         new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
-        new Script { ExtensionSuite = ExtensionSuite.GridView }
-    )
+        new Script { ExtensionSuite = ExtensionSuite.GridView })
+
+    @RenderSection("DevExpressScript", false)
+
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
@@ -31,7 +35,7 @@
             background-color: red !important;
         }
     </style>
-    
+
     @{
         if (Request.Browser.IsMobileDevice)
         {
@@ -43,6 +47,11 @@
             </style>
         }
     }
+
+    <link href="~/Content/dx.common.css" rel="stylesheet" />
+    <link href="~/Content/dx.dark.compact.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Scripts/dx.all.js"></script>
 
 </head>
 <body>
@@ -74,7 +83,7 @@
         collection.ControlsInitialized.AddHandler(updateHeaderMenuOrientation);
         collection.BrowserWindowResized.AddHandler(updateHeaderMenuOrientation);
 
-        var ShowHint = function(s, e) {
+        var ShowHint = function (s, e) {
             Hint.Show();
             console.log('nie gosterilmiyor');
         }
@@ -87,8 +96,14 @@
     settings.SetContent(RenderBody().ToHtmlString());
 
 }).GetHtml()
+
+    @Html.Partial("_showLogsGrid")
+
+    @Html.Partial("_searchCari")
     
-    @RenderSection("script", false )
+    <script src="~/Scripts/adjustEnterKeyUpdate.js"></script>
+
+    @RenderSection("script", false)
 
 </body>
 </html>

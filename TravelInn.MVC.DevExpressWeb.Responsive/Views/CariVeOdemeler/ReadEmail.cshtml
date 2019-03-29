@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "ReadEmail";
+}
+
+@section DevExpressStyle
+{
+    @Html.DevExpress().GetStyleSheets( 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.RichEdit }
+        )
+}
+
+@section DevExpressScript
+{
+    @Html.DevExpress().GetScripts(
+        new Script { ExtensionSuite = ExtensionSuite.RichEdit})
+}
+
+@using (Html.BeginForm())
+{
+    @Html.Action("RichEditEmailPartial")
+}
+

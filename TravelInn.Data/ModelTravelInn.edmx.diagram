@@ -23,7 +23,6 @@
         <EntityTypeShape EntityType="TravelInnModel.Tur" Width="1.5" PointX="3.75" PointY="29.625" />
         <AssociationConnector Association="TravelInnModel.FK_Odeme_Banka" />
         <AssociationConnector Association="TravelInnModel.FK_Musteri_Uyruk" />
-        <EntityTypeShape EntityType="TravelInnModel.View_YaklasanKayitlar" Width="2.25" PointX="10.375" PointY="0.75" />
         <EntityTypeShape EntityType="TravelInnModel.View_UyrukCariAdedi" Width="1.5" PointX="1" PointY="3" />
         <EntityTypeShape EntityType="TravelInnModel.View_CariSearch" Width="2.125" PointX="10.375" PointY="4.75" />
         <EntityTypeShape EntityType="TravelInnModel.Cari" Width="1.5" PointX="5.75" PointY="9.5" />
@@ -34,6 +33,7 @@
         <AssociationConnector Association="TravelInnModel.FK_Odenecek_Firma" />
         <EntityTypeShape EntityType="TravelInnModel.CariConfirmation" Width="1.5" PointX="8.625" PointY="14" />
         <AssociationConnector Association="TravelInnModel.FK_CariConfirmations_Cari" />
+        <EntityTypeShape EntityType="TravelInnModel.View_YaklasanKayitlar" Width="2.25" PointX="10.375" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

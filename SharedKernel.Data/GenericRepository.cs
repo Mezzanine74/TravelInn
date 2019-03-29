@@ -149,6 +149,7 @@ namespace SharedKernel.Data
         /// </summary>
         public OperationResult Update(TEntity entity)
         {
+
             var opr = new OperationResult() { Success = true };
 
             if (entity.Validate().Success)

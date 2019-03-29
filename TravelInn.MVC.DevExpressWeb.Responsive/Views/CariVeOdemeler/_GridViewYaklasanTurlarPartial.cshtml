@@ -32,6 +32,30 @@
             col.FieldName = "Tarih"; col.Width = 75; col.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
             col.GroupIndex = 0;
         });
+
+        settings.Columns.Add(col =>
+        {
+
+            col.FieldName = "Confirmed";
+
+            col.SetDataItemTemplateContent(c =>
+            {
+                Html.DevExpress().Button(b =>
+                {
+                    var visibleIndex = c.VisibleIndex;
+                    var confirmed = (bool) DataBinder.Eval(c.DataItem, "Confirmed");
+
+                    b.Name = "Button" + c.VisibleIndex;
+                    b.Text = confirmed ? "Confirmed" : "Not Confirmed";
+                    b.Images.Image.IconID = confirmed ? "iconbuilder_actions_check_svg_32x32" : "actions_cancel_16x16";
+                    b.ImagePosition = ImagePosition.Right;
+                    b.ClientSideEvents.Click = confirmed ? string.Format("function(s, e) {{ EmailButtonClick(" + c.KeyValue.ToString() + ", '{0}'); }}", Url.Action("ReadEmail", "CariVeOdemeler")) : string.Empty;
+                }).GetHtml();
+            });
+
+        });
+
+
         settings.Columns.Add("FirmaIsmi");
         settings.Columns.Add("Aciklama");
         settings.Columns.Add("Sorumlu");

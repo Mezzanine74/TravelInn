@@ -1,7 +1,5 @@
 ﻿@Html.DevExpress().ComboBox(settings => {
     settings.Name = "comboBoxMusterilerSearch";
-    //settings.Width = 180;
-    //settings.SelectedIndex = 0;
     settings.CallbackRouteValues = new { Controller = "CariVeOdemeler", Action = "ComboBoxMusterilerPartial" };
     settings.Properties.CallbackPageSize = 1000;
     settings.Properties.TextField = "MusteriAdi";
@@ -9,7 +7,7 @@
     settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
     settings.Properties.DropDownHeight = Unit.Pixel(450);
 
-    settings.Properties.Columns.Add("MusteriAdi", "Musteri Adi", 100);
+    settings.Properties.Columns.Add(fieldName:"MusteriAdi", caption: "Musteri Adi", width: 100);
     settings.Properties.Columns.Add("FirmaAdi", "Firma Adi", 130);
     settings.Properties.Columns.Add("Aciklama", "Aciklama", 250);
 

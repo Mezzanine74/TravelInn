@@ -1,4 +1,5 @@
 ﻿using SharedKernel.Data;
+using System;
 using System.Linq;
 using TravelInn.Common;
 
@@ -37,7 +38,11 @@ namespace TravelInn.Data.ViewModelRepository
                     if (cari.Confirmed == false)
                     {
                         cari.Confirmed = true;
-                        _repoCari.Update(cari);
+                        if (_repoCari.Update(cari).Success)
+                        {
+                            _return.MessageList.Add("confirmed");
+                        };
+
                     };
 
                     _return.Success = true;
@@ -59,32 +64,54 @@ namespace TravelInn.Data.ViewModelRepository
 
         public OperationResult Remove(string path, int id)
         {
-            var _return = new OperationResult();
+            var _return = new OperationResult() { Success = false };
 
-            var confirmation = _repo.FindBy(c => c.FilePath.Contains(path)).ToList()[0];
+            var confirmation = _repo.FindBy(c => c.FilePath.Contains(path));
 
-            // confirmation silme basarili ise
-            if (_repo.Remove(confirmation.Id).Success)
+            if (confirmation.Count() > 0)
             {
-                // caride confirmation kalmamis ise sil
-                var confirmationsCount = _repo.FindBy(c => c.CariId == id).ToList().Count;
-                if (confirmationsCount == 0)
+                // confirmation silme basarili ise
+                if (_repo.Remove(confirmation.ToList()[0].Id).Success)
                 {
-                    // cari yi unconfirmed yap
-                    var cari = _repoCari.FindByKey(id);
-                    cari.Confirmed = false;
-                    _repoCari.Update(cari);
-                };
+                    // caride confirmation kalmamis ise sil
+                    var confirmationsCount = _repo.FindBy(c => c.CariId == id).ToList().Count;
+                    if (confirmationsCount == 0)
+                    {
+                        // cari yi unconfirmed yap
+                        var cari = _repoCari.FindByKey(id);
+                        cari.Confirmed = false;
+                        if (_repoCari.Update(cari).Success)
+                        {
+                            _return.MessageList.Add("unconfirmed");
+                        };
 
-                // cari yi confirmed yap
-                _return.Success = true;
+                    };
+
+                    // cari yi confirmed yap
+                    _return.Success = true;
+                }
             }
-            else
-            {
-                _return.Success = false;
-            };
 
             return _return;
+
+        }
+
+        public string GetEmailPath(int CariId)
+        {
+            try
+            {
+                var cf = _repo.FindBy(c => c.CariId == CariId).OrderBy(c => c.WhenInserted).Take(1);
+
+                if (cf != null)
+                {
+                    return cf.ToList()[0].FilePath;
+                }
+            }
+            catch (Exception e)
+            {
+            }
+
+            return string.Empty;
 
         }
     }

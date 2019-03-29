@@ -254,26 +254,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="View_YaklasanKayitlar">
-      <EntityTypeMapping TypeName="TravelInnModel.View_YaklasanKayitlar">
-        <MappingFragment StoreEntitySet="View_YaklasanKayitlar">
-          <ScalarProperty Name="Otel" ColumnName="Otel" />
-          <ScalarProperty Name="Tur" ColumnName="Tur" />
-          <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
-          <ScalarProperty Name="Musteri" ColumnName="Musteri" />
-          <ScalarProperty Name="Pax" ColumnName="Pax" />
-          <ScalarProperty Name="VN" ColumnName="VN" />
-          <ScalarProperty Name="Dollar" ColumnName="Dollar" />
-          <ScalarProperty Name="Euro" ColumnName="Euro" />
-          <ScalarProperty Name="TL" ColumnName="TL" />
-          <ScalarProperty Name="Sorumlu" ColumnName="Sorumlu" />
-          <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
-          <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
-          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="View_UyrukCariAdedi">
       <EntityTypeMapping TypeName="TravelInnModel.View_UyrukCariAdedi">
         <MappingFragment StoreEntitySet="View_UyrukCariAdedi">
@@ -344,6 +324,27 @@
           <ScalarProperty Name="Uniqueidentifier" ColumnName="Uniqueidentifier" />
           <ScalarProperty Name="FilePath" ColumnName="FilePath" />
           <ScalarProperty Name="CariId" ColumnName="CariId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_YaklasanKayitlar">
+      <EntityTypeMapping TypeName="TravelInnModel.View_YaklasanKayitlar">
+        <MappingFragment StoreEntitySet="View_YaklasanKayitlar">
+          <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+          <ScalarProperty Name="Otel" ColumnName="Otel" />
+          <ScalarProperty Name="Tur" ColumnName="Tur" />
+          <ScalarProperty Name="Uyrugu" ColumnName="Uyrugu" />
+          <ScalarProperty Name="Musteri" ColumnName="Musteri" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+          <ScalarProperty Name="VN" ColumnName="VN" />
+          <ScalarProperty Name="Dollar" ColumnName="Dollar" />
+          <ScalarProperty Name="Euro" ColumnName="Euro" />
+          <ScalarProperty Name="TL" ColumnName="TL" />
+          <ScalarProperty Name="Sorumlu" ColumnName="Sorumlu" />
+          <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+          <ScalarProperty Name="FirmaIsmi" ColumnName="FirmaIsmi" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

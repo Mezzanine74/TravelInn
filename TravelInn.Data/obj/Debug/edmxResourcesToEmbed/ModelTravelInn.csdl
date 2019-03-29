@@ -31,7 +31,6 @@
       <End Role="Uyruk" EntitySet="Uyruks" />
       <End Role="Musteri" EntitySet="Musteris" />
     </AssociationSet>
-    <EntitySet Name="View_YaklasanKayitlar" EntityType="TravelInnModel.View_YaklasanKayitlar" />
     <EntitySet Name="View_UyrukCariAdedi" EntityType="TravelInnModel.View_UyrukCariAdedi" />
     <EntitySet Name="View_CariSearch" EntityType="TravelInnModel.View_CariSearch" />
     <EntitySet Name="Caris" EntityType="TravelInnModel.Cari" />
@@ -60,6 +59,7 @@
       <End Role="Cari" EntitySet="Caris" />
       <End Role="CariConfirmation" EntitySet="CariConfirmations" />
     </AssociationSet>
+    <EntitySet Name="View_YaklasanKayitlar" EntityType="TravelInnModel.View_YaklasanKayitlar" />
   </EntityContainer>
   <EntityType Name="Firma">
     <Key>
@@ -361,25 +361,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="View_YaklasanKayitlar">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="Tarih" Type="DateTime" Precision="0" />
-    <Property Name="FirmaIsmi" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Name="Sorumlu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="VN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Pax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Musteri" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="Uyrugu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="Tur" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="Otel" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-  </EntityType>
   <EntityType Name="View_UyrukCariAdedi">
     <Key>
       <PropertyRef Name="Id" />
@@ -531,4 +512,24 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="View_YaklasanKayitlar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Tarih" Type="DateTime" Precision="0" />
+    <Property Name="FirmaIsmi" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Sorumlu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="TL" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Euro" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Dollar" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="VN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Musteri" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Uyrugu" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Tur" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Otel" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Confirmed" Type="Boolean" Nullable="false" />
+  </EntityType>
 </Schema>
